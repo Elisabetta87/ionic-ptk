@@ -1,0 +1,25 @@
+<form padding [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+  <h5 class="text-center mt-3">Where are you?</h5>
+  <ion-item>
+    <ion-label stacked>Address</ion-label>
+    <ion-input type="text" name="address" formControlName="address"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>City</ion-label>
+    <ion-input type="text" name="city" formControlName="city"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>PostCode</ion-label>
+    <ion-input type="text" name="postcode" formControlName="postcode"></ion-input>
+  </ion-item>
+  <h5 class="text-center mt-5">Linen Info</h5>
+  <ion-item>
+    <ion-label stacked>How many packs of dirty linen?</ion-label>
+    <ion-input type="text" name="dirtyLinen" formControlName="dirtyLinen"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>How many packs of clean linen?</ion-label>
+    <ion-input type="text" name="cleanLinen" formControlName="cleanLinen"></ion-input>
+  </ion-item>
+  <button class="my-5" type="submit" [disabled]="!propertyForm.valid">Send</button>
+</form>
