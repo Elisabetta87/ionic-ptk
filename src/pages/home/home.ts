@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+//import {Diagnostic} from 'ionic-native';
+//import { AlertController } from 'ionic-angular';
+
 
 @Component({
   selector: 'page-home',
@@ -7,16 +9,35 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
+  constructor() {
+    // testing Diagnostic
+    /*let successCallback = (isAvailable) => { console.log('Is available? ' + isAvailable); };
+     let errorCallback = (e) => console.error(e);
 
-  constructor(public navCtrl: NavController) {
+     //Diagnostic.isCameraAvailable().then(successCallback).catch(errorCallback);
+
+     Diagnostic.isLocationAvailable().then(successCallback, errorCallback);
+*/
+     /*Diagnostic.getLocationMode()
+     .then((state) => {
+     if (state == Diagnostic.locationMode.LOCATION_OFF){
+     this.showAlert();
+     } else {
+     // do something else
+     }
+     }).catch(e => console.error(e));
+     }*/
+
+
+
+
+     /*showAlert() {
+     let alert = this.alertCtrl.create({
+     title: 'GPS IS REQUIRED',
+     subTitle: 'Please enable your GPS!',
+     buttons: ['OK']
+     });
+     alert.present();*/
 
   }
-
-  /*cordova.plugins.diagnostic.isLocationAvailable(function(available){
-    console.log("Location is " + (available ? "available" : "not available"));
-  }, function(error){
-    console.error("The following error occurred: "+error);
-  });
-*/
-
 }

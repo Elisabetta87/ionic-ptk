@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
   templateUrl: 'property-details.html'
 })
 export class PropertyDetailsPage {
+
 }

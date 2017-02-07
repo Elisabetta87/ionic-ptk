@@ -8,6 +8,8 @@ import { HttpModule } from '@angular/http';
 import {PropertyForm} from '../components/property-form/property-form';
 import {GeolocationService} from '../services/geolocation-service';
 import {PropertyDetailsPage} from '../pages/property-details/property-details';
+import {SecondFormComponent} from '../components/second-property-form/second-property-form';
+import {StorageService} from '../services/storage-service';
 
 
 @NgModule({
@@ -16,7 +18,8 @@ import {PropertyDetailsPage} from '../pages/property-details/property-details';
     HomePage,
     PropertyPage,
     PropertyForm,
-    PropertyDetailsPage
+    PropertyDetailsPage,
+    SecondFormComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -29,11 +32,13 @@ import {PropertyDetailsPage} from '../pages/property-details/property-details';
     HomePage,
     PropertyPage,
     PropertyForm,
+    SecondFormComponent,
     PropertyDetailsPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    GeolocationService
+    GeolocationService,
+    StorageService
   ]
 })
 export class AppModule {}
