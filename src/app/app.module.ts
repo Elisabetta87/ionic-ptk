@@ -9,7 +9,7 @@ import {PropertyForm} from '../components/property-form/property-form';
 import {GeolocationService} from '../services/geolocation-service';
 import {PropertyDetailsPage} from '../pages/property-details/property-details';
 import {SecondFormComponent} from '../components/second-property-form/second-property-form';
-import {StorageService} from '../services/storage-service';
+import {SecureStorage} from 'ionic-native';
 
 
 @NgModule({
@@ -38,7 +38,7 @@ import {StorageService} from '../services/storage-service';
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GeolocationService,
-    StorageService
+    SecureStorage
   ]
 })
 export class AppModule {}

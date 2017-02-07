@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {GeolocationService} from '../../services/geolocation-service';
 import {NavController} from 'ionic-angular/index';
 import {PropertyDetailsPage} from '../../pages/property-details/property-details';
-import {StorageService} from "../../services/storage-service";
+import {SecureStorage} from 'ionic-native';
 
 
 
@@ -18,19 +18,23 @@ export class PropertyForm implements OnInit {
   public propertyForm: FormGroup;
 
   constructor(
-    private geoService: GeolocationService,
     public navCtrl: NavController,
-    private secStorage: StorageService
-  ) {}
+    private fb: FormBuilder,
+    private geoService: GeolocationService,
+    private storage: SecureStorage
+  ) {
+    this.storage = new SecureStorage();
+    this.storage.create('form');
+  }
 
   ngOnInit(){
 // setting validators for propertyForm
-    this.propertyForm = new FormGroup({
-      address: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3)])),
-      city: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3)])),
-      postcode: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]{1,2}(\\d[a-zA-Z]|[\\d]{2})\\s*\\d[a-zA-Z]{2}$')])),
-      dirtyLinen: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])),
-      cleanLinen: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')]))
+    this.propertyForm = this.fb.group({
+      address: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+      city: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+      postcode: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]{1,2}(\\d[a-zA-Z]|[\\d]{2})\\s*\\d[a-zA-Z]{2}$')])],
+      dirtyLinen: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
+      cleanLinen: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])]
     });
 
 // get address info from google api and setValue into the input form fields
@@ -66,7 +70,7 @@ export class PropertyForm implements OnInit {
     this.propertyForm.value['stage'] = '2';
     let stringifyForm = JSON.stringify(this.propertyForm.value);
     console.log(stringifyForm);
-    this.secStorage.setStorageItem('firstForm', stringifyForm);
+    this.storage.set('firstForm', stringifyForm);
     this.navCtrl.setRoot(PropertyDetailsPage);
   };
 
