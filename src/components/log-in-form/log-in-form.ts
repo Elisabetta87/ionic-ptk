@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {NavController} from 'ionic-angular/index';
 import {SecureStorage} from 'ionic-native';
@@ -25,7 +25,6 @@ export class LogInForm implements OnInit {
   ) {
     this.storage = new SecureStorage();
     this.storage.create('logIn');
-    console.log('Hey');
   }
 
 
@@ -47,7 +46,7 @@ export class LogInForm implements OnInit {
 // when submit the form user goes to a  new page propertyDetailsPage
   onSubmit() {
     //if clicked on the 'continue as guest' button store property guestId else logId
-    this.logInfoStorage['logInfo'] = 'logInfo';
+    this.logInfoStorage = {'logInfo': 'logInfo'};
     if (this.btnClicked == 'logId') {
       this.logInfoStorage['logId'] = '1';
       this.storage.set('logInfo', JSON.stringify(this.logInfoStorage));

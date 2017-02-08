@@ -23,7 +23,7 @@ export class HomePage {
       .then(
           data => {
             console.log(data);
-            /*let logInfoStorage = JSON.parse(data);
+            let logInfoStorage = JSON.parse(data);
             console.log(logInfoStorage, logInfoStorage['logId'], logInfoStorage['guestId']);
              if (logInfoStorage['logId']) {
                   this.logInfo = 'Registered';
@@ -31,11 +31,11 @@ export class HomePage {
                   this.logInfo = 'Logged In As Guest';
              } else if (logInfoStorage == null ) {
                   this.navCtrl.setRoot(LogInPage);
-             }*/
+             }
           },
           error => {
             console.log(error);
-            
+
           }
         )
 
