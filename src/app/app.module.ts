@@ -10,6 +10,9 @@ import {GeolocationService} from '../services/geolocation-service';
 import {PropertyDetailsPage} from '../pages/property-details/property-details';
 import {SecondFormComponent} from '../components/second-property-form/second-property-form';
 import {SecureStorage} from 'ionic-native';
+import {ThankYouPage} from "../pages/thank-you/thank-you";
+import {LogInPage} from "../pages/log-in/log-in";
+import {LogInForm} from "../components/log-in-form/log-in-form";
 
 
 @NgModule({
@@ -19,7 +22,12 @@ import {SecureStorage} from 'ionic-native';
     PropertyPage,
     PropertyForm,
     PropertyDetailsPage,
-    SecondFormComponent
+    SecondFormComponent,
+    ThankYouPage,
+    LogInPage,
+    LogInForm
+
+
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -33,7 +41,10 @@ import {SecureStorage} from 'ionic-native';
     PropertyPage,
     PropertyForm,
     SecondFormComponent,
-    PropertyDetailsPage
+    PropertyDetailsPage,
+    ThankYouPage,
+    LogInForm,
+    LogInPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

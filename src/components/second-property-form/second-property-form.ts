@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {SecureStorage} from 'ionic-native';
+import {NavController} from 'ionic-angular/index';
+import {ThankYouPage} from "../../pages/thank-you/thank-you";
 
 
 
@@ -16,8 +18,9 @@ export class SecondFormComponent implements OnInit {
   public secondPropertyForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder,
-    private storage: SecureStorage
+    public    navCtrl: NavController,
+    private        fb: FormBuilder,
+    private   storage: SecureStorage
   ) {
     this.storage = new SecureStorage();
     this.storage.create('form');
@@ -43,6 +46,8 @@ export class SecondFormComponent implements OnInit {
           formStorage[index] = this.secondPropertyForm.controls[index].value;
         }
         this.storage.set(keyStorage, JSON.stringify(formStorage));
+        this.navCtrl.setRoot(ThankYouPage);
+        console.log(formStorage);
       });
   }
 

@@ -1,0 +1,15 @@
+<form padding [formGroup]="logInForm" (ngSubmit)="onSubmit()">
+  <ion-item>
+    <ion-label>Email</ion-label>
+    <ion-input type="text" name="email" formControlName="email"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Password</ion-label>
+    <ion-input type="text" name="password" formControlName="password"></ion-input>
+  </ion-item>
+  <button type="submit" (click)="logId()">Log In</button>
+  <ion-item>
+    <p> - OR - </p>
+  </ion-item>
+  <button type="submit" (click)="logAsGuest()">Continue As Guest</button>
+</form>

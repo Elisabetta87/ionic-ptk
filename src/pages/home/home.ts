@@ -1,43 +1,46 @@
 import { Component } from '@angular/core';
-//import {Diagnostic} from 'ionic-native';
-//import { AlertController } from 'ionic-angular';
+import {SecureStorage} from "ionic-native/dist/es5/index";
+import {NavController} from "ionic-angular/index";
+import {LogInPage} from "../log-in/log-in";
 
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  providers: [SecureStorage]
 })
 export class HomePage {
 
-  constructor() {
-    // testing Diagnostic
-    /*let successCallback = (isAvailable) => { console.log('Is available? ' + isAvailable); };
-     let errorCallback = (e) => console.error(e);
+  logInfo: string;
 
-     //Diagnostic.isCameraAvailable().then(successCallback).catch(errorCallback);
-
-     Diagnostic.isLocationAvailable().then(successCallback, errorCallback);
-*/
-     /*Diagnostic.getLocationMode()
-     .then((state) => {
-     if (state == Diagnostic.locationMode.LOCATION_OFF){
-     this.showAlert();
-     } else {
-     // do something else
-     }
-     }).catch(e => console.error(e));
-     }*/
-
-
-
-
-     /*showAlert() {
-     let alert = this.alertCtrl.create({
-     title: 'GPS IS REQUIRED',
-     subTitle: 'Please enable your GPS!',
-     buttons: ['OK']
-     });
-     alert.present();*/
+  constructor(
+    public navCtrl: NavController,
+    private storage: SecureStorage
+  ) {
+    this.storage = new SecureStorage();
+    this.storage.create('logInfo');
+    this.storage.get('logInfo')
+      .then(
+          data => {
+            console.log(data);
+            /*let logInfoStorage = JSON.parse(data);
+            console.log(logInfoStorage, logInfoStorage['logId'], logInfoStorage['guestId']);
+             if (logInfoStorage['logId']) {
+                  this.logInfo = 'Registered';
+             } else if (logInfoStorage['guestId']) {
+                  this.logInfo = 'Logged In As Guest';
+             } else if (logInfoStorage == null ) {
+                  this.navCtrl.setRoot(LogInPage);
+             }*/
+          },
+          error => {
+            console.log(error);
+            
+          }
+        )
 
   }
+
+
 }
+

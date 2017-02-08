@@ -25,6 +25,7 @@ export class PropertyForm implements OnInit {
   ) {
     this.storage = new SecureStorage();
     this.storage.create('form');
+
   }
 
   ngOnInit(){
