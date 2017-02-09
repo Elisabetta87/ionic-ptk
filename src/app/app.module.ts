@@ -15,6 +15,7 @@ import { LogInPage } from '../pages/log-in/log-in';
 import { LogInForm } from '../components/log-in-form/log-in-form';
 import { HomePageGuest } from '../pages/home-guest/home-guest';
 import { JobsListPage } from '../pages/jobs-list/jobs-list';
+import {JobDetailsPage} from "../pages/job-details/job-details";
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { JobsListPage } from '../pages/jobs-list/jobs-list';
     LogInPage,
     LogInForm,
     HomePageGuest,
-    JobsListPage
+    JobsListPage,
+    JobDetailsPage
 
 
   ],
@@ -50,7 +52,8 @@ import { JobsListPage } from '../pages/jobs-list/jobs-list';
     LogInForm,
     LogInPage,
     HomePageGuest,
-    JobsListPage
+    JobsListPage,
+    JobDetailsPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

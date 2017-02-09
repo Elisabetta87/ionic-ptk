@@ -1,23 +1,10 @@
-<!--<ion-content >
-  <div *ngFor="let job of jobs">
-    <ion-card class="{{ job.status }} m-4 my-5">
-      <ion-card-content class="pt-5">
-        <p>{{ job.dateTime }}</p>
-        <p class="mt-2">{{ job.address }}</p>
-        <p class="mt-2">{{ job.service }}</p>
-        <ion-icon name="arrow-forward"></ion-icon>
-      </ion-card-content>
-    </ion-card>
-  </div>
-</ion-content>-->
-
 <ion-header>
   <ion-title class="text-center">Schedule</ion-title>
 </ion-header>
 
 <ion-content *ngIf="jobsAvailable">
     <ion-list inset *ngFor="let job of jobs" class="{{ job.status }} m-3 mt-4">
-      <button ion-item class="{{ job.status }}" (click)="jobInfo()">
+      <button ion-item class="{{ job.status }}" (click)="pushPage(job.id)">
         <p>{{ job.dateTime }}</p>
         <p>{{ job.address }}</p>
         <p>{{ job.service }}</p>
