@@ -1,6 +1,7 @@
-button {
+.log-button {
   background-color: $macaroni;
   color: $white;
   height: 40px;
-  //width: 100%;
+  display: block;
+  margin: 35px auto 0;
 }
