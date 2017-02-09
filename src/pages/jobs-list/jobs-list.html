@@ -1,0 +1,11 @@
+<ion-content *ngIf="jobsAvailable">
+  <ion-card class="{{ statusColor }} m-4 my-5" *ngFor="let job of jobs">
+    <ion-card-content class="pt-5">
+      <p>{{ job.dateTime }}</p>
+      <p class="mt-2">{{ job.address }}</p>
+      <p class="mt-2">{{ job.service }}</p>
+      <div></div>
+      <p>{{ job.status }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

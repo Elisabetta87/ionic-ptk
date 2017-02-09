@@ -1,0 +1,23 @@
+<ion-content padding class="home-background">
+  <!----------- JOB MATCH -------------->
+  <ion-item-group>
+    <form *ngIf="checklist">
+    <h3 class="text-center">Set Location and Time</h3>
+      <ion-item>
+        <ion-label>Location</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Time</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+      <button>Complete Checklist</button>
+    </form>
+    <ion-card>
+      <ion-card-header class="text-center">Sorry!</ion-card-header>
+      <ion-card-content class="text-center pt-4">
+        No current job matches.
+      </ion-card-content>
+    </ion-card>
+  </ion-item-group>
+</ion-content>

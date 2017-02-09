@@ -1,0 +1,31 @@
+page-jobs-list {
+  ion-content {
+    .green {
+      background-color: $olive-green;
+    }
+    .red {
+      background-color: #9d223c;
+    }
+    .orange {
+      background-color: $macaroni;
+    }
+    .yellow {
+      background-color: yellow;
+    }
+    .grey {
+      background-color: #8c8c8c;
+    }
+    ion-card {
+      ion-card-content {
+        div {
+          height: 30px;
+          width: 30px;
+          float: right;
+          background-color: #1c1c1c;
+          position: relative;
+          top: -33px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+page-home-guest {
+  ion-content {
+    ion-card, h3 {
+      color: $white;
+      display: block;
+      margin: 90px auto;
+      ion-card-content {
+        color: #000000;
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {NavController} from 'ionic-angular/index';
 import {SecureStorage} from 'ionic-native';
 import {HomePage} from "../../pages/home/home";
+import {HomePageGuest} from "../../pages/home-guest/home-guest";
 
 
 
@@ -50,14 +51,13 @@ export class LogInForm implements OnInit {
     if (this.btnClicked == 'logId') {
       this.logInfoStorage['logId'] = '1';
       this.storage.set('logInfo', JSON.stringify(this.logInfoStorage));
+      this.navCtrl.setRoot(HomePage);
     } else {
       this.logInfoStorage['guestId'] = 'G1';
       this.storage.set('logInfo', JSON.stringify(this.logInfoStorage));
+      this.navCtrl.setRoot(HomePageGuest);
     }
-    console.log(this.logInfoStorage);
-    this.navCtrl.setRoot(HomePage);
   };
-
 
 }
 

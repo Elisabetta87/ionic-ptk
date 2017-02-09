@@ -1,23 +1,27 @@
-ion-header {
-  ion-icon {
-    color: $ocean-blue;
+page-home {
+  ion-header {
+    ion-icon {
+      color: $ocean-blue;
+    }
+    ion-title {
+      img {
+        width: 150px;
+        display: block;
+      }
+    }
   }
-  ion-title {
-    img {
-      width: 150px;
-      display: block;
+  ion-content {
+    h3, p {
+      color: $white;
+    }
+    p {
+      font-size: 1.5rem;
+    }
+    a {
+      text-decoration: none;
+      color: $olive-green;
     }
   }
 }
-ion-content {
-  h3, p {
-    color: $white;
-  }
-  p {
-    font-size: 1.5rem;
-  }
-  a {
-    text-decoration: none;
-    color: $olive-green;
-  }
-}
+
+

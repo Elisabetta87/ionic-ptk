@@ -14,3 +14,22 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
+//ptk colors
+$ocean-blue: #125ea2;
+$macaroni: #ee9b2c;
+$olive-green: #93cd5b;
+$white: #ffffff;
+
+//background img
+.home-background {
+  background-image: url('../assets/img/top-bg-home-min@2x.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+button {
+  display: block;
+  margin: 35px auto 0;
+}
