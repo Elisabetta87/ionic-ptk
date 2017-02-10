@@ -1,10 +1,15 @@
 <ion-header>
-  <ion-title class="text-center">Schedule</ion-title>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Schedule</ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content *ngIf="jobsAvailable">
     <ion-list inset *ngFor="let job of jobs" class="{{ job.status }} m-3 mt-4">
-      <button ion-item class="{{ job.status }}" (click)="pushPage(job.id)">
+      <button ion-item class="{{ job.status }}" (click)="pushPage(job.id, job.status)">
         <p>{{ job.dateTime }}</p>
         <p>{{ job.address }}</p>
         <p>{{ job.service }}</p>

@@ -1,16 +1,16 @@
 <form padding [formGroup]="secondPropertyForm" (ngSubmit)="onSubmit()">
   <h5 class="text-center mt-3">More Details</h5>
-  <ion-item>
+  <ion-item class="pl-0">
     <ion-label stacked>Are the keys in the key safe?</ion-label>
     <ion-input type="text" name="keys" formControlName="keys"></ion-input>
   </ion-item>
-  <ion-item>
+  <ion-item class="pl-0">
     <ion-label stacked>Number of beds made?</ion-label>
     <ion-input type="number" name="bedsMade" formControlName="bedsMade"></ion-input>
   </ion-item>
-  <ion-item>
+  <ion-item class="pl-0">
     <ion-label stacked>how many packs of clean linen at end of job?</ion-label>
     <ion-input type="number" name="cleanLinenLeft" formControlName="cleanLinenLeft"></ion-input>
   </ion-item>
-  <button class="my-5" type="submit">Send</button>
+  <button class="my-5 customise-btn" type="submit">Send</button>
 </form>

@@ -46,7 +46,7 @@ export class LogInForm implements OnInit {
 
 // when submit the form user goes to a  new page propertyDetailsPage
   onSubmit() {
-    //if clicked on the 'continue as guest' button store property guestId else logId
+    //if clicked on the 'continue as guest' button store checklist guestId else logId
     this.logInfoStorage = {'logInfo': 'logInfo'};
     if (this.btnClicked == 'logId') {
       this.logInfoStorage['logId'] = '1';

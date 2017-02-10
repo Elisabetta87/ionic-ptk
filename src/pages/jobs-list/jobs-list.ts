@@ -19,8 +19,6 @@ export class JobsListPage {
 
     this.jobsAvailable = true;
 
-    //this.status = ['complete', 'past and not complete', 'current and not complete', 'future', 'unaccepted'];
-
     this.jobs = [
       {
         id: '1',
@@ -63,14 +61,17 @@ export class JobsListPage {
   //this function needs to be called inside future function that gets API jobs list info
   //getJobs() {}
 
-  pushPage(id:string) {
+  pushPage(id:string, status: string) {
     for (let i = 0; i < this.jobs.length; i++) {
-      if (this.jobs[i].id === id) {
+      if (this.jobs[i].id === id && status !== 'red') {
         this.navCtrl.push(JobDetailsPage, {
           address: this.jobs[i].address,
-          service: this.jobs[i].services
+          service: this.jobs[i].service,
+               id: this.jobs[i].id
           }
         );
+      } else if (this.jobs[i].id === id && status === 'red') {
+          console.log('job no more available!!!');
       }
     }
   }

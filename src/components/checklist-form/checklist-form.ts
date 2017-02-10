@@ -1,31 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {GeolocationService} from '../../services/geolocation-service';
-import {NavController} from 'ionic-angular/index';
-import {PropertyDetailsPage} from '../../pages/property-details/property-details';
-import {SecureStorage} from 'ionic-native';
+import { GeolocationService } from '../../services/geolocation-service';
+import { NavController, NavParams } from 'ionic-angular/index';
+import { ChecklistSecondPage } from '../../pages/checklist-second/checklist-second';
+import { SecureStorage } from 'ionic-native';
 
 
 
 
 @Component({
-  selector: 'property-form',
-  templateUrl: 'property-form.html'
+  selector: 'checklist-form',
+  templateUrl: 'checklist-form.html'
 })
 
 export class PropertyForm implements OnInit {
 
+  private id: string;
   public propertyForm: FormGroup;
 
   constructor(
     public navCtrl: NavController,
     private fb: FormBuilder,
     private geoService: GeolocationService,
-    private storage: SecureStorage
+    private storage: SecureStorage,
+    private navParams: NavParams
   ) {
+    this.id = navParams.get('id');
     this.storage = new SecureStorage();
     this.storage.create('form');
-
   }
 
   ngOnInit(){
@@ -70,9 +72,12 @@ export class PropertyForm implements OnInit {
   onSubmit() {
     this.propertyForm.value['stage'] = '2';
     let stringifyForm = JSON.stringify(this.propertyForm.value);
-    console.log(stringifyForm);
-    this.storage.set('firstForm', stringifyForm);
-    this.navCtrl.setRoot(PropertyDetailsPage);
+    let checklist = 'checklist-'+this.id;
+    console.log(checklist);
+    this.storage.set(checklist, stringifyForm);
+    this.navCtrl.setRoot(ChecklistSecondPage, {
+      id: this.id
+    });
   };
 
 

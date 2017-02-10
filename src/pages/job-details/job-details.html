@@ -1,6 +1,15 @@
-<ion-content>
-  <p>{{ address }}</p>
-  <p>{{ service }}</p>
-  <p></p>
+<ion-content padding>
+
+  <!-- this creates a google map on the page with the given lat/lng from -->
+  <!-- the component as the initial center of the map: -->
+  <sebm-google-map [latitude]="lat" [longitude]="lng">
+    <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
+  </sebm-google-map>
+
+
+
+  <p class="mt-5">{{ address }}</p>
+  <p class="mb-5">{{ service }}</p>
+  <button class="button-go-to-checklist" (click)="completeChecklist()">Complete Checklist</button>
 </ion-content>
 

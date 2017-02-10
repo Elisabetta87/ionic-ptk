@@ -1,27 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {SecureStorage} from 'ionic-native';
-import {NavController} from 'ionic-angular/index';
-import {ThankYouPage} from "../../pages/thank-you/thank-you";
+import { SecureStorage } from 'ionic-native';
+import { NavController, NavParams } from 'ionic-angular/index';
+import { ThankYouPage } from "../../pages/thank-you/thank-you";
 
 
 
 
 
 @Component({
-  selector: 'second-property-form',
-  templateUrl: 'second-property-form.html'
+  selector: 'checklist-second-form',
+  templateUrl: 'checklist-second-form.html'
 })
 
 export class SecondFormComponent implements OnInit {
 
+  private id: string;
   public secondPropertyForm: FormGroup;
 
   constructor(
     public    navCtrl: NavController,
     private        fb: FormBuilder,
-    private   storage: SecureStorage
+    private   storage: SecureStorage,
+    private navParams: NavParams
   ) {
+    this.id = navParams.get('id');
     this.storage = new SecureStorage();
     this.storage.create('form');
   }
@@ -37,7 +40,7 @@ export class SecondFormComponent implements OnInit {
 
 
   onSubmit() {
-    let keyStorage = 'firstForm';
+    let keyStorage = 'checklist-'+this.id;
     this.storage.get(keyStorage)
       .then(data => {
         let formStorage = JSON.parse(data);
