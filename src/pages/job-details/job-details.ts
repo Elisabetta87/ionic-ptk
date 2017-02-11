@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular/index';
-import { ChecklistPage } from '../checklist/checklist';
+import { ChecklistStatusPage } from '../checklist-status/checklist-status';
 
 @Component({
   selector: 'page-job-details',
@@ -26,9 +26,14 @@ export class JobDetailsPage {
   }
 
   completeChecklist() {
-    this.navCtrl.push(ChecklistPage, {
+    /*this.navCtrl.push(ChecklistPage, {
       id: this.id
-    });
+    });*/
+    this.navCtrl.push(ChecklistStatusPage, {
+     id: this.id, 
+     service: this.service
+     });
+
   }
 
 }
