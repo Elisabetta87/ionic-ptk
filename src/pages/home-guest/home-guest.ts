@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import {SecureStorage} from "ionic-native/dist/es5/index";
-import {NavController} from "ionic-angular/index";
+import { SecureStorage } from 'ionic-native/dist/es5/index';
+import { NavController } from 'ionic-angular/index';
+import { LogInPage } from '../log-in/log-in';
+import { GuestEntryPage } from '../guest-entry/guest-entry';
 
 
 @Component({
@@ -22,6 +24,12 @@ export class HomePageGuest {
     this.checklist = true;
   }
 
+  accept() {
+    this.navCtrl.setRoot(GuestEntryPage);
+  }
+
+  discard() {
+    this.navCtrl.setRoot(LogInPage);
+  }
 
 }
-

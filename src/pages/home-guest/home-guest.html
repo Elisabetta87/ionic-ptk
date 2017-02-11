@@ -1,24 +1,24 @@
 <ion-content padding>
   <!----------- JOB MATCH -------------->
   <img src="../../assets/img/logo@2x-min.png" width="50"/>
-  <ion-item-group>
-    <form *ngIf="checklist">
-    <h3 class="text-center">Set Location and Time</h3>
-      <ion-item>
-        <ion-label>Location</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>Time</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
-      <button>Complete Checklist</button>
-    </form>
-    <ion-card>
+  <h2>PTK</h2>
+  <ion-item-group *ngIf="checklist">
+        <p class="mt-4">We have matched your time and location against the following job, to be performed by an agent of Friendly Cleaners:</p>
+        <div class="orange-box my-4 p-2">
+          <p>11am-2pm</p>
+          <p>Porden Road, SW2 5SA</p>
+          <p>Cleaning</p>
+        </div>
+        <p>Are you here to perform this job?</p>
+        <div class="my-4 pl-5 pr-5">
+          <button class="green-btn" (click)="accept()">YES</button>
+          <button class="pink-btn float-right" (click)="discard()">NO</button>
+        </div>
+  </ion-item-group>
+    <ion-card *ngIf="!checklist">
       <ion-card-header class="text-center">Sorry!</ion-card-header>
       <ion-card-content class="text-center pt-4">
         No current job matches.
       </ion-card-content>
     </ion-card>
-  </ion-item-group>
 </ion-content>

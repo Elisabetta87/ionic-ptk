@@ -15,8 +15,9 @@ import { LogInPage } from '../pages/log-in/log-in';
 import { LogInForm } from '../components/log-in-form/log-in-form';
 import { HomePageGuest } from '../pages/home-guest/home-guest';
 import { JobsListPage } from '../pages/jobs-list/jobs-list';
-import {JobDetailsPage} from "../pages/job-details/job-details";
-import {AgmCoreModule} from "angular2-google-maps/core/core-module";
+import { JobDetailsPage } from '../pages/job-details/job-details';
+import { AgmCoreModule } from 'angular2-google-maps/core/core-module';
+import { GuestEntryPage } from '../pages/guest-entry/guest-entry';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import {AgmCoreModule} from "angular2-google-maps/core/core-module";
     LogInForm,
     HomePageGuest,
     JobsListPage,
-    JobDetailsPage
+    JobDetailsPage,
+    GuestEntryPage
 
 
   ],
@@ -57,7 +59,8 @@ import {AgmCoreModule} from "angular2-google-maps/core/core-module";
     LogInPage,
     HomePageGuest,
     JobsListPage,
-    JobDetailsPage
+    JobDetailsPage,
+    GuestEntryPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
