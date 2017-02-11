@@ -12,6 +12,11 @@ import { JobsListPage } from '../jobs-list/jobs-list';
 })
 export class HomePage {
 
+  tab1Root = JobsListPage;
+  tab2Root = LogInPage;
+  tab3Root = LogInPage;
+
+
   logInfo: string;
 
   constructor(

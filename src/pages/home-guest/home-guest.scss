@@ -1,4 +1,8 @@
 page-home-guest {
+  img {
+    display: block;
+    margin: 25px auto 0;
+  }
   ion-content {
     ion-card, h3 {
       color: $white;

@@ -19,7 +19,7 @@ export class HomePageGuest {
     this.storage = new SecureStorage();
     this.storage.create('logInfo');
     //set storage with new info home guest
-    this.checklist = false;
+    this.checklist = true;
   }
 
 

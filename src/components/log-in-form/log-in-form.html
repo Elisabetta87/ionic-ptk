@@ -1,15 +1,13 @@
 <form padding [formGroup]="logInForm" (ngSubmit)="onSubmit()">
   <ion-item class="pl-0">
-    <ion-label>Email</ion-label>
-    <ion-input type="text" name="email" formControlName="email"></ion-input>
+    <ion-label>Username</ion-label>
+    <ion-input type="text" name="email" formControlName="username"></ion-input>
   </ion-item>
   <ion-item class="pl-0">
     <ion-label>Password</ion-label>
-    <ion-input type="text" name="password" formControlName="password"></ion-input>
+    <ion-input type="password" name="password" formControlName="password"></ion-input>
   </ion-item>
-  <button class="log-button" type="submit" (click)="logId()">Log In</button>
-  <ion-item class="pl-0">
-    <p class="text-center mt-4">  OR  </p>
-  </ion-item>
+  <button class="log-button mt-5" type="submit" (click)="logId()">Log In</button>
+  <p class="text-center my-4">  OR  </p>
   <button class="log-button" type="submit" (click)="logAsGuest()">Continue As Guest</button>
 </form>

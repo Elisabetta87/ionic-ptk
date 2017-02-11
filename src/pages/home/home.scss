@@ -7,12 +7,13 @@ page-home {
       img {
         width: 150px;
         display: block;
+        margin: 0 auto;
       }
     }
   }
   ion-content {
     h3, p {
-      color: $white;
+      color: #000000;
     }
     p {
       font-size: 1.5rem;

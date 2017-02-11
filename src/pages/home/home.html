@@ -1,13 +1,13 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
+  <!--<ion-navbar>
+    &lt;!&ndash;<button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button>
+    </button>&ndash;&gt;
     <ion-title><img src="../../assets/img/logo.png" width="150"/></ion-title>
-  </ion-navbar>
+  </ion-navbar>-->
 </ion-header>
 
-<ion-content padding class="home-background">
+<!--<ion-content padding class="home-background">
   <h3 class="text-center mt-4">Airbnb Management London</h3>
 
   <p class="text-center">
@@ -15,4 +15,14 @@
   </p>
   <h1 color="light" class="mt-5 text-center">{{logInfo}}</h1>
   <button class="job-list-button" (click)="linkToJobsList()"> Jobs List </button>
-</ion-content>
+</ion-content>-->
+
+<ion-tabs id="tabs" #content>
+  <ion-tab [root]="tab1Root" tabTitle="Schedule" tabIcon="clock"></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="Market" tabIcon="basket"></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle="More" tabIcon="menu"></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle="Messenger" tabIcon="text"></ion-tab>
+<!--
+  <ion-tab [root]="tab3Root" tabTitle="ciao" tabIcon="cog"></ion-tab>
+-->
+</ion-tabs>
