@@ -3,6 +3,8 @@ import { SecureStorage } from 'ionic-native/dist/es5/index';
 import { NavController } from 'ionic-angular/index';
 import { LogInPage } from '../log-in/log-in';
 import { JobsListPage } from '../jobs-list/jobs-list';
+import { MarketPage } from '../market/market';
+import { MorePage } from '../more/more';
 
 
 @Component({
@@ -13,8 +15,9 @@ import { JobsListPage } from '../jobs-list/jobs-list';
 export class HomePage {
 
   tab1Root = JobsListPage;
-  tab2Root = LogInPage;
-  tab3Root = LogInPage;
+  tab2Root = MarketPage;
+  tab3Root = MorePage;
+  tab4Root = JobsListPage;
 
 
   logInfo: string;

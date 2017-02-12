@@ -1,10 +1,90 @@
 page-checklist-status {
   .greenBar {
     background-color: #B6D8AD;
+    width: 85%;
+    border: 2px solid rgba(0,0,0,0.8);
   }
   .stage-one {
-    width: 70%;
-    height: 25px;
-    border: 2px solid;
+    height: 35px;
+  }
+  .stage-two {
+    height: 70px;
+  }
+  .stage-three {
+    height: 151px;
+    width: 85%;
+    border: 2px solid rgba(0, 0, 0, 0.8);
+  }
+  .stage-four {
+    height: 40px;
+    width: 85%;
+    border: 2px solid rgba(0, 0, 0, 0.8);
+  }
+  .stage-five {
+    height: 78px;
+    width: 85%;
+    border: 2px solid rgba(0, 0, 0, 0.8);
+  }
+  .stage-six {
+    height: 40px;
+    width: 85%;
+    border: 2px solid rgba(0, 0, 0, 0.8);
+  }
+  ion-icon.green-txt {
+    font-size: 2.6rem;
+    font-weight: 900;
+    float: right;
+    display: flex;
+    align-items: center;
+    line-height: inherit;
+  }
+  .status-bar {
+    ion-col {
+      padding: 0 5px;
+      button {
+        display: block;
+        margin-top: 10px;
+      }
+    }
+
+    ion-row ion-col:not(:first-of-type){
+      height: 0px;
+    }
+
+    ion-row:nth-of-type(1) {
+      ion-col:not(:first-of-type) {
+        line-height: 35px;
+      }
+    }
+    ion-row:nth-of-type(2) {
+      ion-col:not(:first-of-type) {
+        line-height: 70px;
+      }
+    }
+    ion-row:nth-of-type(4) {
+      ion-col:not(:first-of-type) {
+        line-height: 40px;
+      }
+    }
+    ion-row:nth-of-type(5) {
+      ion-col:nth-of-type(n+1) {
+        line-height: 78px;
+      }
+      ion-col:nth-of-type(3) {
+        line-height: inherit;
+        display: flex;
+        align-items: center;
+        height: inherit;
+        button{
+          margin-top: 0px;
+        }
+      }
+    }
+    ion-row:nth-of-type(6) {
+      ion-col:not(:first-of-type) {
+        line-height: 40px;
+      }
+    }
+
   }
 }

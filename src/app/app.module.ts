@@ -19,6 +19,8 @@ import { JobDetailsPage } from '../pages/job-details/job-details';
 import { AgmCoreModule } from 'angular2-google-maps/core/core-module';
 import { GuestEntryPage } from '../pages/guest-entry/guest-entry';
 import { ChecklistStatusPage } from '../pages/checklist-status/checklist-status';
+import { MarketPage } from '../pages/market/market';
+import { MorePage } from '../pages/more/more';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { ChecklistStatusPage } from '../pages/checklist-status/checklist-status'
     JobsListPage,
     JobDetailsPage,
     GuestEntryPage,
-    ChecklistStatusPage
+    ChecklistStatusPage,
+    MarketPage,
+    MorePage
 
 
   ],
@@ -63,7 +67,9 @@ import { ChecklistStatusPage } from '../pages/checklist-status/checklist-status'
     JobsListPage,
     JobDetailsPage,
     GuestEntryPage,
-    ChecklistStatusPage
+    ChecklistStatusPage,
+    MarketPage,
+    MorePage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

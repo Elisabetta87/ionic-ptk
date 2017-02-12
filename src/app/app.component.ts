@@ -1,9 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
-import { HomePage } from '../pages/home/home';
 import { LogInPage } from '../pages/log-in/log-in';
-import {JobsListPage} from "../pages/jobs-list/jobs-list";
 
 
 @Component({
