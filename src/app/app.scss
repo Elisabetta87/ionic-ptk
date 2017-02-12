@@ -46,3 +46,16 @@ $white: #ffffff;
 .pink-btn {
   background-color: #EB999B;
 }
+.bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
+  display: inline-block;
+  &:focus {
+    outline: none;
+  }
+}
+a:focus, a:hover {
+  text-decoration: none;
+}
+.tabs-md .tabs-button {
+  border: 2px solid black;
+}
+

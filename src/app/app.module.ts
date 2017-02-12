@@ -21,6 +21,7 @@ import { GuestEntryPage } from '../pages/guest-entry/guest-entry';
 import { ChecklistStatusPage } from '../pages/checklist-status/checklist-status';
 import { MarketPage } from '../pages/market/market';
 import { MorePage } from '../pages/more/more';
+import { InputNumber } from '../components/input-number/input-number';
 
 
 @NgModule({
@@ -40,9 +41,8 @@ import { MorePage } from '../pages/more/more';
     GuestEntryPage,
     ChecklistStatusPage,
     MarketPage,
-    MorePage
-
-
+    MorePage,
+    InputNumber
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -69,7 +69,8 @@ import { MorePage } from '../pages/more/more';
     GuestEntryPage,
     ChecklistStatusPage,
     MarketPage,
-    MorePage
+    MorePage,
+    InputNumber
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

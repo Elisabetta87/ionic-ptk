@@ -75,9 +75,9 @@ export class PropertyForm implements OnInit {
     let checklist = 'checklist-'+this.id;
     console.log(checklist);
     this.storage.set(checklist, stringifyForm);
-    this.navCtrl.setRoot(ChecklistSecondPage, {
+    /*this.navCtrl.setRoot(ChecklistSecondPage, {
       id: this.id
-    });
+    })*/;
   };
 
 

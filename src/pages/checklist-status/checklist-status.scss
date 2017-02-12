@@ -1,4 +1,15 @@
 page-checklist-status {
+  .toggle-ios .toggle-icon {
+    width: 40px;
+    height: 24.8px;
+    .toggle-inner {
+      width: 21.7px;
+      height: 21.7px;
+    }
+  }
+  .toggle-ios .toggle-checked .toggle-inner {
+    transform: translate3d(14.725px, 0, 0);
+  }
   .greenBar {
     background-color: #B6D8AD;
     width: 85%;
@@ -11,7 +22,7 @@ page-checklist-status {
     height: 70px;
   }
   .stage-three {
-    height: 151px;
+    height: 180px;
     width: 85%;
     border: 2px solid rgba(0, 0, 0, 0.8);
   }
@@ -31,7 +42,7 @@ page-checklist-status {
     border: 2px solid rgba(0, 0, 0, 0.8);
   }
   ion-icon.green-txt {
-    font-size: 2.6rem;
+    font-size: 1.8rem;
     font-weight: 900;
     float: right;
     display: flex;
@@ -41,9 +52,17 @@ page-checklist-status {
   .status-bar {
     ion-col {
       padding: 0 5px;
+    }
+    ion-col:nth-of-type(3) {
       button {
         display: block;
         margin-top: 10px;
+        height: 25px;
+        background-color: white;
+        border: 2px solid black;
+        width: 100%;
+        font-size: 1.3rem;
+        box-shadow: 1px 1px;
       }
     }
 
@@ -57,13 +76,28 @@ page-checklist-status {
       }
     }
     ion-row:nth-of-type(2) {
-      ion-col:not(:first-of-type) {
+      ion-col:not(:first-of-type)  {
         line-height: 70px;
+      }
+      ion-col:nth-of-type(3) {
+        line-height: inherit;
+        display: flex;
+        height: inherit;
+        align-items: center;
+        button {
+          margin-top: 0px;
+        }
       }
     }
     ion-row:nth-of-type(4) {
       ion-col:not(:first-of-type) {
         line-height: 40px;
+      }
+      ion-col:nth-of-type(4) {
+        line-height: inherit;
+        height: inherit;
+        display: flex;
+        align-items: center;
       }
     }
     ion-row:nth-of-type(5) {
@@ -83,6 +117,12 @@ page-checklist-status {
     ion-row:nth-of-type(6) {
       ion-col:not(:first-of-type) {
         line-height: 40px;
+      }
+      ion-col:nth-of-type(4) {
+        line-height: inherit;
+        height: inherit;
+        display: flex;
+        align-items: center;
       }
     }
 

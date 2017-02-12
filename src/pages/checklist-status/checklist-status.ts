@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular/index';
+import {ChecklistPage} from "../checklist/checklist";
 
 
 
@@ -23,11 +24,16 @@ export class ChecklistStatusPage {
     this.greenBar = this.id ? 'greenBar' : '';
   }
 
+  checklist() {
+    this.navCtrl.setRoot(ChecklistPage);
+  }
+
   completeChecklist() {
     /*this.navCtrl.push(ChecklistPage, {
      id: this.id
      });*/
 
   }
+
 
 }

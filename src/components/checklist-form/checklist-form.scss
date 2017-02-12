@@ -1,5 +1,28 @@
 checklist-form {
-  /*.form-control {
-    border: none;
-  }*/
+  .toggle-ios .toggle-icon {
+    width: 40px;
+    height: 24.8px;
+    .toggle-inner {
+      width: 21.7px;
+      height: 21.7px;
+    }
+  }
+  .toggle-ios .toggle-checked .toggle-inner {
+    transform: translate3d(14.725px, 0, 0);
+  }
+  ion-row {
+    .align-center {
+      display: flex;
+      align-items: center;
+      line-height: inherit;
+    }
+  }
+  .customise {
+    background-color: #A0C7F4;
+    color: #000000;
+    height: 35px;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+  }
 }

@@ -1,0 +1,40 @@
+input-number {
+ div {
+   border: 2px solid #000000;
+   display: inline-block;
+   width: 40px;
+   height: 22px;
+   p{
+     float: left;
+     font-size: 1.3rem!important;
+     text-align: center;
+     width: 21px;
+     margin: 0;
+     height: 20px;
+     border-right: 2px solid #000000;
+   }
+   button {
+     padding: 0 2px;
+     font-size: 1.8rem;
+     height: 10px;
+     float: right;
+     overflow: hidden;
+     background-color: transparent;
+     &:focus {
+       outline: none;
+     }
+     ion-icon{
+       line-height: 10px;
+       margin: 0;
+       padding: 0;
+       float: left;
+       &.ion-md-arrow-dropup{
+         margin-top: 1px;
+       }
+       &.ion-md-arrow-dropdown{
+         margin-top: -2px;
+       }
+     }
+   }
+ }
+}

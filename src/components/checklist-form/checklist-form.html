@@ -1,6 +1,41 @@
 <form padding [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
-  <h5 class="text-center mt-3">Where are you?</h5>
-  <ion-item class="pl-0">
+  <ion-row>
+    <ion-col width-80>
+      <p>Are the keys in the keysafe?</p>
+    </ion-col>
+    <ion-col width-20>
+      <ion-toggle color="dark" class="toggle" mode="ios"></ion-toggle>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col width-80>
+      <p>How many sets of dirty linen are there?</p>
+    </ion-col>
+    <ion-col width-20 class="align-center">
+      <input-number></input-number>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col width-80>
+      <p>How many sets of clean linen are there?</p>
+    </ion-col>
+    <ion-col width-20 class="align-center">
+      <input-number></input-number>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col width-100>
+      <button class="my-5 customise">Submit</button>
+    </ion-col>
+  </ion-row>
+
+
+
+
+
+
+
+  <!--<ion-item class="pl-0">
     <ion-label stacked>Address</ion-label>
     <ion-input type="text" name="address" formControlName="address"></ion-input>
   </ion-item>
@@ -21,5 +56,5 @@
     <ion-label stacked>How many packs of clean linen?</ion-label>
     <ion-input type="text" name="cleanLinen" formControlName="cleanLinen"></ion-input>
   </ion-item>
-  <button class="my-5 customise-btn" type="submit" [disabled]="!propertyForm.valid">Send</button>
+  <button class="my-5 customise-btn" type="submit" [disabled]="!propertyForm.valid">Send</button>-->
 </form>
