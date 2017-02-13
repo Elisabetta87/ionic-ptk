@@ -4,12 +4,12 @@ import { MyApp } from './app.component';
 import { HomePage} from '../pages/home/home';
 import { ChecklistPage } from '../pages/checklist/checklist';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, XHRBackend, RequestOptions } from '@angular/http';
 import { PropertyForm } from '../components/checklist-form/checklist-form';
 import { GeolocationService } from '../services/geolocation-service';
 import { ChecklistSecondPage } from '../pages/checklist-second/checklist-second';
 import { SecondFormComponent } from '../components/checklist-second-form/checklist-second-form';
-import { SecureStorage } from 'ionic-native';
+import {SecureStorage } from 'ionic-native';
 import { ThankYouPage } from '../pages/thank-you/thank-you';
 import { LogInPage } from '../pages/log-in/log-in';
 import { LogInForm } from '../components/log-in-form/log-in-form';
@@ -22,6 +22,7 @@ import { ChecklistStatusPage } from '../pages/checklist-status/checklist-status'
 import { MarketPage } from '../pages/market/market';
 import { MorePage } from '../pages/more/more';
 import { InputNumber } from '../components/input-number/input-number';
+import {PtkHttp} from "../services/ptkHttp";
 
 
 @NgModule({
@@ -75,7 +76,12 @@ import { InputNumber } from '../components/input-number/input-number';
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GeolocationService,
-    SecureStorage
+    SecureStorage,
+    {
+      provide: PtkHttp,
+      useFactory: (backend: XHRBackend, options: RequestOptions) => new PtkHttp(backend, options),
+      deps: [XHRBackend, RequestOptions]
+    }
   ]
 })
 export class AppModule {}

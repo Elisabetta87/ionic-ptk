@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {NavController} from "ionic-angular/index";
+import {SecureStorage} from "ionic-native/dist/es5/index";
 
 
 
@@ -10,9 +11,16 @@ import {NavController} from "ionic-angular/index";
 export class MorePage {
 
   constructor(
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    private storage: SecureStorage
   ) {
+    this.storage = new SecureStorage();
+    this.storage.create('logIn');
+  }
 
+
+  logOut() {
+    this.storage.remove('logInfo');
   }
 }
 
