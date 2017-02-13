@@ -6,8 +6,6 @@ import {HomePage} from "../../pages/home/home";
 import {HomePageGuest} from "../../pages/home-guest/home-guest";
 
 
-
-
 @Component({
   selector: 'log-in-form',
   templateUrl: 'log-in-form.html'

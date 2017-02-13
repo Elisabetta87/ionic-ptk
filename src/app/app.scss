@@ -42,9 +42,13 @@ $white: #ffffff;
 }
 .green-btn {
   background-color: #B6D8AD;
+  border: 2px solid;
+  box-shadow: 1px 1px;
 }
 .pink-btn {
   background-color: #EB999B;
+  border: 2px solid;
+  box-shadow: 1px 1px;
 }
 .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
   display: inline-block;
