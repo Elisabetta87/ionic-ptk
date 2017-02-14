@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular/index';
+import {JobDetailsPage} from "../job-details/job-details";
 
 
 
@@ -14,6 +15,11 @@ export class GuestEntryPage {
     public navCtrl: NavController
   ) {
 
+  }
+
+
+  moveToJobDetails() {
+    this.navCtrl.setRoot(JobDetailsPage);
   }
 
 }

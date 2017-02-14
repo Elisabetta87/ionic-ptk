@@ -27,13 +27,13 @@ export class HomePage {
     private storage: SecureStorage
   ) {
     this.storage = new SecureStorage();
-    this.storage.create('logInfo');
-    this.storage.get('logInfo')
+    this.storage.create('authToken');
+    this.storage.get('authToken')
       .then(
           data => {
-            console.log(data);
+            //console.log(data);
             let logInfoStorage = JSON.parse(data);
-            console.log(logInfoStorage, logInfoStorage['logId'], logInfoStorage['guestId']);
+            //console.log(logInfoStorage);
              if (logInfoStorage['logId']) {
                   this.logInfo = 'Registered';
              } else if (logInfoStorage['guestId']) {

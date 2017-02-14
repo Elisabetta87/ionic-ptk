@@ -5,6 +5,7 @@ import {SecureStorage} from 'ionic-native';
 import {HomePage} from "../../pages/home/home";
 import {HomePageGuest} from "../../pages/home-guest/home-guest";
 import {LogInService} from "../../services/log-in-service";
+import {GeolocationService} from "../../services/geolocation-service";
 
 
 @Component({
@@ -17,22 +18,31 @@ export class LogInForm implements OnInit {
   public logInForm: FormGroup;
   private btnClicked: string;
   private logInfoStorage: any;
+  private lat: number;
+  private lng: number;
+  private urlUser: string = 'http://ptkconnect.co.uk/api/token-auth/';
+  //private urlGuest: string = 'http://ptkconnect.co.uk/api/v2/guest/match';
 
   constructor(
     public navCtrl: NavController,
     private fb: FormBuilder,
     private storage: SecureStorage,
-    private logInService: LogInService
+    private logInService: LogInService,
+    private geolocation: GeolocationService
   ) {
     this.storage = new SecureStorage();
-    this.storage.create('logIn');
+    this.storage.create('authToken');
+    this.geolocation.getGeoPosition().then((resp) => {
+      this.lat = resp.coords.latitude;
+      this.lng = resp.coords.longitude;
+    });
   }
 
 
   ngOnInit(){
     this.logInForm = this.fb.group({
-      username: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -47,20 +57,29 @@ export class LogInForm implements OnInit {
 // when submit the form user goes to a  new page propertyDetailsPage
   onSubmit() {
     //if clicked on the 'continue as guest' button store checklist guestId else logId
-    this.logInfoStorage = {'logInfo': 'logInfo'};
-    console.log(this.logInForm.value);
+    //this.logInfoStorage = {'authToken': 'logInfo'};
     if (this.btnClicked == 'logId') {
-      this.logInService.getUserToken(this.logInForm).subscribe(resp => {
-          this.logInfoStorage['logId'] = resp;
-          console.log(resp);
-      });
-      //this.logInfoStorage['logId'] = '1';
-      this.storage.set('logInfo', JSON.stringify(this.logInfoStorage));
-      this.navCtrl.setRoot(HomePage);
-    } else {
-      this.logInfoStorage['guestId'] = 'G1';
-      this.storage.set('logInfo', JSON.stringify(this.logInfoStorage));
-      this.navCtrl.setRoot(HomePageGuest);
+      let body = JSON.stringify(this.logInForm.value);
+      this.logInService.getUserToken(this.urlUser, body).subscribe(resp =>  {
+          //console.log(resp.token);
+          this.storage.set('authToken', JSON.stringify(resp.token));
+          this.navCtrl.setRoot(HomePage);
+          }
+          //error => console.log(error)
+      );
+    }
+    if (this.btnClicked == 'logAsGuest') {
+      let today = new Date();
+      let location = this.lat + ', ' + this.lng;
+      let body = {
+        datetime: today,
+        location: location
+      }
+      console.log(body);
+      /*this.logInService.getGuestJobMatch(this.urlGuest, body).subscribe(resp => {
+        console.log(resp);
+      });*/
+      //this.navCtrl.setRoot(HomePageGuest);
     }
   };
 

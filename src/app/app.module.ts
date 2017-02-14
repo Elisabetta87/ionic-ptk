@@ -1,5 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import {IonicApp, IonicModule, IonicErrorHandler, NavController, App} from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage} from '../pages/home/home';
 import { ChecklistPage } from '../pages/checklist/checklist';
@@ -81,8 +81,8 @@ import {LogInService} from "../services/log-in-service";
     LogInService,
     {
       provide: PtkHttp,
-      useFactory: (backend: XHRBackend, options: RequestOptions) => new PtkHttp(backend, options),
-      deps: [XHRBackend, RequestOptions]
+      useFactory: (backend: XHRBackend, options: RequestOptions, storage: SecureStorage, app: App) => new PtkHttp(backend, options, storage, app),
+      deps: [XHRBackend, RequestOptions, SecureStorage, App]
     }
   ]
 })

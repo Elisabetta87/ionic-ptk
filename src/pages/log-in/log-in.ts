@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SecureStorage } from 'ionic-native/dist/es5/index';
+import {NavController} from "ionic-angular/index";
 
 
 @Component({
@@ -9,5 +10,8 @@ import { SecureStorage } from 'ionic-native/dist/es5/index';
 })
 export class LogInPage {
 
+  constructor(
+    public navCtrl: NavController
+  ){}
 
 }

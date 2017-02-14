@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers, RequestOptionsArgs, Request, Response, ConnectionBackend, RequestOptions} from "@angular/http";
 import {Observable} from 'rxjs/Rx';
-import {NavController} from "ionic-angular/index";
+import {NavController, App} from "ionic-angular/index";
 import {LogInPage} from "../pages/log-in/log-in";
+import {SecureStorage} from "ionic-native/dist/es5/index";
 
 
 
@@ -13,21 +14,35 @@ export class PtkHttp extends Http {
 
   constructor(
     private backend: ConnectionBackend,
-    private defaultOptions: RequestOptions) {
+    private defaultOptions: RequestOptions,
+    private storage: SecureStorage,
+    public app: App
+  ) {
     super(backend, defaultOptions);
+    this.storage = new SecureStorage();
+    this.storage.create('authToken');
+    this.navCtrl = app.getActiveNav();
   }
 
   getCustomRequest(url:string, method:string, options?: RequestOptionsArgs, body?:any):Request{
     let headers = new Headers();
-    let token = localStorage.getItem("token");
-    if(token){
-      headers.append("Authorization", 'Token '+ token);
-    }
-    else{
+    this.storage.get("authToken").then(
+      data => {
+        console.log(data);
+        headers.append("Authorization", 'Token '+ data);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    /*if(token){
+
+    }*/
+    /*else{
       //navigate login
       console.log('no token!');
       this.navCtrl.setRoot(LogInPage);
-    }
+    }*/
 
     let reqOpt = new RequestOptions({method, headers, body, url});
     //reqOpt = reqOpt.merge(options);
@@ -47,16 +62,16 @@ export class PtkHttp extends Http {
 
 
   post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response>{
-    return this.request(this.getCustomRequest(url, 'GET', options, body));
+    return this.request(this.getCustomRequest(url, 'POST', options, body));
   }
 
   put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response>{
-    return this.request(this.getCustomRequest(url, 'GET', options, body));
+    return this.request(this.getCustomRequest(url, 'PUT', options, body));
   }
 
 
   delete(url: string, options?: RequestOptionsArgs): Observable<Response>{
-    return this.request(this.getCustomRequest(url, 'GET', options));
+    return this.request(this.getCustomRequest(url, 'DELETE', options));
   }
 
 }
