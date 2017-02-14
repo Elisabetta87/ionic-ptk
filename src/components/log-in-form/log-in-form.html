@@ -1,12 +1,12 @@
 <form padding [formGroup]="logInForm" (ngSubmit)="onSubmit()">
   <ion-row>
     <ion-col class="mt-4">
-      <ion-input placeholder="Username" type="text" name="username" formControlName="username"></ion-input>
+      <ion-input type="hidden" placeholder="Username" type="text" name="username" formControlName="username"></ion-input>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-input placeholder="Password" type="password" name="password" formControlName="password"></ion-input>
+      <ion-input type="hidden" placeholder="Password" type="password" name="password" formControlName="password"></ion-input>
     </ion-col>
   </ion-row>
   <ion-row>

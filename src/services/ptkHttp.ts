@@ -1,13 +1,19 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers, RequestOptionsArgs, Request, Response, ConnectionBackend, RequestOptions} from "@angular/http";
 import {Observable} from 'rxjs/Rx';
+import {NavController} from "ionic-angular/index";
+import {LogInPage} from "../pages/log-in/log-in";
 
 
 
 @Injectable()
 export class PtkHttp extends Http {
 
-  constructor(private backend: ConnectionBackend, private defaultOptions: RequestOptions) {
+  public navCtrl: NavController;
+
+  constructor(
+    private backend: ConnectionBackend,
+    private defaultOptions: RequestOptions) {
     super(backend, defaultOptions);
   }
 
@@ -20,6 +26,7 @@ export class PtkHttp extends Http {
     else{
       //navigate login
       console.log('no token!');
+      this.navCtrl.setRoot(LogInPage);
     }
 
     let reqOpt = new RequestOptions({method, headers, body, url});

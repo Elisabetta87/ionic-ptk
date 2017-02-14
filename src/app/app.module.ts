@@ -23,6 +23,7 @@ import { MarketPage } from '../pages/market/market';
 import { MorePage } from '../pages/more/more';
 import { InputNumber } from '../components/input-number/input-number';
 import {PtkHttp} from "../services/ptkHttp";
+import {LogInService} from "../services/log-in-service";
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import {PtkHttp} from "../services/ptkHttp";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GeolocationService,
     SecureStorage,
+    LogInService,
     {
       provide: PtkHttp,
       useFactory: (backend: XHRBackend, options: RequestOptions) => new PtkHttp(backend, options),
