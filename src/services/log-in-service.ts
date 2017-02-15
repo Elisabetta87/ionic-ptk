@@ -15,10 +15,10 @@ export class LogInService {
   ){}
 
 
-  getUserToken(url, body){
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({headers: headers});
-    return this.ptkHttp.post(url, body, options)
+  getUserToken(url, body, authorization){
+    //let headers = new Headers({ 'Content-Type': 'application/json' });
+    //let options = new RequestOptions({headers: headers});
+    return this.ptkHttp.post(url, body, authorization)
       .map(data => JSON.parse(data['_body']))
   }
 

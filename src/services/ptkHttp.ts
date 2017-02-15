@@ -24,17 +24,19 @@ export class PtkHttp extends Http {
     this.navCtrl = app.getActiveNav();
   }
 
-  getCustomRequest(url:string, method:string, options?: RequestOptionsArgs, body?:any):Request{
-    let headers = new Headers();
-    this.storage.get("authToken").then(
-      data => {
-        console.log(data);
-        headers.append("Authorization", 'Token '+ data);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+  getCustomRequest(url:string, method:string, options?: RequestOptionsArgs, body?:any, authorization?:boolean):Request{
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    if (authorization) {
+      this.storage.get("authToken").then(
+        data => {
+          console.log(data);
+          headers.append("Authorization", 'Token '+ data);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
     /*if(token){
 
     }*/
@@ -61,8 +63,8 @@ export class PtkHttp extends Http {
   }
 
 
-  post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response>{
-    return this.request(this.getCustomRequest(url, 'POST', options, body));
+  post(url: string, body: any, options?: RequestOptionsArgs, authorization?: boolean): Observable<Response>{
+    return this.request(this.getCustomRequest(url, 'POST', options, body, authorization));
   }
 
   put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response>{

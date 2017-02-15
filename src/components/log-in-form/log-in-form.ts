@@ -60,8 +60,8 @@ export class LogInForm implements OnInit {
     //this.logInfoStorage = {'authToken': 'logInfo'};
     if (this.btnClicked == 'logId') {
       let body = JSON.stringify(this.logInForm.value);
-      this.logInService.getUserToken(this.urlUser, body).subscribe(resp =>  {
-          //console.log(resp.token);
+      this.logInService.getUserToken(this.urlUser, body, false).subscribe(resp =>  {
+          console.log(resp.token);
           this.storage.set('authToken', JSON.stringify(resp.token));
           this.navCtrl.setRoot(HomePage);
           }
