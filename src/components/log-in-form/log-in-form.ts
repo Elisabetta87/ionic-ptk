@@ -6,29 +6,37 @@ import {HomePage} from "../../pages/home/home";
 import {HomePageGuest} from "../../pages/home-guest/home-guest";
 import {LogInService} from "../../services/log-in-service";
 import {GeolocationService} from "../../services/geolocation-service";
+import {UserIdService} from "../../services/user-id-service";
+import {GetJobsService} from "../../services/get-jobs";
+import {JobsListPage} from "../../pages/jobs-list/jobs-list";
+
 
 
 @Component({
   selector: 'log-in-form',
-  templateUrl: 'log-in-form.html'
+  templateUrl: 'log-in-form.html',
+  providers: [SecureStorage]
 })
 
 export class LogInForm implements OnInit {
 
   public logInForm: FormGroup;
   private btnClicked: string;
-  private logInfoStorage: any;
   private lat: number;
   private lng: number;
   private urlUser: string = 'http://ptkconnect.co.uk/api/token-auth/';
-  //private urlGuest: string = 'http://ptkconnect.co.uk/api/v2/guest/match';
+  private urlUserId: string = 'http://ptkconnect.co.uk/api/v2/users/?username=';
+  private urlGetjobs: string = 'http://ptkconnect.co.uk/api/v2/jobs/?provider=';
+  private urlGuest: string = 'http://ptkconnect.co.uk/api/v2/guest/match';
 
   constructor(
     public navCtrl: NavController,
     private fb: FormBuilder,
     private storage: SecureStorage,
     private logInService: LogInService,
-    private geolocation: GeolocationService
+    private userIdService: UserIdService,
+    private geolocation: GeolocationService,
+    private getJobsService: GetJobsService
   ) {
     this.storage = new SecureStorage();
     this.storage.create('authToken');
@@ -60,25 +68,37 @@ export class LogInForm implements OnInit {
     //this.logInfoStorage = {'authToken': 'logInfo'};
     if (this.btnClicked == 'logId') {
       let body = JSON.stringify(this.logInForm.value);
-      this.logInService.getUserToken(this.urlUser, body, false).subscribe(resp =>  {
-          console.log(resp.token);
-          this.storage.set('authToken', JSON.stringify(resp.token));
-          this.navCtrl.setRoot(HomePage);
-          }
-          //error => console.log(error)
-      );
-    }
+      //console.log(body);
+      let username = this.logInForm.value.username;
+      this.logInService.getUserToken(this.urlUser, this.logInForm.value)
+        .subscribe(resp => {
+          let token = resp.token;
+          this.storage.set('authToken', token);
+          this.storage.get('authToken').then(data => {
+            this.userIdService.getUserId(this.urlUserId + username, {token: true})
+              .subscribe(resp => {
+                console.log(resp.results[0].id);
+                let userId = resp.results[0].id;
+
+                //&status=accepted,completed&start_date=2017-2-13&end_date=2017-2-27
+                /*this.getJobsService.getJobs('http://ptkconnect.co.uk/api/v2/jobs/', {token: data})
+                  .subscribe(resp => console.log(resp))*/
+              });
+          });
+          this.navCtrl.setRoot(JobsListPage);
+        });
+    };
     if (this.btnClicked == 'logAsGuest') {
       let today = new Date();
       let location = this.lat + ', ' + this.lng;
       let body = {
         datetime: today,
         location: location
-      }
-      console.log(body);
-      /*this.logInService.getGuestJobMatch(this.urlGuest, body).subscribe(resp => {
+      };
+      //console.log(body);
+      this.logInService.getGuestJobMatch(this.urlGuest, body).subscribe(resp => {
         console.log(resp);
-      });*/
+      });
       //this.navCtrl.setRoot(HomePageGuest);
     }
   };

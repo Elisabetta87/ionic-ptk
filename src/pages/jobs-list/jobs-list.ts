@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SecureStorage } from 'ionic-native/dist/es5/index';
 import { NavController } from 'ionic-angular/index';
 import { JobDetailsPage } from '../job-details/job-details';
+import {GetJobsService} from "../../services/get-jobs";
 
 
 @Component({
@@ -15,9 +16,30 @@ export class JobsListPage {
   private jobs:any;
   //private status: string;
 
-  constructor(public navCtrl:NavController) {
+  constructor(
+    //public  loadingCtrl: LoadingController,
+    public navCtrl:NavController,
+    private getJobsService: GetJobsService
+  ) {
 
     this.jobsAvailable = true;
+
+    /* loading test */
+    /*let loading = this.loadingCtrl.create({
+     content: 'Please wait...'
+     });
+
+     loading.present();
+
+     setTimeout(() => {
+     loading.dismiss();
+     }, 3000);*/
+
+    this.getJobsService.getJobs('http://ptkconnect.co.uk/api/v2/jobs/', {token: true})
+     .subscribe(resp => console.log(resp.results, resp.results[0].date, resp.results[0]));
+
+
+
 
     this.jobs = [
       {

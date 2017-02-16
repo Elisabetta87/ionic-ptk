@@ -1,5 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import {IonicApp, IonicModule, IonicErrorHandler, NavController, App} from 'ionic-angular';
+import {IonicApp, IonicModule, IonicErrorHandler, App} from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage} from '../pages/home/home';
 import { ChecklistPage } from '../pages/checklist/checklist';
@@ -24,6 +24,8 @@ import { MorePage } from '../pages/more/more';
 import { InputNumber } from '../components/input-number/input-number';
 import {PtkHttp} from "../services/ptkHttp";
 import {LogInService} from "../services/log-in-service";
+import {UserIdService} from "../services/user-id-service";
+import {GetJobsService} from "../services/get-jobs";
 
 
 @NgModule({
@@ -79,6 +81,8 @@ import {LogInService} from "../services/log-in-service";
     GeolocationService,
     SecureStorage,
     LogInService,
+    UserIdService,
+    GetJobsService,
     {
       provide: PtkHttp,
       useFactory: (backend: XHRBackend, options: RequestOptions, storage: SecureStorage, app: App) => new PtkHttp(backend, options, storage, app),
