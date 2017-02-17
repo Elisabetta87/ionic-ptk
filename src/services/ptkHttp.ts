@@ -47,7 +47,7 @@ export class PtkHttp extends Http {
 
 
 
-  post(url: string, body: any, options?: RequestOptionsArgs): Observable{
+  post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response>{
     return this.getObsCustomReq(url, 'POST', options, body);
   }
 
@@ -80,7 +80,8 @@ export class PtkHttp extends Http {
       Observable.fromPromise(this.storage.get('authToken'))
         .subscribe(
           token => {
-            headers.append("Authorization", 'Token '+ token);
+            console.log('ciao');
+            headers.append("Authorization", 'Token '+token);
             reqOpts.merge(options);
             subjNewReq.next( this.createNewRequest(reqOpts, options) );
           },
@@ -100,7 +101,7 @@ export class PtkHttp extends Http {
 
 
 
-  getObsCustomReq(url:string, method:string, options?: RequestOptionsArgs, body?:any):Observable{
+  getObsCustomReq(url:string, method:string, options?: RequestOptionsArgs, body?:any):Observable<any>{
     let subjCustomReq = new Subject();
     this.setCustomRequest(url, method, options, body)
         .subscribe(

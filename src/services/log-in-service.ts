@@ -15,10 +15,8 @@ export class LogInService {
 
 
   getUserToken(url, body){
-    console.log('START AJAX: ', url, body);
-    this.ptkHttp.post(url, body)
-                .subscribe( data => {console.log(data);} );
-               //.map(data => JSON.parse(data['_body']))
+    return this.ptkHttp.post(url, body)
+               .map(data => JSON.parse(data['_body']))
   }
 
   /*getUserToken(url, body, options) {

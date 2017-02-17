@@ -9,6 +9,8 @@ import {GeolocationService} from "../../services/geolocation-service";
 import {UserIdService} from "../../services/user-id-service";
 import {GetJobsService} from "../../services/get-jobs";
 import {JobsListPage} from "../../pages/jobs-list/jobs-list";
+import {Observable} from 'rxjs/Rx';
+import 'rxjs/add/observable/fromPromise';
 
 
 
@@ -22,6 +24,7 @@ export class LogInForm implements OnInit {
 
   public logInForm: FormGroup;
   private btnClicked: string;
+  private isStorageReady: boolean;
   private lat: number;
   private lng: number;
   private urlUser: string = 'http://ptkconnect.co.uk/api/token-auth/';
@@ -39,7 +42,8 @@ export class LogInForm implements OnInit {
     private getJobsService: GetJobsService
   ) {
     this.storage = new SecureStorage();
-    this.storage.create('authToken');
+    this.storage.create('ptkStorage').then(
+      () => { console.log('storage is ready'); this.isStorageReady = true; });
     this.geolocation.getGeoPosition().then((resp) => {
       this.lat = resp.coords.latitude;
       this.lng = resp.coords.longitude;
@@ -71,14 +75,20 @@ export class LogInForm implements OnInit {
       //console.log(body);
       let username = this.logInForm.value.username;
       this.logInService.getUserToken(this.urlUser, this.logInForm.value)
-        // .subscribe(resp => {
-        //   let token = resp.token;
-        //   this.storage.set('authToken', token);
-        //   this.storage.get('authToken').then(data => {
-        //     this.userIdService.getUserId(this.urlUserId + username, {token: true})
-        //       .subscribe(resp => {
-        //         console.log(resp.results[0].id);
-        //         let userId = resp.results[0].id;
+         .subscribe(resp => {
+            let token = resp.token;
+            if(this.isStorageReady){
+              Observable.fromPromise(this.storage.set('authToken', token))
+                        .subscribe(
+                            token => {
+                                this.userIdService.getUserId(this.urlUserId + username, {withCredentials: true})
+                                    .subscribe(resp => {
+                                        console.log(resp.results[0].id);
+                                        let userId = resp.results[0].id;
+                                    })
+                            });
+            }
+         });                                                                
         //
         //         //&status=accepted,completed&start_date=2017-2-13&end_date=2017-2-27
         //         /*this.getJobsService.getJobs('http://ptkconnect.co.uk/api/v2/jobs/', {token: data})
