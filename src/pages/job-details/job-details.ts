@@ -8,12 +8,12 @@ import { ChecklistStatusPage } from '../checklist-status/checklist-status';
 })
 export class JobDetailsPage {
   /*set lat and lng for google map */
-  lat: number = 51.5269772;
-  lng: number = -0.0905013;
+  property_latitude: number;
+  property_longitude: number;
 
   private id: number;
   private address: string;
-  private service: string;
+  private services: string;
 
   constructor(
     public navCtrl: NavController,
@@ -21,8 +21,10 @@ export class JobDetailsPage {
   ) {
 
     this.address = navParams.get('address');
-    this.service = navParams.get('service');
+    this.services = navParams.get('services');
     this.id = navParams.get('id');
+    this.property_latitude = navParams.get('property_latitude');
+    this.property_longitude = navParams.get('property_longitude');
   }
 
   completeChecklist() {
@@ -30,8 +32,8 @@ export class JobDetailsPage {
       id: this.id
     });*/
     this.navCtrl.push(ChecklistStatusPage, {
-     id: this.id, 
-     service: this.service
+     id: this.id,
+     services: this.services
      });
 
   }

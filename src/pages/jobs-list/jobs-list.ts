@@ -14,7 +14,7 @@ export class JobsListPage {
 
   private jobsAvailable:boolean;
   private jobs:any;
-  //private status: string;
+  //
 
   constructor(
     //public  loadingCtrl: LoadingController,
@@ -22,7 +22,7 @@ export class JobsListPage {
     private getJobsService: GetJobsService
   ) {
 
-    this.jobsAvailable = true;
+
 
     /* loading test */
     /*let loading = this.loadingCtrl.create({
@@ -36,48 +36,14 @@ export class JobsListPage {
      }, 3000);*/
 
     this.getJobsService.getJobs('http://ptkconnect.co.uk/api/v2/jobs/', {token: true})
-     .subscribe(resp => console.log(resp.results, resp.results[0].date, resp.results[0]));
-
-
-
-
-    this.jobs = [
-      {
-        id: '1',
-        dateTime: '6-02-17',
-        address: '64, Streatham Vale, SW16 5TD',
-        service: 'cleaning',
-        status: 'green'
-      },
-      {
-        id: '2',
-        dateTime: '18-01-17',
-        address: '60, Tooting Bec, SW16 5TD',
-        service: 'delivery grocery',
-        status: 'red'
-      },
-      {
-        id: '3',
-        dateTime: '8-03-17',
-        address: '54, Streatham Hill, SW16',
-        service: 'pick keys up',
-        status: 'orange'
-      },
-      {
-        id: '4',
-        dateTime: '12-04-17',
-        address: '12, Balham, SW17',
-        service: 'delivery keys to the new guest',
-        status: 'yellow'
-      },
-      {
-        id: '5',
-        dateTime: '8-03-17',
-        address: '4, Oval, SW16',
-        service: 'cleaning',
-        status: 'grey'
-      }
-    ];
+     .subscribe(resp => {
+       this.jobs = [];
+       this.jobsAvailable = true;
+       for(let i=0; i<15; i++) {
+         this.jobs.push(resp.results[i]);
+       };
+       console.log(this.jobs);
+     });
   }
 
   //this function needs to be called inside future function that gets API jobs list info
@@ -87,9 +53,11 @@ export class JobsListPage {
     for (let i = 0; i < this.jobs.length; i++) {
       if (this.jobs[i].id === id && status !== 'red') {
         this.navCtrl.push(JobDetailsPage, {
-          address: this.jobs[i].address,
-          service: this.jobs[i].service,
-               id: this.jobs[i].id
+                    address : this.jobs[i].property_address,
+                   services : this.jobs[i].services_string,
+                         id : this.jobs[i].id,
+          property_latitude : +this.jobs[i].property_latitude,
+          property_longitude: +this.jobs[i].property_longitude
           }
         );
       } else if (this.jobs[i].id === id && status === 'red') {

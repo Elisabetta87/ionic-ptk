@@ -71,22 +71,22 @@ export class LogInForm implements OnInit {
       //console.log(body);
       let username = this.logInForm.value.username;
       this.logInService.getUserToken(this.urlUser, this.logInForm.value)
-        .subscribe(resp => {
-          let token = resp.token;
-          this.storage.set('authToken', token);
-          this.storage.get('authToken').then(data => {
-            this.userIdService.getUserId(this.urlUserId + username, {token: true})
-              .subscribe(resp => {
-                console.log(resp.results[0].id);
-                let userId = resp.results[0].id;
-
-                //&status=accepted,completed&start_date=2017-2-13&end_date=2017-2-27
-                /*this.getJobsService.getJobs('http://ptkconnect.co.uk/api/v2/jobs/', {token: data})
-                  .subscribe(resp => console.log(resp))*/
-              });
-          });
-          this.navCtrl.setRoot(JobsListPage);
-        });
+        // .subscribe(resp => {
+        //   let token = resp.token;
+        //   this.storage.set('authToken', token);
+        //   this.storage.get('authToken').then(data => {
+        //     this.userIdService.getUserId(this.urlUserId + username, {token: true})
+        //       .subscribe(resp => {
+        //         console.log(resp.results[0].id);
+        //         let userId = resp.results[0].id;
+        //
+        //         //&status=accepted,completed&start_date=2017-2-13&end_date=2017-2-27
+        //         /*this.getJobsService.getJobs('http://ptkconnect.co.uk/api/v2/jobs/', {token: data})
+        //           .subscribe(resp => console.log(resp))*/
+        //       });
+        //   });
+        //   this.navCtrl.setRoot(JobsListPage);
+        // });
     };
     if (this.btnClicked == 'logAsGuest') {
       let today = new Date();
