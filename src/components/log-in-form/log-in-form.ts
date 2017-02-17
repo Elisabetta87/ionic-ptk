@@ -81,10 +81,11 @@ export class LogInForm implements OnInit {
               Observable.fromPromise(this.storage.set('authToken', token))
                         .subscribe(
                             token => {
-                                this.userIdService.getUserId(this.urlUserId + username, {withCredentials: true})
+                                this.userIdService.getUserId(this.urlUserId + username, {withCredentials: ''})
                                     .subscribe(resp => {
-                                        console.log(resp.results[0].id);
+                                        //console.log(resp.results[0].id);
                                         let userId = resp.results[0].id;
+                                        this.navCtrl.setRoot(JobsListPage);
                                     })
                             });
             }

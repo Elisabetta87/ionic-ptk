@@ -80,7 +80,6 @@ export class PtkHttp extends Http {
       Observable.fromPromise(this.storage.get('authToken'))
         .subscribe(
           token => {
-            console.log('ciao');
             headers.append("Authorization", 'Token '+token);
             reqOpts.merge(options);
             subjNewReq.next( this.createNewRequest(reqOpts, options) );
