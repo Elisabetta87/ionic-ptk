@@ -1,8 +1,7 @@
+import { PtkHttp } from './ptkHttp';
+import { URLs } from './URLs';
 import {Injectable} from "@angular/core";
 import "rxjs/Rx";
-import {PtkHttp} from "./ptkHttp";
-
-
 
 
 
@@ -10,14 +9,17 @@ import {PtkHttp} from "./ptkHttp";
 export class LogInService {
 
   constructor(
-    private ptkHttp: PtkHttp
+    private ptkHttp: PtkHttp,
   ){}
 
 
-  getUserToken(url, body){
-    return this.ptkHttp.post(url, body)
+  getUserToken(body){
+    //return this.ptkHttp.post('http://ptkconnect.co.uk/api/token-auth/', body)
+
+    return this.ptkHttp.post(URLs.APIs.tokenAuth, body)
                .map(data => JSON.parse(data['_body']))
   }
+
 
   /*getUserToken(url, body, options) {
     return this.ptkHttp.post(url, body, options)

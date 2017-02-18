@@ -42,6 +42,7 @@ export class PtkHttp extends Http {
 
 
   get(url: string, options?: RequestOptionsArgs): Observable<Response>{
+    //return this.request(this.setCustomRequest( url, 'GET', options ));
     return this.getObsCustomReq(url, 'GET', options);
   }
 

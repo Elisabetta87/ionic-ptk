@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import "rxjs/Rx";
 import {PtkHttp} from "./ptkHttp";
+import { URLs } from './URLs';
 
 
 
@@ -13,8 +14,8 @@ export class UserIdService {
   ){}
 
 
-  getUserId(url, options){
-    return  this.ptkHttp.get(url, options)
+  getUserId(username, options){
+    return  this.ptkHttp.get(URLs.APIs.getUserId+username, options)
                 .map(data => JSON.parse(data['_body']))
   }
 

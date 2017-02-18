@@ -26,9 +26,7 @@ export class LogInForm implements OnInit {
   private btnClicked: string;
   private isStorageReady: boolean;
   private lat: number;
-  private lng: number;
-  private urlUser: string = 'http://ptkconnect.co.uk/api/token-auth/';
-  private urlUserId: string = 'http://ptkconnect.co.uk/api/v2/users/?username=';
+  private lng: number; 
   private urlGetjobs: string = 'http://ptkconnect.co.uk/api/v2/jobs/?provider=';
   private urlGuest: string = 'http://ptkconnect.co.uk/api/v2/guest/match';
 
@@ -74,14 +72,13 @@ export class LogInForm implements OnInit {
       let body = JSON.stringify(this.logInForm.value);
       //console.log(body);
       let username = this.logInForm.value.username;
-      this.logInService.getUserToken(this.urlUser, this.logInForm.value)
+      this.logInService.getUserToken(this.logInForm.value)
          .subscribe(resp => {
             let token = resp.token;
             if(this.isStorageReady){
               Observable.fromPromise(this.storage.set('authToken', token))
-                        .subscribe(
-                            token => {
-                                this.userIdService.getUserId(this.urlUserId + username, {withCredentials: ''})
+                  .subscribe( token => {
+                                this.userIdService.getUserId(username, {withCredentials: ''})
                                     .subscribe(resp => {
                                         //console.log(resp.results[0].id);
                                         let userId = resp.results[0].id;
