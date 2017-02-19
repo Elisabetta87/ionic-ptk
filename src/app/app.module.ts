@@ -1,3 +1,4 @@
+import { MenuComponent } from './../components/menu/menu';
 import { NgModule, ErrorHandler } from '@angular/core';
 import {IonicApp, IonicModule, IonicErrorHandler, App} from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -46,10 +47,11 @@ import {GetJobsService} from "../services/get-jobs";
     ChecklistStatusPage,
     MarketPage,
     MorePage,
-    InputNumber
+    InputNumber,
+    MenuComponent
   ],
   imports: [
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {tabsPlacement: 'bottom'}),
     ReactiveFormsModule,
     HttpModule,
     AgmCoreModule.forRoot({
@@ -74,7 +76,8 @@ import {GetJobsService} from "../services/get-jobs";
     ChecklistStatusPage,
     MarketPage,
     MorePage,
-    InputNumber
+    InputNumber,
+    MenuComponent
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

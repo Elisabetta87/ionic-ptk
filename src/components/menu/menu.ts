@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {JobsListPage} from '../../pages/jobs-list/jobs-list';
-//import {MarketPage} from '../..pages/market/market';
-//import {MorePage} from '../../pages/more/more';
+import {MarketPage} from '../../pages/market/market';
+import {MorePage} from '../../pages/more/more';
 
 
 
@@ -15,8 +15,8 @@ import {JobsListPage} from '../../pages/jobs-list/jobs-list';
 export class MenuComponent {
 
   tab1Root = JobsListPage;
-  //tab2Root = MarketPage;
-  //tab3Root = MorePage;
+  tab2Root = MarketPage;
+  tab3Root = MorePage;
   tab4Root = JobsListPage;
 
     constructor() {}

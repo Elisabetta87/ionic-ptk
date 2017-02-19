@@ -1,3 +1,4 @@
+import { MenuComponent } from './../../components/menu/menu';
 import { Component } from '@angular/core';
 import { SecureStorage } from 'ionic-native/dist/es5/index';
 import { NavController, LoadingController } from 'ionic-angular/index';
@@ -41,11 +42,11 @@ export class JobsListPage {
 
     this.getJobsService.getJobs('http://ptkconnect.co.uk/api/v2/jobs/', {withCredentials: ''})
      .subscribe(resp => {
-       this.jobs = [];
-       this.jobsAvailable = true;
-       for(let i=0; i<15; i++) {
-         this.jobs.push(resp.results[i]);
-       };
+      //  this.jobs = [];
+      //  this.jobsAvailable = true;
+      //  for(let i=0; i<3; i++) {
+      //    this.jobs.push(resp.results[i]);
+      //  };
        loading.dismiss();
        console.log(this.jobs);
      });
