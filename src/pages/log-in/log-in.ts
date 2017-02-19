@@ -13,5 +13,5 @@ export class LogInPage {
   constructor(
     public navCtrl: NavController
   ){}
-
+  
 }

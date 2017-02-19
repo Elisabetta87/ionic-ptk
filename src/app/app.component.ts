@@ -1,7 +1,11 @@
+import { LogInPage } from './../pages/log-in/log-in';
+import { NavController } from 'ionic-angular/index';
+import { MarketPage } from './../pages/market/market';
+import { JobsListPage } from './../pages/jobs-list/jobs-list';
+import { TabsPage } from './../pages/tabs/tabs';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
-import { LogInPage } from '../pages/log-in/log-in';
 
 
 @Component({
@@ -13,18 +17,19 @@ export class MyApp {
   rootPage: any = LogInPage;
 
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, tabComponent: any}>;
 
   constructor(
     public platform: Platform
-
   ) {
 
     // used for an example of ngFor and navigation
-    /*this.pages = [
-      { title: 'Home Page', component: HomePage },
-      { title: 'Checklist', component: JobsListPage }
-    ];*/
+    this.pages = [
+      { title: 'Jobs', component: TabsPage, tabComponent: JobsListPage },
+      { title: 'Checklist', component: TabsPage, tabComponent: MarketPage },
+      { title: 'Checklist', component: TabsPage, tabComponent: MarketPage},
+      { title: 'Checklist', component: TabsPage, tabComponent: MarketPage}
+    ];
 
   }
 
@@ -43,8 +48,17 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
-
+    console.log('DID ENTER', this.nav);
+   
   }
+
+
+  ionViewDidEnter(){
+        
+      
+    }
+
+
 }
 
 

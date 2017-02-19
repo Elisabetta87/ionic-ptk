@@ -1,4 +1,4 @@
-<ion-content *ngIf="jobsAvailable">
+<ion-content padding *ngIf="jobsAvailable">
     <ion-list inset *ngFor="let job of jobs" class="{{ job.status }} m-3 mt-4">
       <button ion-item class="{{ job.status }}" (click)="pushPage(job.id, job.status)">
         <p>{{ job.date }}</p>
@@ -8,4 +8,3 @@
       </button>
     </ion-list>
 </ion-content>
-<menu></menu>

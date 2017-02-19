@@ -1,3 +1,4 @@
+import { TabsPage } from './../tabs/tabs';
 import { MenuComponent } from './../../components/menu/menu';
 import { Component } from '@angular/core';
 import { SecureStorage } from 'ionic-native/dist/es5/index';
@@ -15,7 +16,7 @@ export class JobsListPage {
 
   private jobsAvailable:boolean;
   private jobs:any;
-  //
+  
 
   constructor(
     public  loadingCtrl: LoadingController,
@@ -29,24 +30,14 @@ export class JobsListPage {
     
     loading.present();
 
-    /* loading test */
-    /*let loading = this.loadingCtrl.create({
-     content: 'Please wait...'
-     });
-
-     loading.present();
-
-     setTimeout(() => {
-     loading.dismiss();
-     }, 3000);*/
 
     this.getJobsService.getJobs('http://ptkconnect.co.uk/api/v2/jobs/', {withCredentials: ''})
      .subscribe(resp => {
-      //  this.jobs = [];
-      //  this.jobsAvailable = true;
-      //  for(let i=0; i<3; i++) {
-      //    this.jobs.push(resp.results[i]);
-      //  };
+       this.jobs = [];
+       this.jobsAvailable = true;
+       for(let i=0; i<10; i++) {
+         this.jobs.push(resp.results[i]);
+       };
        loading.dismiss();
        console.log(this.jobs);
      });
