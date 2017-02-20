@@ -27,8 +27,6 @@ export class LogInForm implements OnInit {
   private isStorageReady: boolean;
   private lat: number;
   private lng: number; 
-  private urlGetjobs: string = 'http://ptkconnect.co.uk/api/v2/jobs/?provider=';
-  private urlGuest: string = 'http://ptkconnect.co.uk/api/v2/guest/match';
 
   constructor(
     public navCtrl: NavController,
@@ -64,29 +62,50 @@ export class LogInForm implements OnInit {
     this.btnClicked = 'logAsGuest';
   }
 
+
+
+
+
+//   getParams(obj) {
+
+//     for(let index in obj) {
+//       console.log(obj[index]);
+      
+//     }
+//     console.log(Object.keys(obj).length);
+      
+//  }
+
 // when submit the form user goes to a  new page propertyDetailsPage
   onSubmit() {
     //if clicked on the 'continue as guest' button store checklist guestId else logId
     //this.logInfoStorage = {'authToken': 'logInfo'};
     if (this.btnClicked == 'logId') {
       let body = JSON.stringify(this.logInForm.value);
+
+      //this.getParams({one: 'ciao', two: 'hello', three: 'hola'});
+
+
       //console.log(body);
       let username = this.logInForm.value.username;
       this.logInService.getUserToken(this.logInForm.value)
          .subscribe(resp => {
+           console.log(resp);
             let token = resp.token;
             if(this.isStorageReady){
               Observable.fromPromise(this.storage.set('authToken', token))
                   .subscribe( token => {
-                                this.userIdService.getUserId(username, {withCredentials: ''})
+                                this.userIdService.getUserId({username: username}, {withCredentials: ''})
                                     .subscribe(resp => {
-                                        //console.log(resp.results[0].id);
+                                        console.log(resp.results[0].id);
                                         let userId = resp.results[0].id;
-                                        this.navCtrl.setRoot(JobsListPage);
+                                        this.navCtrl.push(JobsListPage, {id: userId});
                                     })
                             });
             }
-         });                                                                
+         },
+         //error => console.log('Unable to log in with provided credentials.')
+         );                                                                
         //
         //         //&status=accepted,completed&start_date=2017-2-13&end_date=2017-2-27
         //         /*this.getJobsService.getJobs('http://ptkconnect.co.uk/api/v2/jobs/', {token: data})
@@ -104,10 +123,10 @@ export class LogInForm implements OnInit {
         location: location
       };
       //console.log(body);
-      this.logInService.getGuestJobMatch(this.urlGuest, body).subscribe(resp => {
-        console.log(resp);
-      });
-      //this.navCtrl.setRoot(HomePageGuest);
+      //this.logInService.getGuestJobMatch(this.urlGuest, body).subscribe(resp => {
+        //console.log(resp);
+      //});
+      this.navCtrl.setRoot(HomePageGuest);
     }
   };
 

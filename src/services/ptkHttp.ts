@@ -88,6 +88,7 @@ export class PtkHttp extends Http {
           err => {
             if( (options && options.withCredentials) ){
               console.log('DO SOMETHING IF THE TOKEN DOESN\'T EXIST AND YOU NEED IT');
+              //this.navCtrl.setRoot(LogInPage);
             }
             else{
               console.log('YOU DON\'T NEED TOKEN');
@@ -148,7 +149,7 @@ var observer2 = function(data){
 obs.subscribe(observer1);
 obs.subscribe(observer2);
 
-setTimeout(function(){ obs.emit('Fulvio'); }, Math.random()*5000);
+setTimeout(function(){ obs.emit('Ciao'); }, Math.random()*5000);
 setTimeout(function(){ obs.emit('Elisa'); }, Math.random()*5000);
 
 */

@@ -14,8 +14,6 @@ export class LogInService {
 
 
   getUserToken(body){
-    //return this.ptkHttp.post('http://ptkconnect.co.uk/api/token-auth/', body)
-
     return this.ptkHttp.post(URLs.APIs.tokenAuth, body)
                .map(data => JSON.parse(data['_body']))
   }

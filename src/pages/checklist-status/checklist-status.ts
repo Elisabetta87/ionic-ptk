@@ -11,7 +11,7 @@ import {ChecklistPage} from "../checklist/checklist";
 export class ChecklistStatusPage {
 
   private id: number;
-  private service: string;
+  private services: string;
   private greenBar: string;
 
   constructor(
@@ -20,7 +20,7 @@ export class ChecklistStatusPage {
   ) {
 
     this.id = navParams.get('id');
-    this.service = navParams.get('service');
+    this.services = navParams.get('services');
     this.greenBar = this.id ? 'greenBar' : '';
   }
 

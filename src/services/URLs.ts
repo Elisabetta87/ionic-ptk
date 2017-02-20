@@ -1,17 +1,54 @@
-import { Injectable } from '@angular/core';
+//import { Injectable } from '@angular/core';
 import { Component } from '@angular/core';
+
+
+
+// private urlGetjobs: string = 'http://ptkconnect.co.uk/api/v2/jobs/?provider=';
+//   private urlGuest: string = 'http://ptkconnect.co.uk/api/v2/guest/match';
 
 //@Injectable()
 export class URLs{
-
+    
     static home: string = 'http://ptkconnect.co.uk/';
 
     static APIs = {
         tokenAuth: URLs.home + 'api/token-auth/',
-        getUserId: URLs.home + 'api/v2/users/?username='    
+        getUserId: URLs.home + 'api/v2/users/',
+          getJobs: URLs.home + 'api/v2/jobs/',
+      checklistId: URLs.home + 'api/v2/cleaningchecklists/'
     };
+    
+    //?key=value&key=value
+    static  getParams(params?:Object) { 
+        let url_string: string = '?';
+        let count: number = 0;
+        if (params == null || undefined) {
+            url_string = '';
+        }
+        for (let index in params) {
+            count++;
+            if (Object.keys(params).length == 1) {
+                url_string += index + '=' + params[index]
+            } else {
+                url_string += index + '=' + params[index] + '&';
+            }
+
+        }  
+
+      return url_string    
+
+    }
 
 }
+
+
+
+
+
+
+
+
+
 
 
 // class Class{

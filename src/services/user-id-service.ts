@@ -14,8 +14,8 @@ export class UserIdService {
   ){}
 
 
-  getUserId(username, options){
-    return  this.ptkHttp.get(URLs.APIs.getUserId+username, options)
+  getUserId(params, options){
+    return  this.ptkHttp.get(URLs.APIs.getUserId+URLs.getParams(params), options)
                 .map(data => JSON.parse(data['_body']))
   }
 

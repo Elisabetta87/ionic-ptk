@@ -1,3 +1,4 @@
+import { GetChecklistId } from './../../services/get-checklist-id';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular/index';
 import { ChecklistStatusPage } from '../checklist-status/checklist-status';
@@ -14,10 +15,13 @@ export class JobDetailsPage {
   private id: number;
   private address: string;
   private services: string;
+  private checklistBody: Object;
+  private current_date: Date = new Date();
 
   constructor(
     public navCtrl: NavController,
-    private navParams: NavParams
+    private navParams: NavParams,
+    private getChecklistId: GetChecklistId
   ) {
 
     this.address = navParams.get('address');
@@ -31,6 +35,11 @@ export class JobDetailsPage {
     /*this.navCtrl.push(ChecklistPage, {
       id: this.id
     });*/
+    this.checklistBody = {
+                 job: this.id,
+      check_in_stamp: this.current_date.toLocaleDateString() + ' ' + this.current_date.toISOString().slice(11, 16),
+    }
+    this.getChecklistId.checklistId(this.checklistBody, {withCredentials: ''}).subscribe(resp => console.log(resp))
     this.navCtrl.push(ChecklistStatusPage, {
      id: this.id,
      services: this.services

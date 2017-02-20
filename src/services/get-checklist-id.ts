@@ -7,16 +7,15 @@ import { URLs } from './URLs';
 
 
 @Injectable()
-export class GetJobsService {
+export class GetChecklistId {
 
   constructor(
     private ptkHttp: PtkHttp
-    //private http: Http
   ){}
 
 
-  getJobs(params, options){
-    return this.ptkHttp.get(URLs.APIs.getJobs + URLs.getParams(params), options)
+  checklistId(body, options){
+    return this.ptkHttp.post(URLs.APIs.checklistId, body, options)
       .map(data => JSON.parse(data['_body']))
   }
 
