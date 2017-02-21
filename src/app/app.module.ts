@@ -6,7 +6,7 @@ import {IonicApp, IonicModule, IonicErrorHandler, App} from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage} from '../pages/home/home';
 import { ChecklistPage } from '../pages/checklist/checklist';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpModule, XHRBackend, RequestOptions } from '@angular/http';
 import { PropertyForm } from '../components/checklist-form/checklist-form';
 import { GeolocationService } from '../services/geolocation-service';
@@ -54,6 +54,7 @@ import {GetJobsService} from "../services/get-jobs";
   ],
   imports: [
     IonicModule.forRoot(MyApp),
+    FormsModule,
     ReactiveFormsModule,
     HttpModule,
     AgmCoreModule.forRoot({

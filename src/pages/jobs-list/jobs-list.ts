@@ -19,6 +19,7 @@ export class JobsListPage {
   private params: Object;
   private today: any = new Date();
   private twoWeeksAfter: any =  new Date(+new Date + 12096e5);
+  private message: string;
 
   
 
@@ -29,32 +30,45 @@ export class JobsListPage {
     private getJobsService: GetJobsService
   ) {
 
-    let loading = this.loadingCtrl.create({
-     content: 'Please wait...'
-    });
-    
-    loading.present();
+        let loading = this.loadingCtrl.create({
+        content: 'Please wait...'
+        });
+        
+        loading.present();
 
-    
-  
-    this.params = {
-      start_date: this.today.toISOString().slice(0, 10),
-      end_date: this.twoWeeksAfter.toISOString().slice(0, 10),
-      status: 'accepted,completed',
-      userID: navParams.get('id')
-    }
-
-    this.getJobsService.getJobs(this.params, {withCredentials: ''})
-     .subscribe(resp => {
-       console.log(resp);
-       this.jobs = [];
-       this.jobsAvailable = true;
-       for(let i=0; i< resp.count; i++) {
-         this.jobs.push(resp.results[i]);
-       };
-       loading.dismiss();
-       console.log(this.jobs);
-     });
+        
+      
+        this.params = {
+          start_date: this.today.toISOString().slice(0, 10),
+          end_date: this.twoWeeksAfter.toISOString().slice(0, 10),
+          status: 'accepted,completed',
+          user_id: navParams.get('id')
+        }
+        console.log(this.params['user_id'] != undefined);
+        if (this.params['user_id'] != undefined) {
+                this.getJobsService.getJobs(this.params, {withCredentials: ''})
+            .subscribe(resp => {
+              console.log(resp);
+              this.jobs = [];
+              this.jobsAvailable = true;
+              if (resp.results.length == 0) {
+                this.jobsAvailable = false;
+                this.message = 'Sorry, no jobs available!!';
+                loading.dismiss();
+              } else {
+                  for(let i=0; i< resp.results.length; i++) {
+                    this.jobs.push(resp.results[i]);
+                  };
+                  loading.dismiss();
+                  console.log(this.jobs);
+              }
+            });
+        } else {
+          this.jobsAvailable = false;
+          this.message = 'Sorry, no jobs available!!';
+          loading.dismiss();
+        }
+        
   }
 
   //this function needs to be called inside future function that gets API jobs list info

@@ -4,7 +4,7 @@
       <p>Are the keys in the keysafe?</p>
     </ion-col>
     <ion-col width-20>
-      <ion-toggle color="dark" class="toggle" mode="ios"></ion-toggle>
+      <ion-toggle color="dark" class="toggle" mode="ios" (ionChange)="notify()" formControlName="keys_in_keysafe"></ion-toggle>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -12,7 +12,7 @@
       <p>How many sets of dirty linen are there?</p>
     </ion-col>
     <ion-col width-20 class="align-center">
-      <input-number></input-number>
+      <input-number (notifyNumber)="getNumber($event)" formControlName="dirty_linen_count_start" ngDefaultControl></input-number>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -20,41 +20,12 @@
       <p>How many sets of clean linen are there?</p>
     </ion-col>
     <ion-col width-20 class="align-center">
-      <input-number></input-number>
+      <input-number (notifyNumber)="getNumber($event)"  formControlName="clean_linen_count_start" ngDefaultControl></input-number>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col width-100>
-      <button class="my-5 customise">Submit</button>
+      <button type="submit" class="my-5 customise" [disabled]="!propertyForm.valid">Submit</button>
     </ion-col>
   </ion-row>
-
-
-
-
-
-
-
-  <!--<ion-item class="pl-0">
-    <ion-label stacked>Address</ion-label>
-    <ion-input type="text" name="address" formControlName="address"></ion-input>
-  </ion-item>
-  <ion-item class="pl-0">
-    <ion-label stacked>City</ion-label>
-    <ion-input type="text" name="city" formControlName="city"></ion-input>
-  </ion-item>
-  <ion-item class="pl-0">
-    <ion-label stacked>PostCode</ion-label>
-    <ion-input type="text" name="postcode" formControlName="postcode"></ion-input>
-  </ion-item>
-  <h5 class="text-center mt-5">Linen Info</h5>
-  <ion-item class="pl-0">
-    <ion-label stacked>How many packs of dirty linen?</ion-label>
-    <ion-input type="text" name="dirtyLinen" formControlName="dirtyLinen"></ion-input>
-  </ion-item>
-  <ion-item class="pl-0">
-    <ion-label stacked>How many packs of clean linen?</ion-label>
-    <ion-input type="text" name="cleanLinen" formControlName="cleanLinen"></ion-input>
-  </ion-item>
-  <button class="my-5 customise-btn" type="submit" [disabled]="!propertyForm.valid">Send</button>-->
 </form>

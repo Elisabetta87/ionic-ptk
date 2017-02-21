@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-
+import { Component, Output, EventEmitter } from '@angular/core';
 
 
 
@@ -12,18 +11,25 @@ import { Component } from '@angular/core';
 
 export class InputNumber {
 
+  @Output() notifyNumber: EventEmitter<any> = new EventEmitter<any>();
   private number: number = 1;
 
   constructor(
   ) {}
 
-  increase() {
+  increase(e) {
+    e.preventDefault();
     this.number += this.number === 20 ? 0 : 1;
+    this.notifyNumber.emit(this.number);
   }
 
-  decrease() {
+  decrease(e) {
+    e.preventDefault();
     this.number -= this.number ? 1 : 0;
+    this.notifyNumber.emit(this.number);
   }
 
+  
+ 
 }
 

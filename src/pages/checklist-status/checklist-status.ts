@@ -25,7 +25,9 @@ export class ChecklistStatusPage {
   }
 
   checklist() {
-    this.navCtrl.setRoot(ChecklistPage);
+    this.navCtrl.push(ChecklistPage, {
+     id: this.id
+     });
   }
 
   completeChecklist() {

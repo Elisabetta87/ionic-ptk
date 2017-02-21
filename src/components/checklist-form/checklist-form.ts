@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormsModule } from '@angular/forms';
+//import { FormsModule } from '@angular/forms';
 import { GeolocationService } from '../../services/geolocation-service';
 import { NavController, NavParams } from 'ionic-angular/index';
 import { ChecklistSecondPage } from '../../pages/checklist-second/checklist-second';
@@ -17,6 +18,7 @@ export class PropertyForm implements OnInit {
 
   private id: string;
   public propertyForm: FormGroup;
+  are_keys_in_there: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -28,18 +30,17 @@ export class PropertyForm implements OnInit {
     this.id = navParams.get('id');
     this.storage = new SecureStorage();
     this.storage.create('form');
+    console.log(this.id);
   }
 
   ngOnInit(){
-    console.log(this.id);
+    //this.are_keys_in_there = true;
 // setting validators for propertyForm
-    // this.propertyForm = this.fb.group({
-    //   address: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-    //   city: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-    //   postcode: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]{1,2}(\\d[a-zA-Z]|[\\d]{2})\\s*\\d[a-zA-Z]{2}$')])],
-    //   dirtyLinen: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
-    //   cleanLinen: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])]
-    // });
+    this.propertyForm = this.fb.group({
+      keys_in_keysafe: [false, Validators.required],
+      dirty_linen_count_start: [0, Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
+      clean_linen_count_start: [0, Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])]
+    });
 
 // get address info from google api and setValue into the input form fields
     // this.geoService.getGeoPosition().then(resp => {
@@ -51,35 +52,52 @@ export class PropertyForm implements OnInit {
 
     //       });
 
-      // let watch = Geolocation.watchPosition();
-      // watch.subscribe((data) => {
-      //   // data can be a set of coordinates, or an error (if an error occurred).
-      //   // data.coords.latitude
-      //   // data.coords.longitude
-      //   //console.log(data);
-      // });
+    //   let watch = Geolocation.watchPosition();
+    //   watch.subscribe((data) => {
+    //     // data can be a set of coordinates, or an error (if an error occurred).
+    //     // data.coords.latitude
+    //     // data.coords.longitude
+    //     //console.log(data);
+    //   });
 
-  //   })
-  //   .catch((error) => {
-  //     console.log('Error getting location', error);
+    // })
+    // .catch((error) => {
+    //   console.log('Error getting location', error);
 
-  //   });
+    // });
+
+  }
+  notify() {
+    if (this.are_keys_in_there == false) {
+      this.are_keys_in_there =  true;
+    } else {
+      this.are_keys_in_there =  false;
+    }
+    console.log(this.are_keys_in_there);
+    return this.are_keys_in_there;
+  }
 
 
-   }
-
+  getNumber(number:number) {
+    console.log(number);
+  }
 
 // when submit the form user goes to a  new page propertyDetailsPage
-  // onSubmit() {
-  //   this.propertyForm.value['stage'] = '2';
-  //   let stringifyForm = JSON.stringify(this.propertyForm.value);
-  //   let checklist = 'checklist-'+this.id;
-  //   console.log(checklist);
-  //   this.storage.set(checklist, stringifyForm);
-  //   /*this.navCtrl.setRoot(ChecklistSecondPage, {
-  //     id: this.id
-  //   })*/;
-  // };
+  onSubmit() {
+    //let n = this.getNumber;
+    //console.log(n);
+   // this.propertyForm.value['dirty_linen_count_start']= this.getNumber;
+   // this.propertyForm.value['clean_linen_count_start']= this.getNumber;
+     console.log(this.propertyForm.value);
+    //this.propertyForm.value['stage'] = '2';
+    let stringifyForm = JSON.stringify(this.propertyForm.value);
+    let checklist = 'checklist-'+this.id;
+    console.log(checklist);
+    this.storage.set(checklist, stringifyForm);
+    /*this.navCtrl.setRoot(ChecklistSecondPage, {
+      id: this.id
+    })*/;
+  };
 
 
 }

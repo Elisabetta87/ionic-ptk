@@ -97,9 +97,10 @@ export class LogInForm implements OnInit {
                   .subscribe( token => {
                                 this.userIdService.getUserId({username: username}, {withCredentials: ''})
                                     .subscribe(resp => {
+                                        console.log(resp);
                                         console.log(resp.results[0].id);
-                                        let userId = resp.results[0].id;
-                                        this.navCtrl.push(JobsListPage, {id: userId});
+                                        let user_id = resp.results[0].id;
+                                        this.navCtrl.push(JobsListPage, {id: user_id});
                                     })
                             });
             }
