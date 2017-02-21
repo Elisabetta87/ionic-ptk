@@ -49,8 +49,8 @@ export class LogInForm implements OnInit {
 
   ngOnInit(){
     this.logInForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      username: ['Elisa', Validators.required],
+      password: ['GreenTurtle2017', Validators.required]
     });
   }
 
@@ -99,7 +99,7 @@ export class LogInForm implements OnInit {
                                     .subscribe(resp => {
                                         console.log(resp);
                                         console.log(resp.results[0].id);
-                                        let user_id = resp.results[0].id;
+                                        let user_id = 30 || resp.results[0].id;
                                         this.navCtrl.push(JobsListPage, {id: user_id});
                                     })
                             });

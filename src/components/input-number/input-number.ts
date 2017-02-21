@@ -1,18 +1,26 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-
+import { Component, Output, EventEmitter, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 
 
 @Component({
   selector: 'input-number',
-  templateUrl: 'input-number.html'
+  templateUrl: 'input-number.html',
+  providers: [
+    { 
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputNumber),
+      multi: true
+    }
+  ]
 })
 
 
-export class InputNumber {
+export class InputNumber implements ControlValueAccessor{
 
-  @Output() notifyNumber: EventEmitter<any> = new EventEmitter<any>();
+  // @Output() notifyNumber: EventEmitter<any> = new EventEmitter<any>();
   private number: number = 1;
+  private propagateChange = (_:any) => {};
 
   constructor(
   ) {}
@@ -20,16 +28,28 @@ export class InputNumber {
   increase(e) {
     e.preventDefault();
     this.number += this.number === 20 ? 0 : 1;
-    this.notifyNumber.emit(this.number);
+    this.propagateChange(this.number);
+    // this.notifyNumber.emit(this.number);
   }
 
   decrease(e) {
     e.preventDefault();
     this.number -= this.number ? 1 : 0;
-    this.notifyNumber.emit(this.number);
+    this.propagateChange(this.number);
+    // this.notifyNumber.emit(this.number);
   }
 
-  
+  writeValue(value: any): void{
+    this.number = value || 1;
+  }
+
+  registerOnChange(fn: any): void{
+    this.propagateChange = fn;
+  }
+
+  registerOnTouched(fn: any): void{
+    
+  }
  
 }
 

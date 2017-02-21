@@ -38,8 +38,8 @@ export class PropertyForm implements OnInit {
 // setting validators for propertyForm
     this.propertyForm = this.fb.group({
       keys_in_keysafe: [false, Validators.required],
-      dirty_linen_count_start: [0, Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
-      clean_linen_count_start: [0, Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])]
+      dirty_linen_count_start: [0, [Validators.required]],
+      clean_linen_count_start: [0, [Validators.required]]
     });
 
 // get address info from google api and setValue into the input form fields
@@ -88,6 +88,7 @@ export class PropertyForm implements OnInit {
     //console.log(n);
    // this.propertyForm.value['dirty_linen_count_start']= this.getNumber;
    // this.propertyForm.value['clean_linen_count_start']= this.getNumber;
+     console.log(this.propertyForm);
      console.log(this.propertyForm.value);
     //this.propertyForm.value['stage'] = '2';
     let stringifyForm = JSON.stringify(this.propertyForm.value);
