@@ -31,24 +31,25 @@ export class PropertyForm implements OnInit {
   }
 
   ngOnInit(){
+    console.log(this.id);
 // setting validators for propertyForm
-    this.propertyForm = this.fb.group({
-      address: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-      city: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-      postcode: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]{1,2}(\\d[a-zA-Z]|[\\d]{2})\\s*\\d[a-zA-Z]{2}$')])],
-      dirtyLinen: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
-      cleanLinen: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])]
-    });
+    // this.propertyForm = this.fb.group({
+    //   address: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+    //   city: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+    //   postcode: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]{1,2}(\\d[a-zA-Z]|[\\d]{2})\\s*\\d[a-zA-Z]{2}$')])],
+    //   dirtyLinen: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
+    //   cleanLinen: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])]
+    // });
 
 // get address info from google api and setValue into the input form fields
-    this.geoService.getGeoPosition().then(resp => {
-      this.geoService.getAddress(resp.coords)
-          .subscribe(address => {
-            this.propertyForm.controls['address'].setValue(address['street_number'] + ',  ' + address['route']);
-            this.propertyForm.controls['city'].setValue(address['locality']);
-            this.propertyForm.controls['postcode'].setValue(address['postal_code']);
+    // this.geoService.getGeoPosition().then(resp => {
+    //   this.geoService.getAddress(resp.coords)
+    //       .subscribe(address => {
+    //         this.propertyForm.controls['address'].setValue(address['street_number'] + ',  ' + address['route']);
+    //         this.propertyForm.controls['city'].setValue(address['locality']);
+    //         this.propertyForm.controls['postcode'].setValue(address['postal_code']);
 
-          });
+    //       });
 
       // let watch = Geolocation.watchPosition();
       // watch.subscribe((data) => {
@@ -58,27 +59,27 @@ export class PropertyForm implements OnInit {
       //   //console.log(data);
       // });
 
-    })
-    .catch((error) => {
-      console.log('Error getting location', error);
+  //   })
+  //   .catch((error) => {
+  //     console.log('Error getting location', error);
 
-    });
+  //   });
 
 
-  }
+   }
 
 
 // when submit the form user goes to a  new page propertyDetailsPage
-  onSubmit() {
-    this.propertyForm.value['stage'] = '2';
-    let stringifyForm = JSON.stringify(this.propertyForm.value);
-    let checklist = 'checklist-'+this.id;
-    console.log(checklist);
-    this.storage.set(checklist, stringifyForm);
-    /*this.navCtrl.setRoot(ChecklistSecondPage, {
-      id: this.id
-    })*/;
-  };
+  // onSubmit() {
+  //   this.propertyForm.value['stage'] = '2';
+  //   let stringifyForm = JSON.stringify(this.propertyForm.value);
+  //   let checklist = 'checklist-'+this.id;
+  //   console.log(checklist);
+  //   this.storage.set(checklist, stringifyForm);
+  //   /*this.navCtrl.setRoot(ChecklistSecondPage, {
+  //     id: this.id
+  //   })*/;
+  // };
 
 
 }

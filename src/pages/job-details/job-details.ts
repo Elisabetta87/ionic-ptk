@@ -37,14 +37,16 @@ export class JobDetailsPage {
     });*/
     this.checklistBody = {
                  job: this.id,
-      check_in_stamp: this.current_date.toLocaleDateString() + ' ' + this.current_date.toISOString().slice(11, 16),
+      check_in_stamp: this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16),
     }
-    this.getChecklistId.checklistId(this.checklistBody, {withCredentials: ''}).subscribe(resp => console.log(resp))
-    this.navCtrl.push(ChecklistStatusPage, {
-     id: this.id,
-     services: this.services
-     });
-
+    this.getChecklistId.checklistId(this.checklistBody, {withCredentials: ''}).subscribe(
+      checklist => {
+        console.log(checklist, checklist.id);
+         this.navCtrl.push(ChecklistStatusPage, {
+            id: checklist.id,
+            services: this.services
+          });
+      })
   }
 
 }

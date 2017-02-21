@@ -35,24 +35,25 @@ export class ChecklistPage {
 
     this.id = navParams.get('id');
     let checklist = 'checklist'+this.id;
-    this.storage = new SecureStorage();
-    this.storage.create('form');
-    this.storage.get(checklist)
-        .then(
-          data => {
-            let formStorage = JSON.parse(data);
-            if (formStorage['stage'] == 2) {
-              this.navCtrl.setRoot(ChecklistSecondPage);
-            } else if (formStorage['stage'] == 3) {
-              this.navCtrl.setRoot(ThankYouPage);
-            } else if (formStorage == null ) {
-              console.log('stage 1');
-            }
-          },
-          error => {
-            console.log(error);
-          }
-        )
+    console.log(checklist);
+    // this.storage = new SecureStorage();
+    // this.storage.create('form');
+    // this.storage.get(checklist)
+    //     .then(
+    //       data => {
+    //         let formStorage = JSON.parse(data);
+    //         if (formStorage['stage'] == 2) {
+    //           this.navCtrl.setRoot(ChecklistSecondPage);
+    //         } else if (formStorage['stage'] == 3) {
+    //           this.navCtrl.setRoot(ThankYouPage);
+    //         } else if (formStorage == null ) {
+    //           console.log('stage 1');
+    //         }
+    //       },
+    //       error => {
+    //         console.log(error);
+    //       }
+    //     )
   }
 
 }
