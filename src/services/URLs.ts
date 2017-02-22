@@ -1,9 +1,6 @@
 //import { Injectable } from '@angular/core';
 import { Component } from '@angular/core';
 
-
-
-// private urlGetjobs: string = 'http://ptkconnect.co.uk/api/v2/jobs/?provider=';
 //   private urlGuest: string = 'http://ptkconnect.co.uk/api/v2/guest/match';
 
 //@Injectable()
@@ -21,12 +18,10 @@ export class URLs{
     //?key=value&key=value
     static  getParams(params?:Object) { 
         let url_string: string = '?';
-        let count: number = 0;
         if (params == null || undefined) {
             url_string = '';
         }
         for (let index in params) {
-            count++;
             if (Object.keys(params).length == 1) {
                 url_string += index + '=' + params[index]
             } else {
@@ -37,6 +32,11 @@ export class URLs{
 
       return url_string    
 
+    }
+
+    static getId(id?:number) {
+        let url_string: string = id + '/';
+        return url_string
     }
 
 }

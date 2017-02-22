@@ -1,4 +1,4 @@
-<ion-content padding-bottom *ngIf="jobsAvailable">
+<ion-content *ngIf="jobsAvailable">
     <ion-list inset *ngFor="let job of jobs" class="{{ job.status }} m-3 mt-4">
       <button ion-item class="{{ job.status }}" (click)="pushPage(job.id, job.status)">
         <div class="ciao">
@@ -9,7 +9,7 @@
         <ion-icon name="ios-arrow-forward"></ion-icon>
       </button>
     </ion-list>
-    <ion-item></ion-item>
+    <ion-title></ion-title>
 </ion-content>
 <ion-content padding *ngIf="!jobsAvailable">
   <h3 class="mt-5 text-center">{{ message }}</h3>

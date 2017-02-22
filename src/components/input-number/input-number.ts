@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 
@@ -18,7 +18,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export class InputNumber implements ControlValueAccessor{
 
-  // @Output() notifyNumber: EventEmitter<any> = new EventEmitter<any>();
   private number: number = 1;
   private propagateChange = (_:any) => {};
 
@@ -29,14 +28,12 @@ export class InputNumber implements ControlValueAccessor{
     e.preventDefault();
     this.number += this.number === 20 ? 0 : 1;
     this.propagateChange(this.number);
-    // this.notifyNumber.emit(this.number);
   }
 
   decrease(e) {
     e.preventDefault();
     this.number -= this.number ? 1 : 0;
     this.propagateChange(this.number);
-    // this.notifyNumber.emit(this.number);
   }
 
   writeValue(value: any): void{

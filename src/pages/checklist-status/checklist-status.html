@@ -11,10 +11,10 @@
     <ion-col width-20><ion-icon class="green-txt" name="checkmark"></ion-icon></ion-col>
   </ion-row>
   <ion-row>
-    <ion-col width-10><div class="greenBar stage-two"></div></ion-col>
+    <ion-col width-10><div class="stage-two" [ngClass]="{'greenBar': enableTickStatusTwo}"></div></ion-col>
     <ion-col width-10 class="text-right">2.</ion-col>
     <ion-col width-70><button (click)="checklist()">Arrival Checklist</button></ion-col>
-    <ion-col width-10><ion-icon class="transparent" name="checkmark"></ion-icon></ion-col>
+    <ion-col width-10><ion-icon  *ngIf="enableTickStatusTwo" class="green-txt status-two" name="checkmark"></ion-icon></ion-col>
   </ion-row>
   <ion-row>
     <ion-col width-10><div class="stage-three"></div></ion-col>

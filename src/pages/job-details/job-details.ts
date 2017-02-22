@@ -44,7 +44,9 @@ export class JobDetailsPage {
         console.log(checklist, checklist.id);
          this.navCtrl.push(ChecklistStatusPage, {
             id: checklist.id,
-            services: this.services
+            jobId: checklist.job,
+            services: this.services,
+            checklistObj: this.checklistBody
           });
       })
   }

@@ -10,7 +10,6 @@ import {SecureStorage} from "ionic-native/dist/es5/index";
 import {Subject} from "rxjs/Subject";
 
 
-//GreenTurtle2017
 @Injectable()
 export class PtkHttp extends Http {
 
