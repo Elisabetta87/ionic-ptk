@@ -21,10 +21,10 @@
     <ion-col width-10 class="text-right">3.</ion-col>
     <ion-col width-70>
       <p>Learn</p>
-      <button href="">Property Photos</button>
-      <button href="">Linen Info</button>
-      <button href="">Rubbish Info</button>
-      <button href="">Special Requirements</button>
+      <button [disabled]="!enableTickStatusTwo" href="">Property Photos</button>
+      <button disabled href="">Linen Info</button>
+      <button disabled href="">Rubbish Info</button>
+      <button disabled href="">Special Requirements</button>
     </ion-col>
     <ion-col width-10><ion-icon class="transparent" name="checkmark"></ion-icon></ion-col>
   </ion-row>
@@ -34,13 +34,13 @@
     <ion-col width-60>
       <p>Complete Clean</p>
     </ion-col>
-    <ion-col width-20><ion-toggle color="dark" class="toggle" mode="ios"></ion-toggle></ion-col>
+    <ion-col width-20><ion-toggle disabled color="dark" class="toggle" mode="ios"></ion-toggle></ion-col>
   </ion-row>
   <ion-row>
     <ion-col width-10><div class="stage-five"></div></ion-col>
     <ion-col width-10 class="text-right">5.</ion-col>
     <ion-col width-70>
-      <button>Complete Departure Checklist</button>
+      <button disabled>Complete Departure Checklist</button>
     </ion-col>
     <ion-col width-10><ion-icon class="transparent" name="checkmark"></ion-icon></ion-col>
   </ion-row>
@@ -48,6 +48,6 @@
     <ion-col width-10><div class="stage-six"></div></ion-col>
     <ion-col width-10 class="text-right">6.</ion-col>
     <ion-col width-60><p>Check-Out</p></ion-col>
-    <ion-col width-20> <ion-toggle color="dark" class="toggle" mode="ios"></ion-toggle></ion-col>
+    <ion-col width-20> <ion-toggle disabled color="dark" class="toggle" mode="ios"></ion-toggle></ion-col>
   </ion-row>
 </ion-content>

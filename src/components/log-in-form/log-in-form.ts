@@ -39,7 +39,7 @@ export class LogInForm implements OnInit {
   ) {
     this.storage = new SecureStorage();
     this.storage.create('ptkStorage').then(
-      () => { console.log('storage is ready'); this.isStorageReady = true; });
+      () => this.isStorageReady = true);
     this.geolocation.getGeoPosition().then((resp) => {
       this.lat = resp.coords.latitude;
       this.lng = resp.coords.longitude;
