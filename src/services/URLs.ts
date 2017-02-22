@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 //@Injectable()
 export class URLs{
     
-    static home: string = 'http://ptkconnect.co.uk/';
+    static home: string = 'https://ptkconnect.com/';
 
     static APIs = {
         tokenAuth: URLs.home + 'api/token-auth/',

@@ -1,3 +1,4 @@
+import { SecureStorage } from 'ionic-native/dist/es5/index';
 import { GetChecklistId } from './../../services/get-checklist-id';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular/index';
@@ -5,7 +6,8 @@ import { ChecklistStatusPage } from '../checklist-status/checklist-status';
 
 @Component({
   selector: 'page-job-details',
-  templateUrl: 'job-details.html'
+  templateUrl: 'job-details.html',
+  providers: [SecureStorage]
 })
 export class JobDetailsPage {
   /*set lat and lng for google map */
@@ -16,11 +18,15 @@ export class JobDetailsPage {
   private address: string;
   private services: string;
   private checklistBody: Object;
+  private jobId: number;
   private current_date: Date = new Date();
+  private isStorageReady: boolean;
+  private button_txt: string = 'Check-In';
 
   constructor(
     public navCtrl: NavController,
     private navParams: NavParams,
+    private storage: SecureStorage,
     private getChecklistId: GetChecklistId
   ) {
 
@@ -29,6 +35,25 @@ export class JobDetailsPage {
     this.id = navParams.get('id');
     this.property_latitude = navParams.get('property_latitude');
     this.property_longitude = navParams.get('property_longitude');
+    this.storage = new SecureStorage();
+    this.storage.create('status').then(
+      () => this.isStorageReady = true);
+  }
+
+
+  ionViewWillEnter() {
+    if(this.isStorageReady) {
+        this.storage.get('checklistStage-job-'+this.jobId).then(
+          res => {
+            console.log(res);
+            this.button_txt = 'Continue Job';
+          },
+          error => {
+            console.log(error);
+          }
+          );
+    }
+    console.log(this.button_txt);
   }
 
   completeChecklist() {

@@ -1,7 +1,6 @@
 import { TabsPage } from './../tabs/tabs';
 import { MenuComponent } from './../../components/menu/menu';
 import { Component } from '@angular/core';
-import { SecureStorage } from 'ionic-native/dist/es5/index';
 import { NavController, LoadingController, NavParams } from 'ionic-angular/index';
 import { JobDetailsPage } from '../job-details/job-details';
 import {GetJobsService} from "../../services/get-jobs";
@@ -9,8 +8,7 @@ import {GetJobsService} from "../../services/get-jobs";
 
 @Component({
   selector: 'page-jobs-list',
-  templateUrl: 'jobs-list.html',
-  providers: [SecureStorage]
+  templateUrl: 'jobs-list.html'
 })
 export class JobsListPage {
 
