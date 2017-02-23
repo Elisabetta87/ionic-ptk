@@ -1,5 +1,6 @@
-<ion-content *ngIf="jobsAvailable">
-    <ion-list inset *ngFor="let job of jobs" class="{{ job.status }} m-3 mt-4">
+<ion-content padding-bottom *ngIf="jobsAvailable">
+  <!--<ion-item *ngIf="setDay">{{ setDay }}</ion-item>-->
+    <ion-list inset *ngFor="let job of jobs" class="{{ job.status }} m-3 mt-4 item-text-wrap">
       <button ion-item class="{{ job.status }}" (click)="pushPage(job.id, job.status)">
         <div class="ciao">
           <p>{{ job.start_time }} - {{ job.end_time }}</p>

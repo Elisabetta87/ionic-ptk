@@ -1,3 +1,5 @@
+import { TabsPage } from './../tabs/tabs';
+import { MenuService } from './../../services/menu';
 import { Component } from '@angular/core';
 import { SecureStorage } from 'ionic-native/dist/es5/index';
 import { NavController } from 'ionic-angular/index';
@@ -16,12 +18,18 @@ export class HomePageGuest {
 
   constructor(
     public navCtrl: NavController,
-    private storage: SecureStorage
+    private storage: SecureStorage,
+    private menuService: MenuService
   ) {
     this.storage = new SecureStorage();
     this.storage.create('logInfo');
     //set storage with new info home guest
     this.checklist = true;
+  }
+
+  ionViewDidEnter() {
+    this.menuService.hideMenu();
+    console.log('ciao');
   }
 
   accept() {

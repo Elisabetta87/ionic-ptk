@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Job Details</ion-title>
+    <ion-title>Job Overview</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding>
@@ -12,9 +12,24 @@
   </sebm-google-map>
 
 
-
-  <p class="mt-5">{{ address }}</p>
-  <p class="mb-5">{{ services }}</p>
-  <button class="button-go-to-checklist" (click)="completeChecklist()">{{ button_txt }}</button>
+<ion-grid class="my-4">
+  <ion-row>
+    <ion-col width-20>Location </ion-col>
+    <ion-col width-80>{{ address }} </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col width-20>Date </ion-col>
+    <ion-col width-80> </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col width-20>Time </ion-col>
+    <ion-col width-80></ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col width-20>Notes </ion-col>
+    <ion-col width-80>{{ services }}</ion-col>
+  </ion-row>
+</ion-grid>
+  <button *ngIf="isStorageReady" class="button-go-to-checklist" (click)="completeChecklist()">{{ button_txt }}</button>
 </ion-content>
 

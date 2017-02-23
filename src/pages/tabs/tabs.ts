@@ -1,3 +1,5 @@
+import { Storage } from '@ionic/storage';
+import { SecureStorage } from 'ionic-native/dist/es5/index';
 import { JobsListPage } from './../jobs-list/jobs-list';
 import { NavController } from 'ionic-angular/index';
 import { LogInPage } from './../log-in/log-in';
@@ -9,7 +11,8 @@ import {MorePage} from '../../pages/more/more';
 
 
 @Component({
-    templateUrl: 'tabs.html'
+    templateUrl: 'tabs.html',
+    providers: [SecureStorage]
 })
 
 
@@ -33,65 +36,11 @@ export class TabsPage {
 
     hasToShowTabs: boolean = false;
 
-    constructor(private navCtrl: NavController) {
+    constructor(
+        private navCtrl: NavController,
+        private Storage: SecureStorage
+        ) {
         
     }
 
-    // ionViewDidEnter(){
-    //     //console.log( this.navCtrl.getActive() );
-    //     console.log( this.navCtrl.getActive().index );
-
-
-    //     this.hasToShowTabs = this.tabRoots[this.navCtrl.getActive().index] !== LogInPage;
-    //     console.log(this.hasToShowTabs);
-        
-    //     document.getElementsByClassName('tab-button')[0]['style'].display = 'none'
-    //     document.querySelector('.tabbar.show-tabbar')['style'].display = this.hasToShowTabs ? 'flex' : 'none';
-    //     document.querySelector('a.tab-button')[0].style.display = 'none';
-    //     console.log( this.tabRoots[this.navCtrl.getActive().index] , LogInPage );
-
-    //     if (this.navCtrl.getActive().index == 0) {
-    //        document.getElementsByClassName('tab-button')[0]['style'].display = 'none';
-    //        document.querySelector('.tabbar.show-tabbar')['style'].display = this.hasToShowTabs ? 'flex' : 'none';
-    //        if( !this.hasToShowTabs ){
-    //           document.getElementsByClassName('scroll-content')[1]['style'].marginBottom = '0px';
-    //           document.getElementsByClassName('fixed-content')[1]['style'].marginBottom = '0px';
-    //        }
-    //     } else {
-    //           document.querySelector('.tabbar.show-tabbar')['style'].display = 'flex';
-    //           document.getElementsByClassName('scroll-content')[1]['style'].marginBottom = '56px';
-    //           document.getElementsByClassName('fixed-content')[1]['style'].marginBottom = '56px';
-    //     }
-    // }
-
-    
-    ionViewDidEnter(){
-        // console.log('DID ENTER', this.navCtrl.getActive());
-        // document.getElementsByClassName('tab-button')[0]['style'].display = 'none';
-        // document.querySelector('.tabbar.show-tabbar')['style'].display = this.hasToShowTabs ? 'flex' : 'none';
-        
-        // if( !this.hasToShowTabs ){
-        //     document.getElementsByClassName('scroll-content')[1]['style'].marginBottom = '0px';
-        //     document.getElementsByClassName('fixed-content')[1]['style'].marginBottom = '0px';
-        // }
-    }
-    
-    //ionViewWillLeave() {
-        //  console.log(document.getElementsByClassName('scroll-content')[1]);
-        // document.querySelector('.tabbar.show-tabbar')['style'].display = 'flex';
-        //         document.getElementsByClassName('scroll-content')[1]['style'].marginBottom = '56px';
-        //         document.getElementsByClassName('fixed-content')[1]['style'].marginBottom = '56px';
-        //this.hasToShowTabs = true;
-        //console.log('WiLL LEAVE', this.navCtrl.getActive());
-        // document.getElementsByClassName('tab-button')[0]['style'].display = 'none';
-        // document.querySelector('.tabbar.show-tabbar')['style'].display = this.hasToShowTabs ? 'flex' : 'none';
-        
-        // if( !this.hasToShowTabs ){
-        //     document.getElementsByClassName('scroll-content')[1]['style'].marginBottom = '0px';
-        //     document.getElementsByClassName('fixed-content')[1]['style'].marginBottom = '0px';
-        // }
-
-
-    //}
-    
 }

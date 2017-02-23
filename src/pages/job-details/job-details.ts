@@ -14,14 +14,13 @@ export class JobDetailsPage {
   property_latitude: number;
   property_longitude: number;
 
-  private id: number;
+  private jobId: number;
   private address: string;
   private services: string;
   private checklistBody: Object;
-  private jobId: number;
   private current_date: Date = new Date();
   private isStorageReady: boolean;
-  private button_txt: string = 'Check-In';
+  private button_txt: string;
 
   constructor(
     public navCtrl: NavController,
@@ -32,7 +31,7 @@ export class JobDetailsPage {
 
     this.address = navParams.get('address');
     this.services = navParams.get('services');
-    this.id = navParams.get('id');
+    this.jobId = navParams.get('id');
     this.property_latitude = navParams.get('property_latitude');
     this.property_longitude = navParams.get('property_longitude');
     this.storage = new SecureStorage();
@@ -50,6 +49,7 @@ export class JobDetailsPage {
           },
           error => {
             console.log(error);
+            this.button_txt = 'Check-In';
           }
           );
     }
@@ -61,7 +61,7 @@ export class JobDetailsPage {
       id: this.id
     });*/
     this.checklistBody = {
-                 job: this.id,
+                 job: this.jobId,
       check_in_stamp: this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16),
     }
     this.getChecklistId.checklistId(this.checklistBody, {withCredentials: ''}).subscribe(

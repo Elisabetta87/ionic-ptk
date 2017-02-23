@@ -18,17 +18,9 @@ export class LogInService {
                .map(data => JSON.parse(data['_body']))
   }
 
-
-  /*getUserToken(url, body, options) {
-    return this.ptkHttp.post(url, body, options)
-                    .map(data => JSON.parse(data['_body']))
-
-    // handle 400 error Unable to login with provided credentials
-  }*/
-
-  getGuestJobMatch(url, body) {
-    return this.ptkHttp.post(url, body)
-                       .map(data => data)
+  getGuestJobMatch(params) {
+    return this.ptkHttp.get(URLs.APIs.getGuestJobMatch+URLs.getParams(params))
+                       .map(data => JSON.parse(data['_body']))
   }
 
 

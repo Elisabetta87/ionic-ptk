@@ -18,6 +18,7 @@ export class JobsListPage {
   private today: any = new Date();
   private twoWeeksAfter: any =  new Date(+new Date + 12096e5);
   private message: string;
+  private setDay: string;
 
   
 
@@ -42,7 +43,6 @@ export class JobsListPage {
           status: 'accepted,completed',
           user_id: navParams.get('id')
         }
-        console.log(this.params['user_id'] != undefined);
         if (this.params['user_id'] != undefined) {
                 this.getJobsService.getJobs(this.params, {withCredentials: ''})
             .subscribe(resp => {
@@ -55,7 +55,11 @@ export class JobsListPage {
                 loading.dismiss();
               } else {
                   for(let i=0; i< resp.results.length; i++) {
-                    this.jobs.push(resp.results[i]);
+                    //if (this.today.toGMTString().slice(5,16) === resp.results[i].date) {
+                        //this.setDay = 'Today';
+                        this.jobs.push(resp.results[i]);
+                    //}
+                    //this.jobs.push(resp.results[i]);
                   };
                   loading.dismiss();
                   console.log(this.jobs);

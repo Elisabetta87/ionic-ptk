@@ -1,3 +1,4 @@
+import { MenuService } from './../services/menu';
 import { UpdateChecklist } from './../services/update-checklist';
 import { GetChecklistId } from './../services/get-checklist-id';
 import { TabsPage } from './../pages/tabs/tabs';
@@ -92,6 +93,7 @@ import {GetJobsService} from "../services/get-jobs";
     GetJobsService,
     GetChecklistId,
     UpdateChecklist,
+    MenuService,
     {
       provide: PtkHttp,
       useFactory: (backend: XHRBackend, options: RequestOptions, storage: SecureStorage, app: App) => new PtkHttp(backend, options, storage, app),
