@@ -1,6 +1,8 @@
+import { LinenInfoPage } from './../linen-info/linen-info';
+import { PhotosPage } from './../photos/photos';
 import { SecureStorage } from 'ionic-native';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular/index';
+import { NavController, NavParams, LoadingController } from 'ionic-angular/index';
 import {ChecklistPage} from "../checklist/checklist";
 
 
@@ -17,49 +19,76 @@ export class ChecklistStatusPage {
   private greenBar: string;
   private checklistObj: Object;
   private isStorageReady: boolean;
-  private enableTickStatusTwo: boolean;
+  private enableTickStatus: boolean;
+  private status: number;
 
   constructor(
     public navCtrl: NavController,
     private navParams: NavParams,
-    private storage: SecureStorage
+    private storage: SecureStorage,
+    private loadingCtrl: LoadingController
   ) {
-
     this.id = navParams.get('id');
     this.jobId = navParams.get('jobId');
     this.services = navParams.get('services');
     this.checklistObj = navParams.get('checklistObj');
     this.greenBar = this.id ? 'greenBar' : '';
-    this.storage = new SecureStorage();
-    this.storage.create('status').then(
-      () => this.isStorageReady = true);
   }
 
 
   ionViewWillEnter() {
-    if(this.isStorageReady) {
+    let loading = this.loadingCtrl.create({
+        content: 'Please wait...'
+    });
+    loading.present();
+    this.storage = new SecureStorage();
+    this.storage.create('status').then(
+      () => {
+        this.isStorageReady = true; 
+        if(this.isStorageReady) {
         this.storage.get('checklistStage-job-'+this.jobId).then(
           res => {
-            //I need a switch statement to check status
-            // switch (key) {
-            //   case value:
-                
-            //     break;
-            
-            //   default:
-            //     break;
-            // }
-            console.log(res);
-            this.enableTickStatusTwo = true;//(res.status == undefined) ? false : true;
-            //console.log(this.enableTickStatusTwo);
+            let res_obj = JSON.parse(res);
+            this.status = res_obj.status;
+            console.log(res_obj, this.status);
+             switch (this.status) {
+               case 2:
+                  this.enableTickStatus = true;
+                  break;
+               case 3.1:
+                  this.enableTickStatus = true;
+                  break;
+               case 3.2:
+                  this.enableTickStatus = true;
+                  break;   
+               case 3.3: 
+                  this.enableTickStatus = true;
+                  break;
+               case 3.4:
+                  this.enableTickStatus = true;
+                  break;
+               case 4:
+                  this.enableTickStatus = true;
+                  break;
+               case 5:
+                  this.enableTickStatus = true;
+                  break;
+               case 6:
+                  this.enableTickStatus = true;
+                  break;   
+               default:
+                  console.log(this.status);
+                  break;                   
+            }            
           },
           error => {
             console.log(error);
-            //this.enableTickStatusTwo = false;
           }
           );
-    }
-  }
+    } 
+        loading.dismiss();
+      });
+  } 
 
 
 
@@ -69,6 +98,22 @@ export class ChecklistStatusPage {
      jobId: this.jobId,
      checklistObj: this.checklistObj
      });
+  }
+
+  photos() {
+    this.navCtrl.push(PhotosPage, {
+      id: this.id,
+      jobId: this.jobId,
+      checklistObj: this.checklistObj
+    })
+  }
+
+  linen() {
+    this.navCtrl.push(LinenInfoPage, {
+      id: this.id,
+      jobId: this.jobId,
+      checklistObj: this.checklistObj
+    })
   }
 
   completeChecklist() {

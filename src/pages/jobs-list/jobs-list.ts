@@ -19,6 +19,8 @@ export class JobsListPage {
   private twoWeeksAfter: any =  new Date(+new Date + 12096e5);
   private message: string;
   private setDay: string;
+  private date: string;
+  private time: string;
 
   
 
@@ -35,6 +37,8 @@ export class JobsListPage {
         
         loading.present();
 
+        this.date = navParams.get('date');
+        this.time = navParams.get('time');
         
       
         this.params = {
@@ -84,7 +88,9 @@ export class JobsListPage {
                    services : this.jobs[i].services_string,
                          id : this.jobs[i].id,
           property_latitude : +this.jobs[i].property_latitude,
-          property_longitude: +this.jobs[i].property_longitude
+         property_longitude : +this.jobs[i].property_longitude,
+                       date : this.jobs[i].date,
+                       time : this.jobs[i].time
           }
         );
       } else if (this.jobs[i].id === id && status === 'red') {

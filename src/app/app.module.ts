@@ -1,10 +1,12 @@
+import { LinenInfoPage } from './../pages/linen-info/linen-info';
+import { PhotosPage } from './../pages/photos/photos';
 import { MenuService } from './../services/menu';
 import { UpdateChecklist } from './../services/update-checklist';
 import { GetChecklistId } from './../services/get-checklist-id';
 import { TabsPage } from './../pages/tabs/tabs';
 import { URLs } from './../services/URLs';
 import { NgModule, ErrorHandler } from '@angular/core';
-import {IonicApp, IonicModule, IonicErrorHandler, App} from 'ionic-angular';
+import { IonicApp, IonicModule, IonicErrorHandler, App } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage} from '../pages/home/home';
 import { ChecklistPage } from '../pages/checklist/checklist';
@@ -14,7 +16,7 @@ import { PropertyForm } from '../components/checklist-form/checklist-form';
 import { GeolocationService } from '../services/geolocation-service';
 import { ChecklistSecondPage } from '../pages/checklist-second/checklist-second';
 import { SecondFormComponent } from '../components/checklist-second-form/checklist-second-form';
-import {SecureStorage } from 'ionic-native';
+import { SecureStorage } from 'ionic-native';
 import { ThankYouPage } from '../pages/thank-you/thank-you';
 import { LogInPage } from '../pages/log-in/log-in';
 import { LogInForm } from '../components/log-in-form/log-in-form';
@@ -27,10 +29,10 @@ import { ChecklistStatusPage } from '../pages/checklist-status/checklist-status'
 import { MarketPage } from '../pages/market/market';
 import { MorePage } from '../pages/more/more';
 import { InputNumber } from '../components/input-number/input-number';
-import {PtkHttp} from "../services/ptkHttp";
-import {LogInService} from "../services/log-in-service";
-import {UserIdService} from "../services/user-id-service";
-import {GetJobsService} from "../services/get-jobs";
+import { PtkHttp } from "../services/ptkHttp";
+import { LogInService } from "../services/log-in-service";
+import { UserIdService } from "../services/user-id-service";
+import { GetJobsService } from "../services/get-jobs";
 
 
 @NgModule({
@@ -52,7 +54,9 @@ import {GetJobsService} from "../services/get-jobs";
     MarketPage,
     MorePage,
     InputNumber,
-    TabsPage
+    TabsPage,
+    PhotosPage,
+    LinenInfoPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -82,7 +86,9 @@ import {GetJobsService} from "../services/get-jobs";
     MarketPage,
     MorePage,
     InputNumber,
-    TabsPage
+    TabsPage,
+    PhotosPage,
+    LinenInfoPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

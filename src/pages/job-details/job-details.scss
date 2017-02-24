@@ -11,6 +11,11 @@ page-job-details {
     .sebm-google-map-container {
       height: 300px;
     }
+    ion-row {
+      ion-col:first-of-type {
+        font-weight: 500;
+      }
+    }
   }
 }
 

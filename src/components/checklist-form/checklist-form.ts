@@ -22,7 +22,7 @@ export class PropertyForm implements OnInit {
   public propertyForm: FormGroup;
   private are_keys_in_there: boolean = false;
   private checklistObj: Object;
-  private checklistTracker: Object = {};
+  public checklistTracker: Object = {};
 
   constructor(
     public navCtrl: NavController,
@@ -67,8 +67,6 @@ export class PropertyForm implements OnInit {
 
 // when submit the form user goes to a  new page propertyDetailsPage
   onSubmit() {
-    // console.log(this.propertyForm.value);
-    //this.propertyForm.value['stage'] = '2';
     let arrivalChecklist = this.propertyForm.value;
     this.checklistObj['keys_in_keysafe'] = arrivalChecklist['keys_in_keysafe'];
     this.checklistObj['clean_linen_count_start'] = arrivalChecklist['clean_linen_count_start'];

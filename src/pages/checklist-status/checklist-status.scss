@@ -51,6 +51,13 @@ page-checklist-status {
     align-items: center;
     line-height: inherit;
   }
+  ion-icon.green-tick {
+    position: relative;
+    top: -21px;
+    right: -200px;
+    color: #B6D8AD;
+    font-weight: 900;
+  }
   .status-bar {
     ion-col {
       padding: 0 5px;
@@ -65,6 +72,9 @@ page-checklist-status {
         width: 100%;
         font-size: 1.3rem;
         box-shadow: 1px 1px;
+      }
+      button.linen-btn {
+        margin-top: -10px;
       }
     }
 

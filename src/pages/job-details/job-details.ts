@@ -21,6 +21,8 @@ export class JobDetailsPage {
   private current_date: Date = new Date();
   private isStorageReady: boolean;
   private button_txt: string;
+  private date: string;
+  private time: string;
 
   constructor(
     public navCtrl: NavController,
@@ -28,32 +30,32 @@ export class JobDetailsPage {
     private storage: SecureStorage,
     private getChecklistId: GetChecklistId
   ) {
-
     this.address = navParams.get('address');
     this.services = navParams.get('services');
     this.jobId = navParams.get('id');
+    this.date = navParams.get('date');
+    this.time = navParams.get('time');
     this.property_latitude = navParams.get('property_latitude');
     this.property_longitude = navParams.get('property_longitude');
-    this.storage = new SecureStorage();
-    this.storage.create('status').then(
-      () => this.isStorageReady = true);
   }
 
 
   ionViewWillEnter() {
-    if(this.isStorageReady) {
+    this.storage = new SecureStorage();
+    this.storage.create('status').then(
+      () => {
+        this.isStorageReady = true;
+        if(this.isStorageReady) {
         this.storage.get('checklistStage-job-'+this.jobId).then(
           res => {
-            console.log(res);
             this.button_txt = 'Continue Job';
           },
           error => {
-            console.log(error);
             this.button_txt = 'Check-In';
           }
           );
-    }
-    console.log(this.button_txt);
+        }
+    });
   }
 
   completeChecklist() {
@@ -66,7 +68,6 @@ export class JobDetailsPage {
     }
     this.getChecklistId.checklistId(this.checklistBody, {withCredentials: ''}).subscribe(
       checklist => {
-        console.log(checklist, checklist.id);
          this.navCtrl.push(ChecklistStatusPage, {
             id: checklist.id,
             jobId: checklist.job,
