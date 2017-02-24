@@ -21,7 +21,7 @@ export class ChecklistPage {
   ) {
     this.id = navParams.get('id');
     let checklist = 'checklist-'+this.id;
-    console.log(checklist);
+    //console.log(checklist);
   }
 
 }

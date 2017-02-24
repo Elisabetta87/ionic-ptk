@@ -12,22 +12,22 @@
     <ion-col width-20><ion-icon class="green-txt" name="checkmark"></ion-icon></ion-col>
   </ion-row>
   <ion-row>
-    <ion-col width-10><div class="stage-two" [ngClass]="{'greenBar': enableTickStatus}"></div></ion-col>
+    <ion-col width-10><div class="stage-two" [ngClass]="{'greenBar': enableTickStatus_2}"></div></ion-col>
     <ion-col width-10 class="text-right">2.</ion-col>
     <ion-col width-70><button (click)="checklist()">Arrival Checklist</button></ion-col>
-    <ion-col width-10><ion-icon  *ngIf="enableTickStatus" class="green-txt status-two" name="checkmark"></ion-icon></ion-col>
+    <ion-col width-10><ion-icon  *ngIf="enableTickStatus_2" class="green-txt" name="checkmark"></ion-icon></ion-col>
   </ion-row>
   <ion-row>
-    <ion-col width-10><div class="stage-three"></div></ion-col>
+    <ion-col width-10><div class="stage-three" [ngClass]="{'greenBar': enableTickStatus_3_4}"></div></ion-col>
     <ion-col width-10 class="text-right">3.</ion-col>
     <ion-col width-70>
       <p>Learn</p>
-      <button (click)="photos()" [disabled]="!enableTickStatus">Property Photos</button><ion-icon  *ngIf="status == 3.1" class="green-tick" name="checkmark"></ion-icon>
-      <button (click)="linen()" [ngClass]="{'linen-btn': status == 3.1}" [disabled]="!(status == 3.1)">Linen Info</button><ion-icon  *ngIf="status == 3.2" class="green-tick" name="checkmark"></ion-icon>
-      <button disabled>Rubbish Info</button>
-      <button disabled>Special Requirements</button>
+      <button (click)="photos()" [disabled]="!enableTickStatus_2">Property Photos</button><ion-icon  *ngIf="enableTickStatus_3_1" class="green-tick" name="checkmark"></ion-icon>
+      <button (click)="linen()" [ngClass]="{'linen-btn': enableTickStatus_3_1}" [disabled]="!enableTickStatus_3_1">Linen Info</button><ion-icon  *ngIf="enableTickStatus_3_2" class="green-tick" name="checkmark"></ion-icon>
+      <button (click)="rubbish()" [ngClass]="{'linen-btn': enableTickStatus_3_2}" [disabled]="!enableTickStatus_3_2">Rubbish Info</button><ion-icon *ngIf="enableTickStatus_3_3" class="green-tick" name="checkmark"></ion-icon>
+      <button (click)="requirements()" [ngClass]="{'linen-btn': enableTickStatus_3_3}" [disabled]="!enableTickStatus_3_3">Special Requirements</button><ion-icon *ngIf="enableTickStatus_3_4" class="green-tick" name="checkmark"></ion-icon>
     </ion-col>
-    <ion-col width-10><ion-icon class="transparent" name="checkmark"></ion-icon></ion-col>
+    <ion-col width-10><ion-icon *ngIf="enableTickStatus_3_4" class="green-txt" name="checkmark"></ion-icon></ion-col>
   </ion-row>
   <ion-row>
     <ion-col width-10><div class="stage-four"></div></ion-col>
@@ -35,13 +35,13 @@
     <ion-col width-60>
       <p>Complete Clean</p>
     </ion-col>
-    <ion-col width-20><ion-toggle disabled color="dark" class="toggle" mode="ios"></ion-toggle></ion-col>
+    <ion-col width-20><ion-toggle [disabled]="!enableTickStatus_3_4" (ionChange)="completeClean()" color="ptkgreen" class="toggle" mode="ios"></ion-toggle></ion-col>
   </ion-row>
   <ion-row>
     <ion-col width-10><div class="stage-five"></div></ion-col>
     <ion-col width-10 class="text-right">5.</ion-col>
     <ion-col width-70>
-      <button disabled>Complete Departure Checklist</button>
+      <button [disabled]="!complete_clean">Complete Departure Checklist</button>
     </ion-col>
     <ion-col width-10><ion-icon class="transparent" name="checkmark"></ion-icon></ion-col>
   </ion-row>
@@ -49,7 +49,7 @@
     <ion-col width-10><div class="stage-six"></div></ion-col>
     <ion-col width-10 class="text-right">6.</ion-col>
     <ion-col width-60><p>Check-Out</p></ion-col>
-    <ion-col width-20> <ion-toggle disabled color="dark" class="toggle" mode="ios"></ion-toggle></ion-col>
+    <ion-col width-20> <ion-toggle disabled (ionChange)="checkOut()" color="ptkgreen" class="toggle" mode="ios"></ion-toggle></ion-col>
   </ion-row>
   </ion-grid>
 </ion-content>

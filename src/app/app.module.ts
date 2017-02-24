@@ -1,3 +1,5 @@
+import { SpecialRequirementsPage } from './../pages/special-requirements/special-requirements';
+import { RubbishInfoPage } from './../pages/rubbish-info/rubbish-info';
 import { LinenInfoPage } from './../pages/linen-info/linen-info';
 import { PhotosPage } from './../pages/photos/photos';
 import { MenuService } from './../services/menu';
@@ -56,7 +58,9 @@ import { GetJobsService } from "../services/get-jobs";
     InputNumber,
     TabsPage,
     PhotosPage,
-    LinenInfoPage
+    LinenInfoPage,
+    RubbishInfoPage,
+    SpecialRequirementsPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -88,7 +92,9 @@ import { GetJobsService } from "../services/get-jobs";
     InputNumber,
     TabsPage,
     PhotosPage,
-    LinenInfoPage
+    LinenInfoPage,
+    RubbishInfoPage,
+    SpecialRequirementsPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

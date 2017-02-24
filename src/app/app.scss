@@ -59,3 +59,22 @@ a:focus, a:hover {
   border: 2px solid black;
 }
 
+.toggle-ios .toggle-icon {
+    width: 40px;
+    height: 23.8px;
+    border: 2px solid #000000;
+    .toggle-inner {
+      width: 23.7px;
+      height: 23.7px;
+      border: 2px solid #000000;
+      left: 0px;
+      top: -2px;
+    }
+  }
+  .toggle-ios .toggle-checked .toggle-inner {
+    transform: translate3d(14.725px, 0, 0);
+  }
+
+  .toggle-ios-ptkgreen .toggle-checked {
+  border: 2px solid #000000;
+}

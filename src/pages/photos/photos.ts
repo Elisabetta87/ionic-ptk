@@ -23,7 +23,7 @@ export class PhotosPage {
     }
 
     send() {
-        this.storage = new SecureStorage();
+      this.storage = new SecureStorage();
       this.storage.create('photos').then(
           ready => {
               this.isStorageReady = true;

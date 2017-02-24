@@ -37,12 +37,9 @@ export class PropertyForm implements OnInit {
     this.checklistObj = navParams.get('checklistObj');
     this.storage = new SecureStorage();
     this.storage.create('form');
-    console.log(this.id);
   }
 
   ngOnInit(){
-    //console.log(this.checklistObj);
-// setting validators for propertyForm
     this.propertyForm = this.fb.group({
       keys_in_keysafe: [false, Validators.required],
       dirty_linen_count_start: ['', [Validators.required]],
@@ -56,16 +53,9 @@ export class PropertyForm implements OnInit {
     } else {
       this.are_keys_in_there =  false;
     }
-    console.log(this.are_keys_in_there);
     return this.are_keys_in_there;
   }
 
-  // capitalise(s:boolean) {
-  //   let str = s.toString();	
-  //   return str[0].toUpperCase() + str.slice(1);
-  // }
-
-// when submit the form user goes to a  new page propertyDetailsPage
   onSubmit() {
     let arrivalChecklist = this.propertyForm.value;
     this.checklistObj['keys_in_keysafe'] = arrivalChecklist['keys_in_keysafe'];
