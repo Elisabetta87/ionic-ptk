@@ -38,14 +38,16 @@ page-checklist-status {
     float: right;
     display: flex;
     align-items: center;
-    line-height: inherit;
+    line-height: 1.5;
   }
   ion-icon.green-tick {
-    position: relative;
-    top: -21px;
-    right: -200px;
-    color: #B6D8AD;
+    font-size: 1.8rem;
     font-weight: 900;
+    float: right;
+    display: flex;
+    align-items: center;
+    line-height: 2.5;
+    color: #B6D8AD;
   }
   .status-bar {
     ion-col {
@@ -62,9 +64,9 @@ page-checklist-status {
         font-size: 1.3rem;
         box-shadow: 1px 1px;
       }
-      button.linen-btn {
-        margin-top: -10px;
-      }
+      // button.linen-btn {
+      //   margin-top: -10px;
+      // }
     }
 
     ion-row ion-col:not(:first-of-type){

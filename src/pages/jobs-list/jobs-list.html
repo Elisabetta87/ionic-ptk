@@ -1,16 +1,16 @@
 <ion-content padding-bottom *ngIf="jobsAvailable">
-  <!--<ion-item *ngIf="setDay">{{ setDay }}</ion-item>-->
-    <ion-list inset *ngFor="let job of jobs" class="{{ job.status }} m-3 mt-4 item-text-wrap">
-      <button ion-item class="{{ job.status }}" (click)="pushPage(job.id, job.status)">
-        <div class="ciao">
-          <p>{{ job.start_time }} - {{ job.end_time }}</p>
-          <p>{{ job.property_address }}</p>
-          <p>{{ job.services_string }}</p>
-        </div>  
-        <ion-icon name="ios-arrow-forward"></ion-icon>
-      </button>
-    </ion-list>
-    <ion-title></ion-title>
+  <ion-list inset *ngFor="let job of jobs; let i = index" class="{{ job.status }} m-3 mt-4 item-text-wrap">
+    <ion-title *ngIf="i == 0 || jobs[i-1].date != job.date">{{ job.date | date:"MM/dd/yy" }}</ion-title>
+    <button ion-item class="{{ job.status }}" (click)="pushPage(job.id, job.status)">
+      <div class="ciao">
+        <p>{{ job.start_time }} - {{ job.end_time }}</p>
+        <p>{{ job.property_address }}</p>
+        <p>{{ job.services_string }}</p>
+      </div>  
+      <ion-icon name="ios-arrow-forward"></ion-icon>
+    </button>
+  </ion-list>
+  <ion-title></ion-title>
 </ion-content>
 <ion-content padding *ngIf="!jobsAvailable">
   <h3 class="mt-5 text-center">{{ message }}</h3>

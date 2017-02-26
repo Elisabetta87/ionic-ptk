@@ -59,11 +59,7 @@ export class JobsListPage {
                 loading.dismiss();
               } else {
                   for(let i=0; i< resp.results.length; i++) {
-                    //if (this.today.toGMTString().slice(5,16) === resp.results[i].date) {
-                        //this.setDay = 'Today';
-                        this.jobs.push(resp.results[i]);
-                    //}
-                    //this.jobs.push(resp.results[i]);
+                      this.jobs.push(resp.results[i]);
                   };
                   loading.dismiss();
                   console.log(this.jobs);
