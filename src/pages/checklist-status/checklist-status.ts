@@ -4,7 +4,7 @@ import { LinenInfoPage } from './../linen-info/linen-info';
 import { PhotosPage } from './../photos/photos';
 import { SecureStorage } from 'ionic-native';
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular/index';
+import { NavController, NavParams, LoadingController, Platform } from 'ionic-angular/index';
 import {ChecklistPage} from "../checklist/checklist";
 
 
@@ -38,7 +38,8 @@ export class ChecklistStatusPage {
     public navCtrl: NavController,
     private navParams: NavParams,
     private storage: SecureStorage,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private platform: Platform
   ) {
     this.id = navParams.get('id');
     this.jobId = navParams.get('jobId');
@@ -54,81 +55,84 @@ export class ChecklistStatusPage {
     });
     loading.present();
     this.storage = new SecureStorage();
-    this.storage.create('status').then(
-      () => {
-        this.isStorageReady = true; 
-        if(this.isStorageReady) {
-        this.storage.get('checklistStage-job-'+this.jobId).then(
-          res => {
-            let res_obj = JSON.parse(res);
-            this.status = res_obj.status;
-            console.log(res_obj);
-             switch (this.status) {
-               case 2:
-                  this.enableTickStatus_2 = true;
-                  break;
-               case 3.1:
-                  this.enableTickStatus_2 = true;
-                  this.enableTickStatus_3_1 = true;
-                  break;
-               case 3.2:
-                  this.enableTickStatus_2 = true;
-                  this.enableTickStatus_3_1 = true;
-                  this.enableTickStatus_3_2 = true;
-                  break;   
-               case 3.3: 
-                  this.enableTickStatus_2 = true;
-                  this.enableTickStatus_3_1 = true;
-                  this.enableTickStatus_3_2 = true;
-                  this.enableTickStatus_3_3 = true;
-                  break;
-               case 3.4:
-                  this.enableTickStatus_2 = true;
-                  this.enableTickStatus_3_1 = true;
-                  this.enableTickStatus_3_2 = true;
-                  this.enableTickStatus_3_3 = true;
-                  this.enableTickStatus_3_4 = true;
-                  break;
-               case 4:
-                  this.enableTickStatus_2 = true;
-                  this.enableTickStatus_3_1 = true;
-                  this.enableTickStatus_3_2 = true;
-                  this.enableTickStatus_3_3 = true;
-                  this.enableTickStatus_3_4 = true;
-                  this.enableTickStatus_4 = true;
-                  this.complete_clean = true;
-                  break;
-               case 5:
-                  this.enableTickStatus_2 = true;
-                  this.enableTickStatus_3_1 = true;
-                  this.enableTickStatus_3_2 = true;
-                  this.enableTickStatus_3_3 = true;
-                  this.enableTickStatus_3_4 = true;
-                  this.enableTickStatus_4 = true;
-                  this.enableTickStatus_5 = true;
-                  this.complete_clean = true;
-                  break;
-               case 6:
-                  this.enableTickStatus_2 = true;
-                  this.enableTickStatus_3_1 = true;
-                  this.enableTickStatus_3_2 = true;
-                  this.enableTickStatus_3_3 = true;
-                  this.enableTickStatus_3_4 = true;
-                  this.enableTickStatus_4 = true;
-                  this.enableTickStatus_5 = true;
-                  this.enableTickStatus_6 = true;
-                  this.complete_clean = true;
-                  break;   
-               default:
-                  console.log(this.status);
-                  break;                   
-            }            
-          },
-          error => {
-            console.log(error);
-          }
-          );
-    } 
+    this.platform.ready().then(() => {
+      this.storage.create('status').then(
+        () => {
+          this.isStorageReady = true; 
+          if(this.isStorageReady) {
+          this.storage.get('checklistStage-job-'+this.jobId).then(
+            res => {
+              console.log(res);
+              let res_obj = JSON.parse(res);
+              this.status = res_obj.status;
+              console.log(res_obj);
+              switch (this.status) {
+                case 2:
+                    this.enableTickStatus_2 = true;
+                    break;
+                case 3.1:
+                    this.enableTickStatus_2 = true;
+                    this.enableTickStatus_3_1 = true;
+                    break;
+                case 3.2:
+                    this.enableTickStatus_2 = true;
+                    this.enableTickStatus_3_1 = true;
+                    this.enableTickStatus_3_2 = true;
+                    break;   
+                case 3.3: 
+                    this.enableTickStatus_2 = true;
+                    this.enableTickStatus_3_1 = true;
+                    this.enableTickStatus_3_2 = true;
+                    this.enableTickStatus_3_3 = true;
+                    break;
+                case 3.4:
+                    this.enableTickStatus_2 = true;
+                    this.enableTickStatus_3_1 = true;
+                    this.enableTickStatus_3_2 = true;
+                    this.enableTickStatus_3_3 = true;
+                    this.enableTickStatus_3_4 = true;
+                    break;
+                case 4:
+                    this.enableTickStatus_2 = true;
+                    this.enableTickStatus_3_1 = true;
+                    this.enableTickStatus_3_2 = true;
+                    this.enableTickStatus_3_3 = true;
+                    this.enableTickStatus_3_4 = true;
+                    this.enableTickStatus_4 = true;
+                    this.complete_clean = true;
+                    break;
+                case 5:
+                    this.enableTickStatus_2 = true;
+                    this.enableTickStatus_3_1 = true;
+                    this.enableTickStatus_3_2 = true;
+                    this.enableTickStatus_3_3 = true;
+                    this.enableTickStatus_3_4 = true;
+                    this.enableTickStatus_4 = true;
+                    this.enableTickStatus_5 = true;
+                    this.complete_clean = true;
+                    break;
+                case 6:
+                    this.enableTickStatus_2 = true;
+                    this.enableTickStatus_3_1 = true;
+                    this.enableTickStatus_3_2 = true;
+                    this.enableTickStatus_3_3 = true;
+                    this.enableTickStatus_3_4 = true;
+                    this.enableTickStatus_4 = true;
+                    this.enableTickStatus_5 = true;
+                    this.enableTickStatus_6 = true;
+                    this.complete_clean = true;
+                    break;   
+                default:
+                    console.log(this.status);
+                    break;                   
+              }            
+            },
+            error => {
+              console.log(error);
+            }
+            );
+          } 
+        })
         loading.dismiss();
       });
   } 

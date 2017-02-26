@@ -14,8 +14,8 @@ export class UpdateChecklist {
   ){}
 
 
-  putChecklist(id, options, body){
-    return  this.ptkHttp.put(URLs.APIs.checklistId+URLs.getId(id), options, body)
+  putChecklist(id, body){
+    return  this.ptkHttp.put(URLs.APIs.checklistId+URLs.getId(id), body, {withCredentials: true})
                 .map(data => JSON.parse(data['_body']))
   }
 

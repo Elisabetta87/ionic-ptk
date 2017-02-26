@@ -48,7 +48,7 @@ export class JobsListPage {
           user_id: navParams.get('id')
         }
         if (this.params['user_id'] != undefined) {
-                this.getJobsService.getJobs(this.params, {withCredentials: ''})
+                this.getJobsService.getJobs(this.params)
             .subscribe(resp => {
               console.log(resp);
               this.jobs = [];

@@ -1,3 +1,4 @@
+import { Platform } from 'ionic-angular/index';
 import { SpecialRequirementsPage } from './../pages/special-requirements/special-requirements';
 import { RubbishInfoPage } from './../pages/rubbish-info/rubbish-info';
 import { LinenInfoPage } from './../pages/linen-info/linen-info';
@@ -108,8 +109,8 @@ import { GetJobsService } from "../services/get-jobs";
     MenuService,
     {
       provide: PtkHttp,
-      useFactory: (backend: XHRBackend, options: RequestOptions, storage: SecureStorage, app: App) => new PtkHttp(backend, options, storage, app),
-      deps: [XHRBackend, RequestOptions, SecureStorage, App]
+      useFactory: (backend: XHRBackend, options: RequestOptions, storage: SecureStorage, app: App, platform: Platform) => new PtkHttp(backend, options, storage, app, platform),
+      deps: [XHRBackend, RequestOptions, SecureStorage, App, Platform]
     }
   ]
 })

@@ -3,7 +3,7 @@ import { UpdateChecklist } from './../../services/update-checklist';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormsModule } from '@angular/forms';
 import { GeolocationService } from '../../services/geolocation-service';
-import { NavController, NavParams } from 'ionic-angular/index';
+import { NavController, NavParams, Platform } from 'ionic-angular/index';
 import { ChecklistSecondPage } from '../../pages/checklist-second/checklist-second';
 import { SecureStorage } from 'ionic-native';
 
@@ -23,6 +23,7 @@ export class PropertyForm implements OnInit {
   private are_keys_in_there: boolean = false;
   private checklistObj: Object;
   public checklistTracker: Object = {};
+  private isStorageReady: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -30,13 +31,17 @@ export class PropertyForm implements OnInit {
     private geoService: GeolocationService,
     private storage: SecureStorage,
     private navParams: NavParams,
-    private updateChecklist: UpdateChecklist
+    private updateChecklist: UpdateChecklist,
+    private platform: Platform
   ) {
     this.id = navParams.get('id');
     this.jobId = navParams.get('jobId');
     this.checklistObj = navParams.get('checklistObj');
     this.storage = new SecureStorage();
-    this.storage.create('form');
+    platform.ready().then(() => {
+      this.storage.create('form');
+      this.isStorageReady = true;
+    })  
   }
 
   ngOnInit(){
@@ -66,14 +71,15 @@ export class PropertyForm implements OnInit {
     let stringifyTracker = JSON.stringify(this.checklistTracker);
     let stringifyForm = JSON.stringify(this.checklistObj);
     let checklist = 'checklist-'+this.id;
-    this.storage.set(checklist, stringifyForm);
-    this.storage.set('checklistStage-job-'+this.jobId, stringifyTracker);
-    this.updateChecklist.putChecklist(this.id, this.checklistObj, {withCredentials: ''})
-                        .subscribe(res => {
-                          console.log('successfully updated');
-                        });
-    this.navCtrl.popTo(ChecklistStatusPage);
-
+    if (this.isStorageReady) {
+      this.storage.set(checklist, stringifyForm).then(res => console.log(res));
+      this.storage.set('checklistStage-job-'+this.jobId, stringifyTracker);
+      this.updateChecklist.putChecklist(this.id, this.checklistObj)
+                          .subscribe(res => {
+                            console.log('successfully updated');
+                          });
+      this.navCtrl.popTo(ChecklistStatusPage);
+    }
   };
 
 

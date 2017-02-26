@@ -1,7 +1,7 @@
 import { SecureStorage } from 'ionic-native/dist/es5/index';
 import { GetChecklistId } from './../../services/get-checklist-id';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular/index';
+import { NavController, NavParams, Platform } from 'ionic-angular/index';
 import { ChecklistStatusPage } from '../checklist-status/checklist-status';
 
 @Component({
@@ -23,12 +23,14 @@ export class JobDetailsPage {
   private button_txt: string;
   private date: string;
   private time: string;
+  private platform_ready: boolean;
 
   constructor(
     public navCtrl: NavController,
     private navParams: NavParams,
     private storage: SecureStorage,
-    private getChecklistId: GetChecklistId
+    private getChecklistId: GetChecklistId,
+    private platform: Platform
   ) {
     this.address = navParams.get('address');
     this.services = navParams.get('services');
@@ -42,39 +44,46 @@ export class JobDetailsPage {
 
   ionViewWillEnter() {
     this.storage = new SecureStorage();
-    this.storage.create('status').then(
-      () => {
-        this.isStorageReady = true;
-        if(this.isStorageReady) {
-        this.storage.get('checklistStage-job-'+this.jobId).then(
-          res => {
-            this.button_txt = 'Continue Job';
-          },
-          error => {
-            this.button_txt = 'Check-In';
+    this.platform.ready().then(() => {
+      this.platform_ready = true;
+      this.storage.create('status').then(
+        () => {
+          this.isStorageReady = true;
+          if(this.isStorageReady) {
+          this.storage.get('checklistStage-job-'+this.jobId).then(
+            res => {
+              console.log(res);
+              this.button_txt = 'Continue Job';
+            },
+            error => {
+              console.log(error);
+              this.button_txt = 'Check-In';
+            }
+            );
           }
-          );
-        }
-    });
+      });
+    })
   }
 
   completeChecklist() {
     /*this.navCtrl.push(ChecklistPage, {
       id: this.id
     });*/
-    this.checklistBody = {
-                 job: this.jobId,
-      check_in_stamp: this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16),
-    }
-    this.getChecklistId.checklistId(this.checklistBody, {withCredentials: ''}).subscribe(
-      checklist => {
-         this.navCtrl.push(ChecklistStatusPage, {
-            id: checklist.id,
-            jobId: checklist.job,
-            services: this.services,
-            checklistObj: this.checklistBody
-          });
-      })
+    this.platform.ready().then(() => {
+      this.checklistBody = {
+                  job: this.jobId,
+        check_in_stamp: this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16),
+      }
+      this.getChecklistId.checklistId(this.checklistBody).subscribe(
+        checklist => {
+          this.navCtrl.push(ChecklistStatusPage, {
+              id: checklist.id,
+              jobId: checklist.job,
+              services: this.services,
+              checklistObj: this.checklistBody
+            });
+        })
+    })
   }
 
 }

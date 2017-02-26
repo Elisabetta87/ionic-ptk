@@ -2,7 +2,7 @@ import { MenuService } from './../../services/menu';
 import { JobsListPage } from './../../pages/jobs-list/jobs-list';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NavController, LoadingController } from 'ionic-angular/index';
+import { NavController, LoadingController, Platform } from 'ionic-angular/index';
 import {SecureStorage} from 'ionic-native';
 import {HomePage} from "../../pages/home/home";
 import {HomePageGuest} from "../../pages/home-guest/home-guest";
@@ -12,6 +12,7 @@ import {UserIdService} from "../../services/user-id-service";
 import {GetJobsService} from "../../services/get-jobs";
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/observable/fromPromise';
+
 
 
 
@@ -39,20 +40,25 @@ export class LogInForm implements OnInit {
     private geolocation: GeolocationService,
     private getJobsService: GetJobsService,
     private menuService: MenuService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private platform: Platform
   ) {
     let loading = this.loadingCtrl.create({
         content: 'Please wait...'
         });
     loading.present();
     this.storage = new SecureStorage();
-    this.storage.create('ptkStorage').then(
-      () => this.isStorageReady = true);
-    this.geolocation.getGeoPosition().then((resp) => {
-      this.lat = resp.coords.latitude;
-      this.lng = resp.coords.longitude;
-      loading.dismiss();
-    });
+    console.log(this.storage);
+    this.platform.ready().then(() => {
+      this.storage.create('ptkStorage').then(
+      () => this.isStorageReady = true); 
+      this.geolocation.getGeoPosition().then((resp) => {
+        this.lat = resp.coords.latitude;
+        this.lng = resp.coords.longitude;
+        
+      });
+    })
+    loading.dismiss();
   }
 
   ngOnInit(){
@@ -82,7 +88,8 @@ export class LogInForm implements OnInit {
             if(this.isStorageReady){
               Observable.fromPromise(this.storage.set('authToken', token))
                   .subscribe( token => {
-                                this.userIdService.getUserId({username: username}, {withCredentials: ''})
+                                this.storage.get('authToken').then(res => console.log(res));
+                                this.userIdService.getUserId({username: username})
                                     .subscribe(resp => {
                                         console.log(resp);
                                         console.log(resp.results[0].id);
@@ -104,6 +111,7 @@ export class LogInForm implements OnInit {
         location: location,
         datetime: today.toISOString()
       };
+      console.log(location);
       this.logInService.getGuestJobMatch(params).subscribe(
         resp => {
         if(resp.results.length == 0) {

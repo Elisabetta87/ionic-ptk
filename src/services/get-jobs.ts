@@ -15,8 +15,8 @@ export class GetJobsService {
   ){}
 
 
-  getJobs(params, options){
-    return this.ptkHttp.get(URLs.APIs.getJobs + URLs.getParams(params), options)
+  getJobs(params){
+    return this.ptkHttp.get(URLs.APIs.getJobs + URLs.getParams(params), {withCredentials: true})
       .map(data => JSON.parse(data['_body']))
   }
 

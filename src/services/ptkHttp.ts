@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/map';
-import {NavController, App} from "ionic-angular/index";
+import {NavController, App, Platform} from "ionic-angular/index";
 import {LogInPage} from "../pages/log-in/log-in";
 import {SecureStorage} from "ionic-native/dist/es5/index";
 import {Subject} from "rxjs/Subject";
@@ -21,14 +21,16 @@ export class PtkHttp extends Http {
     private backend: ConnectionBackend,
     private defaultOptions: RequestOptions,
     private storage: SecureStorage,
-    public app: App
+    public app: App,
+    private platform: Platform
   ) {
     super(backend, defaultOptions);
 
     this.storage = new SecureStorage();
-    this.storage.create('ptkStorage').then(
-      () => { console.log('storage is ready'); this.isStorageReady = true; });
-
+    this.platform.ready().then(() => {
+      this.storage.create('ptkStorage').then(
+        () => { console.log('storage is ready'); this.isStorageReady = true; });
+    })  
     this.navCtrl = app.getActiveNav();
   }
 
@@ -65,8 +67,8 @@ export class PtkHttp extends Http {
 
 
 
-  createNewRequest(reqOpts, options){
-    return new Request(reqOpts.merge(options))
+  createNewRequest(reqOpts){
+    return new Request(reqOpts)
   }
 
 
@@ -77,21 +79,24 @@ export class PtkHttp extends Http {
     let reqOpts = new RequestOptions({method, headers, body, url});
 
     if(this.isStorageReady){
+      console.log(url, options);
       Observable.fromPromise(this.storage.get('authToken'))
         .subscribe(
           token => {
+            console.log(token);
             headers.append("Authorization", 'Token '+token);
+            console.log('Headers: ', headers);
             reqOpts.merge(options);
-            subjNewReq.next( this.createNewRequest(reqOpts, options) );
+            subjNewReq.next( this.createNewRequest(reqOpts) );
           },
           err => {
             if( (options && options.withCredentials) ){
               console.log('DO SOMETHING IF THE TOKEN DOESN\'T EXIST AND YOU NEED IT');
-              //this.navCtrl.setRoot(LogInPage);
             }
             else{
-              console.log('YOU DON\'T NEED TOKEN');
-              subjNewReq.next( this.createNewRequest(reqOpts, options) );
+              console.log('YOU DON\'T NEED TOKEN', options);
+              reqOpts.merge(options);
+              subjNewReq.next( this.createNewRequest(reqOpts) );
             }
           }
         );
@@ -106,6 +111,7 @@ export class PtkHttp extends Http {
     this.setCustomRequest(url, method, options, body)
         .subscribe(
           newCustReq => {
+            console.log('newCustrequest: ', newCustReq);
             this.request(newCustReq).subscribe( response => {
               subjCustomReq.next( response );
             })
