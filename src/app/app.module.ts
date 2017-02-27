@@ -18,8 +18,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpModule, XHRBackend, RequestOptions } from '@angular/http';
 import { PropertyForm } from '../components/checklist-form/checklist-form';
 import { GeolocationService } from '../services/geolocation-service';
-import { ChecklistSecondPage } from '../pages/checklist-second/checklist-second';
-import { SecondFormComponent } from '../components/checklist-second-form/checklist-second-form';
 import { SecureStorage } from 'ionic-native';
 import { ThankYouPage } from '../pages/thank-you/thank-you';
 import { LogInPage } from '../pages/log-in/log-in';
@@ -45,8 +43,6 @@ import { GetJobsService } from "../services/get-jobs";
     HomePage,
     ChecklistPage,
     PropertyForm,
-    ChecklistSecondPage,
-    SecondFormComponent,
     ThankYouPage,
     LogInPage,
     LogInForm,
@@ -80,8 +76,6 @@ import { GetJobsService } from "../services/get-jobs";
     HomePage,
     ChecklistPage,
     PropertyForm,
-    SecondFormComponent,
-    ChecklistSecondPage,
     ThankYouPage,
     LogInForm,
     LogInPage,

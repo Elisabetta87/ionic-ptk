@@ -60,13 +60,12 @@ export class ChecklistStatusPage {
     this.platform.ready().then(() => {
       this.storage.create('ptkStorage').then(
         () => {
-          this.isStorageReady = true; 
-          if(this.isStorageReady) {
+          this.isStorageReady = true;
           this.storage.get('checklistStage-job-'+this.jobId).then(
             res => {
               let res_obj = JSON.parse(res);
               this.status = res_obj.status;
-              console.log(res_obj);
+              console.log(res_obj, this.status);
               switch (this.status) {
                 case 2:
                     this.enableTickStatus_2 = true;
@@ -132,7 +131,7 @@ export class ChecklistStatusPage {
               console.log(error);
             }
             );
-          } 
+           
         })
         loading.dismiss();
       });
@@ -181,7 +180,6 @@ export class ChecklistStatusPage {
   }
 
   completeClean() {
-    console.log('Toggled ' + this.isToggled);
     if (this.isToggled) {
       this.storage = new SecureStorage();
       this.storage.create('ptkStorage').then(
@@ -191,10 +189,11 @@ export class ChecklistStatusPage {
                 this.storage.get('checklistStage-job-'+this.jobId).then(
                 data => {
                     let obj = JSON.parse(data);
-                    obj.status = 4;
-                    data = JSON.stringify(obj);
-                    this.storage.set('checklistStage-job-'+this.jobId, data);
-                    console.log(data);
+                    if(obj.status == 3.4) {
+                        obj['status'] = 4;  
+                        console.log(obj);         
+                        this.storage.set('checklistStage-job-'+this.jobId, JSON.stringify(obj)).then(res => console.log(res));
+                        }
                 },
                 error => console.log(error)
                 )
@@ -214,16 +213,26 @@ export class ChecklistStatusPage {
   }
 
   checkOut() {
-    if (this.check_out == false) {
-      this.check_out =  true;
-    } else {
-      this.check_out =  false;
+    if (this.check_out) {
+      this.storage = new SecureStorage();
+      this.storage.create('ptkStorage').then(
+          ready => {
+              this.isStorageReady = true;
+              if(this.isStorageReady) {
+                this.storage.get('checklistStage-job-'+this.jobId).then(
+                data => {
+                    let obj = JSON.parse(data);
+                    obj.status = 6;
+                    data = JSON.stringify(obj);
+                    this.storage.set('checklistStage-job-'+this.jobId, data);
+                },
+                error => console.log(error)
+                );
+               // this.storage.set('')
+            }
+          }
+      );
     }
-    console.log(this.check_out);
-    /*this.navCtrl.push(ChecklistPage, {
-     id: this.id
-     });*/
-    return this.check_out;
   }
 
 }

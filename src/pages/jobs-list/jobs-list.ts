@@ -50,7 +50,6 @@ export class JobsListPage {
         if (this.params['user_id'] != undefined) {
                 this.getJobsService.getJobs(this.params)
             .subscribe(resp => {
-              console.log(resp);
               this.jobs = [];
               this.jobsAvailable = true;
               if (resp.results.length == 0) {
@@ -62,7 +61,6 @@ export class JobsListPage {
                       this.jobs.push(resp.results[i]);
                   };
                   loading.dismiss();
-                  console.log(this.jobs);
               }
             });
         } else {

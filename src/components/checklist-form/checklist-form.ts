@@ -68,7 +68,9 @@ export class PropertyForm implements OnInit {
     this.checklistObj['dirty_linen_count_start'] = arrivalChecklist['dirty_linen_count_start'];
     this.checklistTracker['job'] = this.checklistObj['job'];
     this.checklistTracker['status'] = 2;
+    this.checklistTracker['id'] = this.id;
     let stringifyTracker = JSON.stringify(this.checklistTracker);
+    console.log(stringifyTracker);
     let stringifyForm = JSON.stringify(this.checklistObj);
     let checklist = 'checklist-'+this.id;
     if (this.isStorageReady) {
@@ -76,7 +78,6 @@ export class PropertyForm implements OnInit {
       this.storage.set('checklistStage-job-'+this.jobId, stringifyTracker);
       this.updateChecklist.putChecklist(this.id, this.checklistObj)
                           .subscribe(res => {
-                            console.log('successfully updated');
                             this.navCtrl.popTo(ChecklistStatusPage);
                           });
     }

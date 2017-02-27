@@ -29,7 +29,7 @@ export class PtkHttp extends Http {
     this.storage = new SecureStorage();
     this.platform.ready().then(() => {
       this.storage.create('ptkStorage').then(
-        () => { console.log('storage is ready'); this.isStorageReady = true; });
+        () => this.isStorageReady = true);
     })  
     this.navCtrl = app.getActiveNav();
   }
@@ -79,13 +79,10 @@ export class PtkHttp extends Http {
     let reqOpts = new RequestOptions({method, headers, body, url});
 
     if(this.isStorageReady){
-      console.log(url, options);
       Observable.fromPromise(this.storage.get('authToken'))
         .subscribe(
           token => {
-            console.log(token);
             headers.append("Authorization", 'Token '+token);
-            console.log('Headers: ', headers);
             reqOpts.merge(options);
             subjNewReq.next( this.createNewRequest(reqOpts) );
           },
@@ -111,7 +108,6 @@ export class PtkHttp extends Http {
     this.setCustomRequest(url, method, options, body)
         .subscribe(
           newCustReq => {
-            console.log('newCustrequest: ', newCustReq);
             this.request(newCustReq).subscribe( response => {
               subjCustomReq.next( response );
             })

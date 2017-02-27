@@ -15,6 +15,7 @@ export class JobDetailsPage {
   property_longitude: number;
 
   private jobId: number;
+  private id: number = 0;
   private address: string;
   private services: string;
   private checklistBody: Object;
@@ -52,7 +53,6 @@ export class JobDetailsPage {
           if(this.isStorageReady) {
           this.storage.get('checklistStage-job-'+this.jobId).then(
             res => {
-              console.log(res);
               this.button_txt = 'Continue Job';
             },
             error => {
@@ -66,16 +66,16 @@ export class JobDetailsPage {
   }
 
   completeChecklist() {
-    /*this.navCtrl.push(ChecklistPage, {
-      id: this.id
-    });*/
-    this.platform.ready().then(() => {
+    console.log(this.id);
+    if(this.button_txt == 'Check-In') {
+      this.platform.ready().then(() => {
       this.checklistBody = {
                   job: this.jobId,
         check_in_stamp: this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16)
       }
       this.getChecklistId.checklistId(this.checklistBody).subscribe(
         checklist => {
+          this.id = checklist.id;
           this.navCtrl.push(ChecklistStatusPage, {
               id: checklist.id,
               jobId: checklist.job,
@@ -83,7 +83,28 @@ export class JobDetailsPage {
               checklistObj: this.checklistBody
             });
         })
-    })
+      })
+    } else {
+      if(this.isStorageReady) {
+        this.storage.get('checklistStage-job-'+this.jobId).then(
+          res => {
+            this.id = JSON.parse(res).id;
+            this.jobId = JSON.parse(res).job;
+            console.log(this.id, res);
+            this.storage.get('checklist-'+this.id).then(
+              res => { this.navCtrl.push(ChecklistStatusPage, {
+                id: this.id,
+                jobId: this.jobId,
+                services: this.services,
+                checklistObj: JSON.parse(res)
+              })
+          }
+        )
+        }
+        )
+      }
+    }
+    
   }
 
 }
