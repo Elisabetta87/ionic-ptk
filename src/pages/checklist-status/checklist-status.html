@@ -85,13 +85,13 @@
     <ion-col width-60>
       <p>Complete Clean</p>
     </ion-col>
-    <ion-col width-20><ion-toggle [disabled]="!enableTickStatus_3_4" (ionChange)="completeClean()" color="ptkgreen" class="toggle" mode="ios"></ion-toggle></ion-col>
+    <ion-col width-20><ion-toggle [disabled]="!enableTickStatus_3_4" [(ngModel)]="isToggled" (ionChange)="completeClean()" color="ptkgreen" class="toggle" mode="ios"></ion-toggle></ion-col>
   </ion-row>
   <ion-row>
     <ion-col width-10><div class="stage-five"></div></ion-col>
     <ion-col width-10 class="text-right">5.</ion-col>
     <ion-col width-70>
-      <button [disabled]="!complete_clean">Complete Departure Checklist</button>
+      <button (click)="departureChecklist()" [disabled]="!isToggled">Complete Departure Checklist</button>
     </ion-col>
     <ion-col width-10><ion-icon class="transparent" name="checkmark"></ion-icon></ion-col>
   </ion-row>

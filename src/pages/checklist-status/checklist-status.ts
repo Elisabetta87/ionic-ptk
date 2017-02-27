@@ -1,3 +1,4 @@
+import { DepartureChecklistPage } from './../complete-departure-checklist/complete-departure-checklist';
 import { SpecialRequirementsPage } from './../special-requirements/special-requirements';
 import { RubbishInfoPage } from './../rubbish-info/rubbish-info';
 import { LinenInfoPage } from './../linen-info/linen-info';
@@ -31,7 +32,7 @@ export class ChecklistStatusPage {
   private enableTickStatus_5: boolean;
   private enableTickStatus_6: boolean;
   private status: number;
-  private complete_clean: boolean = false;
+  private isToggled: boolean;
   private check_out: boolean = false;
 
   constructor(
@@ -46,6 +47,7 @@ export class ChecklistStatusPage {
     this.services = navParams.get('services');
     this.checklistObj = navParams.get('checklistObj');
     this.greenBar = this.id ? 'greenBar' : '';
+    this.isToggled = false;
   }
 
 
@@ -56,13 +58,12 @@ export class ChecklistStatusPage {
     loading.present();
     this.storage = new SecureStorage();
     this.platform.ready().then(() => {
-      this.storage.create('status').then(
+      this.storage.create('ptkStorage').then(
         () => {
           this.isStorageReady = true; 
           if(this.isStorageReady) {
           this.storage.get('checklistStage-job-'+this.jobId).then(
             res => {
-              console.log(res);
               let res_obj = JSON.parse(res);
               this.status = res_obj.status;
               console.log(res_obj);
@@ -99,7 +100,7 @@ export class ChecklistStatusPage {
                     this.enableTickStatus_3_3 = true;
                     this.enableTickStatus_3_4 = true;
                     this.enableTickStatus_4 = true;
-                    this.complete_clean = true;
+                    this.isToggled = true;
                     break;
                 case 5:
                     this.enableTickStatus_2 = true;
@@ -109,7 +110,7 @@ export class ChecklistStatusPage {
                     this.enableTickStatus_3_4 = true;
                     this.enableTickStatus_4 = true;
                     this.enableTickStatus_5 = true;
-                    this.complete_clean = true;
+                    this.isToggled = true;
                     break;
                 case 6:
                     this.enableTickStatus_2 = true;
@@ -120,7 +121,7 @@ export class ChecklistStatusPage {
                     this.enableTickStatus_4 = true;
                     this.enableTickStatus_5 = true;
                     this.enableTickStatus_6 = true;
-                    this.complete_clean = true;
+                    this.isToggled = true;
                     break;   
                 default:
                     console.log(this.status);
@@ -180,13 +181,13 @@ export class ChecklistStatusPage {
   }
 
   completeClean() {
-    if (this.complete_clean == false) {
-      this.complete_clean =  true;
+    console.log('Toggled ' + this.isToggled);
+    if (this.isToggled) {
       this.storage = new SecureStorage();
-      this.storage.create('completeClean').then(
+      this.storage.create('ptkStorage').then(
           ready => {
               this.isStorageReady = true;
-              if(this.isStorageReady && this.complete_clean) {
+              if(this.isStorageReady) {
                 this.storage.get('checklistStage-job-'+this.jobId).then(
                 data => {
                     let obj = JSON.parse(data);
@@ -200,15 +201,16 @@ export class ChecklistStatusPage {
             }
           }
       );
-    } else {
-      this.complete_clean =  false;
-    }
-    console.log(this.complete_clean);
-    return this.complete_clean;
+    } 
+    return this.isToggled;
   }
 
  departureChecklist() {
-
+    this.navCtrl.push(DepartureChecklistPage, {
+      id: this.id,
+      jobId: this.jobId,
+      checklistObj: this.checklistObj
+    })
   }
 
   checkOut() {

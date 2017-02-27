@@ -29,7 +29,7 @@ export class RubbishInfoPage {
     send() {
         console.log(this.jobId);
       this.storage = new SecureStorage();
-      this.storage.create('rubbish').then(
+      this.storage.create('ptkStorage').then(
           ready => {
               this.isStorageReady = true;
               if(this.isStorageReady) {

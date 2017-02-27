@@ -46,7 +46,7 @@ export class JobDetailsPage {
     this.storage = new SecureStorage();
     this.platform.ready().then(() => {
       this.platform_ready = true;
-      this.storage.create('status').then(
+      this.storage.create('ptkStorage').then(
         () => {
           this.isStorageReady = true;
           if(this.isStorageReady) {
@@ -72,7 +72,7 @@ export class JobDetailsPage {
     this.platform.ready().then(() => {
       this.checklistBody = {
                   job: this.jobId,
-        check_in_stamp: this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16),
+        check_in_stamp: this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16)
       }
       this.getChecklistId.checklistId(this.checklistBody).subscribe(
         checklist => {

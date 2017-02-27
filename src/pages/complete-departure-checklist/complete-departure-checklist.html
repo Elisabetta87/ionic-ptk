@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Complete Departure Checklist</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <form padding [formGroup]="departureChecklistForm" (ngSubmit)="onSubmit()">
+  <ion-row>
+    <ion-col width-80>
+      <p>How many sets of clean linen are there?</p>
+    </ion-col>
+    <ion-col width-20 class="align-center">
+      <input-number formControlName="clean_linen_count_end" ></input-number>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col width-80>
+      <p>How many sets of dirty linen are there?</p>
+    </ion-col>
+    <ion-col width-20 class="align-center">
+      <input-number formControlName="dirty_linen_count_end" ></input-number>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col width-80>
+      <p>Do you need to report any damages?</p>
+    </ion-col>
+    <ion-col width-20 class="align-center">
+        <ion-toggle color="ptkgreen" class="toggle" mode="ios" [(ngModel)]="damages_reported" (ionChange)="damages()" formControlName="damages_reported"></ion-toggle>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="damages_reported">
+    <ion-col>
+      <p>Damages description:</p>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="damages_reported">
+      <ion-col>
+        <ion-textarea id="text-box" formControlName="damages_description"></ion-textarea>
+      </ion-col>
+  </ion-row>   
+  <ion-row class="mt-1">
+    <ion-col width-80>
+      <p>There was any delivery during clean?</p>
+    </ion-col>
+    <ion-col width-20 class="align-center">
+        <ion-toggle color="ptkgreen" class="toggle" mode="ios" [(ngModel)]="delivery_during_clean" (ionChange)="delivery()" formControlName="delivery_during_clean"></ion-toggle>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col width-80>
+      <p>How many beds have you made?</p>
+    </ion-col>
+    <ion-col width-20 class="align-center">
+      <input-number formControlName="number_of_beds_made"></input-number>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <p>Comments:</p>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-textarea id="text-box" formControlName="comments"></ion-textarea>
+    </ion-col>
+  </ion-row>  
+  <ion-row>
+    <ion-col width-100>
+      <button type="submit" class="my-5 customise" [disabled]="!departureChecklistForm.valid">Submit</button>
+    </ion-col>
+  </ion-row>
+</form>
+</ion-content>

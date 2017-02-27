@@ -16,7 +16,7 @@ export class GetChecklistId {
 
   checklistId(body){
     return this.ptkHttp.post(URLs.APIs.checklistId, body, {withCredentials: true})
-      .map(data => JSON.parse(data['_body']))
+               .map(data => JSON.parse(data['_body']))
   }
 
 }

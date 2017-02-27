@@ -26,7 +26,7 @@ export class SpecialRequirementsPage {
 
     send() {
       this.storage = new SecureStorage();
-      this.storage.create('requirements').then(
+      this.storage.create('ptkStorage').then(
           ready => {
               this.isStorageReady = true;
               if(this.isStorageReady) {

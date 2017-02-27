@@ -24,7 +24,7 @@ export class PhotosPage {
 
     send() {
       this.storage = new SecureStorage();
-      this.storage.create('photos').then(
+      this.storage.create('ptkStorage').then(
           ready => {
               this.isStorageReady = true;
               if(this.isStorageReady) {

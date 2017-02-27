@@ -26,7 +26,7 @@ export class LinenInfoPage {
 
     send() {
       this.storage = new SecureStorage();
-      this.storage.create('linen').then(
+      this.storage.create('ptkStorage').then(
           ready => {
               this.isStorageReady = true;
               if(this.isStorageReady) {

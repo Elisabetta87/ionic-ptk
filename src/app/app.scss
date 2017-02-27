@@ -22,14 +22,16 @@ $macaroni: #ee9b2c;
 $olive-green: #93cd5b;
 $white: #ffffff;
 
-.customise-btn {
-  width: 100%;
-  height: 40px;
-  margin: 0 auto;
-  display: block;
-  color: $white;
-  background-color: $macaroni;
-}
+
+.customise {
+    background-color: #A0C7F4;
+    color: #000000;
+    height: 35px;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+  }
+
 .green-txt {
   color: #B6D8AD;
 }
@@ -77,4 +79,9 @@ a:focus, a:hover {
 
   .toggle-ios-ptkgreen .toggle-checked {
   border: 2px solid #000000;
+}
+
+
+#text-box.input {
+  border: 1px solid #cccccc;
 }

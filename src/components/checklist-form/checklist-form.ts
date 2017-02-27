@@ -39,7 +39,7 @@ export class PropertyForm implements OnInit {
     this.checklistObj = navParams.get('checklistObj');
     this.storage = new SecureStorage();
     platform.ready().then(() => {
-      this.storage.create('form');
+      this.storage.create('ptkStorage');
       this.isStorageReady = true;
     })  
   }
@@ -77,8 +77,8 @@ export class PropertyForm implements OnInit {
       this.updateChecklist.putChecklist(this.id, this.checklistObj)
                           .subscribe(res => {
                             console.log('successfully updated');
+                            this.navCtrl.popTo(ChecklistStatusPage);
                           });
-      this.navCtrl.popTo(ChecklistStatusPage);
     }
   };
 

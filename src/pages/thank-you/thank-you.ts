@@ -18,7 +18,7 @@ export class ThankYouPage {
     private storage: SecureStorage
   ) {
     this.storage = new SecureStorage();
-    this.storage.create('form')
+    this.storage.create('ptkStorage')
       .then(
         () => console.log('Storage is ready!'),
         error => console.log(error)
