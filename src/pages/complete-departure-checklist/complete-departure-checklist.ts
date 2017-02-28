@@ -47,24 +47,32 @@ export class DepartureChecklistPage implements OnInit {
 
     ngOnInit() {
         this.departureChecklistForm = this.fb.group({
-            clean_linen_count_end: ['', Validators.required],
-            dirty_linen_count_end: ['', [Validators.required]],
-                 damages_reported: [false, [Validators.required]],
-              damages_description: ['Please describe any damages here....'],
-            delivery_during_clean: [false, [Validators.required]],
-              number_of_beds_made: ['', Validators.required],
-                         comments: ['Leave any comments here......']
+            clean_linen_count_end: [this.checklistObj['clean_linen_count_end'] ? this.checklistObj['clean_linen_count_end'] : '', Validators.required],
+            dirty_linen_count_end: [this.checklistObj['dirty_linen_count_end'] ? this.checklistObj['dirty_linen_count_end'] : '', [Validators.required]],
+                 damages_reported: [this.checklistObj['damages_reported'] ? this.checklistObj['damages_reported'] : false, [Validators.required]],
+              damages_description: [this.checklistObj['damages_description'] ? this.checklistObj['damages_description'] : 'Please describe any damages here....'],
+            delivery_during_clean: [this.checklistObj['delivery_during_clean'] ? this.checklistObj['delivery_during_clean'] : false, [Validators.required]],
+              number_of_beds_made: [this.checklistObj['number_of_beds_made'] ? this.checklistObj['number_of_beds_made'] : '', Validators.required],
+                         comments: [this.checklistObj['comments'] ? this.checklistObj['comments'] : 'Leave any comments here......']
         })
     }
 
     delivery() {
-        console.log('delivery: '+this.delivery_during_clean);
-        return this.delivery_during_clean
+     if (this.delivery_during_clean == false) {
+        this.delivery_during_clean =  true;
+     } else {
+        this.delivery_during_clean =  false;
+     }
+     return this.delivery_during_clean
     }
 
     damages() {
-        console.log('damages: '+ this.damages_reported);
-        return this.damages_reported
+     if (this.damages_reported == false) {
+        this.damages_reported =  true;
+     } else {
+        this.damages_reported =  false;
+     }
+     return this.damages_reported
     }
 
 
@@ -74,10 +82,14 @@ export class DepartureChecklistPage implements OnInit {
         this.checklistObj['clean_linen_count_end'] = departureChecklist['clean_linen_count_end'];
         this.checklistObj['dirty_linen_count_end'] = departureChecklist['dirty_linen_count_end'];
         this.checklistObj['damages_reported'] = departureChecklist['damages_reported'];
-        this.checklistObj['damages_description'] = departureChecklist['damages_description'];
+        console.log(departureChecklist['damages_description'], departureChecklist['comments']);
+        let damage_description = departureChecklist['damages_description']; 
+        let comments = departureChecklist['comments'];
+        this.checklistObj['damages_description'] = departureChecklist['damages_description'] != 'Please describe any damages here....' ? damage_description : '';
         this.checklistObj['delivery_during_clean'] = departureChecklist['delivery_during_clean'];
         this.checklistObj['number_of_beds_made'] = departureChecklist['number_of_beds_made'];
-        this.checklistObj['comments'] = departureChecklist['comments'];
+        this.checklistObj['comments'] = departureChecklist['comments'] != 'Leave any comments here......' ? comments : '';
+        console.log(this.checklistObj);
         this.checklistTracker['job'] = this.checklistObj['job'];
         this.checklistTracker['status'] = 5;
         this.checklistTracker['id'] = this.id;
@@ -85,7 +97,7 @@ export class DepartureChecklistPage implements OnInit {
         let stringifyForm = JSON.stringify(this.checklistObj);
         let checklist = 'checklist-'+this.id;
         if (this.isStorageReady) {
-        this.storage.set(checklist, stringifyForm);//.then(res => console.log(res));
+        this.storage.set(checklist, stringifyForm);
         this.storage.set('checklistStage-job-'+this.jobId, stringifyTracker).then(res => console.log(res));
         console.log(this.id);
         this.updateChecklist.putChecklist(this.id, this.checklistObj)

@@ -18,7 +18,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export class InputNumber implements ControlValueAccessor{
 
-  private number: number = 1;
+  private number: number = null;
   private propagateChange = (_:any) => {};
 
   constructor(
@@ -37,7 +37,7 @@ export class InputNumber implements ControlValueAccessor{
   }
 
   writeValue(value: any): void{
-    this.number = value || 1;
+    this.number = value || null;
   }
 
   registerOnChange(fn: any): void{

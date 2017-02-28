@@ -53,7 +53,9 @@ export class JobDetailsPage {
           if(this.isStorageReady) {
           this.storage.get('checklistStage-job-'+this.jobId).then(
             res => {
-              this.button_txt = 'Continue Job';
+              let resObj = JSON.parse(res);
+              console.log(resObj.status);
+              this.button_txt = resObj.status != 6 ? 'Continue Job' : 'Job Completed';
             },
             error => {
               console.log(error);

@@ -55,10 +55,9 @@ export class LogInForm implements OnInit {
       this.geolocation.getGeoPosition().then((resp) => {
         this.lat = resp.coords.latitude;
         this.lng = resp.coords.longitude;
-        
+        loading.dismiss();
       });
     })
-    loading.dismiss();
   }
 
   ngOnInit(){
@@ -93,7 +92,7 @@ export class LogInForm implements OnInit {
                                     .subscribe(resp => {
                                         console.log(resp);
                                         console.log(resp.results[0].id);
-                                        let user_id = 30 || resp.results[0].id;
+                                        let user_id = 31 || resp.results[0].id;
                                         this.menuService.displayMenu();
                                         this.navCtrl.push(JobsListPage, {id: user_id});
                                     })

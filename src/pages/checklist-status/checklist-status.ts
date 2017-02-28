@@ -1,3 +1,4 @@
+import { UpdateChecklist } from './../../services/update-checklist';
 import { DepartureChecklistPage } from './../complete-departure-checklist/complete-departure-checklist';
 import { SpecialRequirementsPage } from './../special-requirements/special-requirements';
 import { RubbishInfoPage } from './../rubbish-info/rubbish-info';
@@ -33,14 +34,16 @@ export class ChecklistStatusPage {
   private enableTickStatus_6: boolean;
   private status: number;
   private isToggled: boolean;
-  private check_out: boolean = false;
+  private check_out: boolean;
+  private current_date: Date = new Date();
 
   constructor(
     public navCtrl: NavController,
     private navParams: NavParams,
     private storage: SecureStorage,
     private loadingCtrl: LoadingController,
-    private platform: Platform
+    private platform: Platform,
+    private updateChecklist: UpdateChecklist
   ) {
     this.id = navParams.get('id');
     this.jobId = navParams.get('jobId');
@@ -48,6 +51,7 @@ export class ChecklistStatusPage {
     this.checklistObj = navParams.get('checklistObj');
     this.greenBar = this.id ? 'greenBar' : '';
     this.isToggled = false;
+    this.check_out = false;
   }
 
 
@@ -121,6 +125,7 @@ export class ChecklistStatusPage {
                     this.enableTickStatus_5 = true;
                     this.enableTickStatus_6 = true;
                     this.isToggled = true;
+                    this.check_out = true;
                     break;   
                 default:
                     console.log(this.status);
@@ -217,22 +222,28 @@ export class ChecklistStatusPage {
       this.storage = new SecureStorage();
       this.storage.create('ptkStorage').then(
           ready => {
-              this.isStorageReady = true;
-              if(this.isStorageReady) {
                 this.storage.get('checklistStage-job-'+this.jobId).then(
                 data => {
                     let obj = JSON.parse(data);
                     obj.status = 6;
-                    data = JSON.stringify(obj);
                     this.storage.set('checklistStage-job-'+this.jobId, data);
+                    this.checklistObj['check_out_stamp'] = this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16);
+                    let stringifyObj= JSON.stringify(this.checklistObj);
+                    let checklist = 'checklist-'+this.id;
+                    this.storage.set(checklist, stringifyObj);
+                    this.storage.set('checklistStage-job-'+this.jobId, JSON.stringify(obj)).then(res => console.log(res));
+                    this.updateChecklist.putChecklist(this.id, this.checklistObj)
+                                        .subscribe(res => {
+                                            //this.navCtrl.popTo(ChecklistStatusPage);
+                                            console.log(res);
+                                        });
                 },
                 error => console.log(error)
                 );
-               // this.storage.set('')
-            }
           }
       );
     }
+    return this.check_out;
   }
 
 }

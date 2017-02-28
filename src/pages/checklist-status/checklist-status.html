@@ -107,10 +107,13 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col width-10><div class="stage-six"></div></ion-col>
+      <ion-col width-10><div class="stage-six" [ngClass]="{'greenBar': check_out}"></div></ion-col>
       <ion-col width-10 class="text-right">6.</ion-col>
-      <ion-col width-60><p>Check-Out</p></ion-col>
-      <ion-col width-20> <ion-toggle [disabled]="!enableTickStatus_5" [(ngModel)]="check_out" (ionChange)="checkOut()" color="ptkgreen" class="toggle" mode="ios"></ion-toggle></ion-col>
+      <ion-col width-50><p>Check-Out</p></ion-col>
+      <ion-col width-20> <ion-toggle [disabled]="!enableTickStatus_5 || check_out" [(ngModel)]="check_out" (ionChange)="checkOut()" color="ptkgreen" class="toggle" mode="ios"></ion-toggle></ion-col>
+      <ion-col width-10>
+        <ion-icon  *ngIf="check_out" class="green-tick" name="checkmark"></ion-icon>
+      </ion-col> 
     </ion-row>
   </ion-grid>
 </ion-content>

@@ -46,9 +46,9 @@ export class PropertyForm implements OnInit {
 
   ngOnInit(){
     this.propertyForm = this.fb.group({
-      keys_in_keysafe: [false, Validators.required],
-      dirty_linen_count_start: ['', [Validators.required]],
-      clean_linen_count_start: ['', [Validators.required]]
+      keys_in_keysafe: [this.checklistObj['keys_in_keysafe'] ? this.checklistObj['keys_in_keysafe'] : false, Validators.required],
+      dirty_linen_count_start: [this.checklistObj['dirty_linen_count_start'] ? this.checklistObj['dirty_linen_count_start'] : '', [Validators.required]],
+      clean_linen_count_start: [this.checklistObj['clean_linen_count_start'] ? this.checklistObj['clean_linen_count_start'] : '', [Validators.required]]
     });
 
   }

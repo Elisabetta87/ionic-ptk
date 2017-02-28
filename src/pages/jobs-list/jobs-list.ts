@@ -21,14 +21,12 @@ export class JobsListPage {
   private setDay: string;
   private date: string;
   private time: string;
-
   
-
   constructor(
     public  loadingCtrl: LoadingController,
     public navCtrl:NavController,
     private navParams: NavParams,
-    private getJobsService: GetJobsService
+    private getJobsService: GetJobsService,
   ) {
 
         let loading = this.loadingCtrl.create({
@@ -45,10 +43,10 @@ export class JobsListPage {
           start_date: this.today.toISOString().slice(0, 10),
           end_date: this.twoWeeksAfter.toISOString().slice(0, 10),
           status: 'accepted,completed',
-          user_id: navParams.get('id')
+          user_id: 31 || navParams.get('id')
         }
         if (this.params['user_id'] != undefined) {
-                this.getJobsService.getJobs(this.params)
+            this.getJobsService.getJobs(this.params)
             .subscribe(resp => {
               this.jobs = [];
               this.jobsAvailable = true;
@@ -71,9 +69,6 @@ export class JobsListPage {
         
   }
 
-  //this function needs to be called inside future function that gets API jobs list info
-  //getJobs() {}
-
   pushPage(id:string, status: string) {
     for (let i = 0; i < this.jobs.length; i++) {
       if (this.jobs[i].id === id && status !== 'red') {
@@ -94,3 +89,6 @@ export class JobsListPage {
   }
 
 }
+
+
+

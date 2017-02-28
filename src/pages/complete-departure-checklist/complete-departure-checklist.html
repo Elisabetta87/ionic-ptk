@@ -26,15 +26,15 @@
       <p>Do you need to report any damages?</p>
     </ion-col>
     <ion-col width-20 class="align-center">
-        <ion-toggle color="ptkgreen" class="toggle" mode="ios" [(ngModel)]="damages_reported" (ionChange)="damages()" formControlName="damages_reported"></ion-toggle>
+        <ion-toggle color="ptkgreen" class="toggle" mode="ios" (ionChange)="damages()" formControlName="damages_reported"></ion-toggle>
     </ion-col>
   </ion-row>
-  <ion-row *ngIf="damages_reported">
+  <ion-row *ngIf="damages_reported || checklistObj['damages_description']">
     <ion-col>
       <p>Damages description:</p>
     </ion-col>
   </ion-row>
-  <ion-row *ngIf="damages_reported">
+  <ion-row *ngIf="damages_reported || checklistObj['damages_description']">
       <ion-col>
         <ion-textarea id="text-box" formControlName="damages_description"></ion-textarea>
       </ion-col>
@@ -44,7 +44,7 @@
       <p>There was any delivery during clean?</p>
     </ion-col>
     <ion-col width-20 class="align-center">
-        <ion-toggle color="ptkgreen" class="toggle" mode="ios" [(ngModel)]="delivery_during_clean" (ionChange)="delivery()" formControlName="delivery_during_clean"></ion-toggle>
+        <ion-toggle color="ptkgreen" class="toggle" mode="ios" (ionChange)="delivery()" formControlName="delivery_during_clean"></ion-toggle>
     </ion-col>
   </ion-row>
   <ion-row>
