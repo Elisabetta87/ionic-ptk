@@ -1,10 +1,10 @@
 import { Storage } from '@ionic/storage';
 import { SecureStorage } from 'ionic-native/dist/es5/index';
 import { JobsListPage } from './../jobs-list/jobs-list';
+import { MarketPage } from '../../pages/jobs-list/market';
 import { NavController } from 'ionic-angular/index';
 import { LogInPage } from './../log-in/log-in';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {MarketPage} from '../../pages/market/market';
 import {MorePage} from '../../pages/more/more';
 
 

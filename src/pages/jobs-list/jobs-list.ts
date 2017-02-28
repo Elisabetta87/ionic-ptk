@@ -1,7 +1,7 @@
 import { TabsPage } from './../tabs/tabs';
 import { MenuComponent } from './../../components/menu/menu';
 import { Component } from '@angular/core';
-import { NavController, LoadingController, NavParams } from 'ionic-angular/index';
+import { NavController, LoadingController, NavParams, Nav } from 'ionic-angular/index';
 import { JobDetailsPage } from '../job-details/job-details';
 import {GetJobsService} from "../../services/get-jobs";
 
@@ -27,10 +27,11 @@ export class JobsListPage {
     public navCtrl:NavController,
     private navParams: NavParams,
     private getJobsService: GetJobsService,
+    public nav: Nav
   ) {
 
         let loading = this.loadingCtrl.create({
-        content: 'Please wait...'
+          content: 'Please wait...'
         });
         
         loading.present();
@@ -45,29 +46,58 @@ export class JobsListPage {
           status: 'accepted,completed',
           user_id: 31 || navParams.get('id')
         }
-        if (this.params['user_id'] != undefined) {
-            this.getJobsService.getJobs(this.params)
-            .subscribe(resp => {
-              this.jobs = [];
-              this.jobsAvailable = true;
-              if (resp.results.length == 0) {
-                this.jobsAvailable = false;
-                this.message = 'Sorry, no jobs available!!';
-                loading.dismiss();
-              } else {
-                  for(let i=0; i< resp.results.length; i++) {
-                      this.jobs.push(resp.results[i]);
-                  };
+
+        this.getJobsService
+            .lopadJobs(this.params)
+            .subscribe( resp => {
                   loading.dismiss();
-              }
+                  if( resp.jobsAvailable ){
+                      this.jobsAvailable = true;
+                      this.jobs = resp.jobs;
+                  }
+                  else{
+                    this.message = resp.message;
+                  }  
             });
-        } else {
-          this.jobsAvailable = false;
-          this.message = 'Sorry, no jobs available!!';
-          loading.dismiss();
-        }
+
+        // if (this.params['user_id'] != undefined) {
+        //     this.getJobsService.getJobs(this.params)
+        //     .subscribe(resp => {
+        //       this.jobs = [];
+        //       this.jobsAvailable = true;
+        //       if (resp.results.length == 0) {
+        //         this.jobsAvailable = false;
+        //         this.message = 'Sorry, no jobs available!!';
+        //         this.loading.dismiss();
+        //       } else {
+        //           for(let i=0; i< resp.results.length; i++) {
+        //               this.jobs.push(resp.results[i]);
+        //           };
+        //           this.loading.dismiss();
+        //       }
+        //     });
+        // } else {
+        //   this.jobsAvailable = false;
+        //   this.message = 'Sorry, no jobs available!!';
+        //   this.loading.dismiss();
+        // }
+        
+        // let getJobsInfo = this.getJobsService.loadJobs(this.params, this.loading);
+        // console.log(getJobsInfo);
+        // this.jobs = getJobsInfo.jobs;
+        // this.jobsAvailable = getJobsInfo.jobsAvailable;
+        // this.message = getJobsInfo.message;
+        // console.log(this.jobs, this.jobsAvailable, this.message);
+        // loading.dismiss();
         
   }
+//ionViewDidEnter
+  // ionViewDidEnter() {
+  //   let getJobsInfo = this.getJobsService.loadJobs(this.params, this.loading);
+  //       console.log(getJobsInfo);
+  //       let view = this.nav.getActive();
+  //       console.log(view.component.name);
+  // }
 
   pushPage(id:string, status: string) {
     for (let i = 0; i < this.jobs.length; i++) {

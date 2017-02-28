@@ -1,6 +1,6 @@
 <ion-content padding-bottom *ngIf="jobsAvailable">
   <ion-list inset *ngFor="let job of jobs; let i = index" class="{{ job.status }} m-3 mt-4 item-text-wrap">
-    <ion-title *ngIf="i == 0 || jobs[i-1].date != job.date">{{ job.date | date:"MM/dd/yy" }}</ion-title>
+    <!--<ion-title *ngIf="i == 0 || jobs[i-1].date != job.date">{{ job.date | date:"MM/dd/yy" }}</ion-title>-->
     <button ion-item class="{{ job.status }}" (click)="pushPage(job.id, job.status)">
       <div class="ciao">
         <p>{{ job.start_time }} - {{ job.end_time }}</p>
