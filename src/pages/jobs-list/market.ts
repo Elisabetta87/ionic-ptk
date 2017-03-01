@@ -18,6 +18,7 @@ export class MarketPage {
   private jobsAvailable:boolean;
   private jobs:any;
   private message: string;
+  private market:boolean = true;
 
   constructor(
     public loadingCtrl: LoadingController,
@@ -25,7 +26,6 @@ export class MarketPage {
     private navParams: NavParams,
     private getJobsService: GetJobsService
   ) {
-    console.log('MARKET PLACE');
     this.date.setDate(this.date.getDate() + 1);
     this.twoWeeksAfter.setDate(this.twoWeeksAfter.getDate() + 1);
     
@@ -37,7 +37,7 @@ export class MarketPage {
 
     this.params_market = {
       start_date: this.date.toISOString().slice(0, 10),
-      end_date: this.date.toISOString().slice(0, 10),//this.twoWeeksAfter.toISOString().slice(0, 10),
+      end_date: this.twoWeeksAfter.toISOString().slice(0, 10),
       status: 'available,accepted',
       user_id: 31 //|| navParams.get('id')
     }

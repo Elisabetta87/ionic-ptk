@@ -22,6 +22,7 @@ export class JobsListPage {
   private date: string;
   private time: string;
   private green: string;
+  private schedule:boolean = true;
   
   constructor(
     public  loadingCtrl: LoadingController,

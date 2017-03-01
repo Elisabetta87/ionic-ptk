@@ -58,12 +58,13 @@ export class PtkHttp extends Http {
     return this.getObsCustomReq(url, 'PUT', options, body);
   }
 
-
+  patch(url: string, body: any, options?: RequestOptionsArgs): Observable<Response>{
+    return this.getObsCustomReq(url, 'PATCH', options, body)
+  }
 
   delete(url: string, options?: RequestOptionsArgs): Observable<Response>{
     return this.getObsCustomReq(url, 'DELET$', options);
   }
-
 
 
   createNewRequest(reqOpts){

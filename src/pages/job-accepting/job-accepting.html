@@ -1,28 +1,32 @@
 <ion-content>
     <ion-card id="card-bg">
-        <ion-card-content>
-            <ion-grid>
+        <ion-card-content class="p-0">
+            <ion-grid class="first-grid">
                 <ion-row>
-                    <ion-col width-30>Time:</ion-col>
-                    <ion-col width-80>{{ job.start_time }} - {{ job.end_time }}</ion-col>
+                    <ion-col width-25>Time:</ion-col>
+                    <ion-col width-75>{{ job.start_time }} - {{ job.end_time }}</ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col width-30>Location:</ion-col>
-                    <ion-col width-80>{{ job.property_address }}</ion-col>
+                    <ion-col width-25>Location:</ion-col>
+                    <ion-col width-75>{{ job.property_address }}</ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col width-30>Services:</ion-col>
-                    <ion-col width-80>{{ job.services_string }}</ion-col>
+                    <ion-col width-25>Services:</ion-col>
+                    <ion-col width-75>{{ job.services_string }}</ion-col>
                 </ion-row>
                 <ion-row *ngIf="job.detail.length > 0">
-                    <ion-col width-30>Details:</ion-col>
-                    <ion-col width-80>{{ job.detail }}</ion-col>
+                    <ion-col width-25>Details:</ion-col>
+                    <ion-col width-75>{{ job.detail }}</ion-col>
                 </ion-row>
             </ion-grid>
         </ion-card-content>
     </ion-card>
-    <ion-grid class="mt-4 text-center">
-        <ion-row><h4>Are You Sure You Want To Accept This Job?</h4></ion-row>
+    <ion-grid class="mt-4">
+        <ion-row>
+            <ion-col class="my-0 mr-5 ml-5">
+                <h4>Are You Sure You Want To Accept This Job?</h4>
+            </ion-col>    
+        </ion-row>
         <ion-row class="my-5">
             <ion-col width-50>
                 <button class="btn-accept" (click)="accept()">YES</button>
@@ -32,9 +36,4 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-    
-    <div class="my-4 pl-5 pr-5">
-          
-          
-        </div>
 </ion-content>
