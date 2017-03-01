@@ -1,3 +1,4 @@
+import { JobAcceptingPage } from './../pages/job-accepting/job-accepting';
 import { DepartureChecklistPage } from './../pages/complete-departure-checklist/complete-departure-checklist';
 import { Platform } from 'ionic-angular/index';
 import { SpecialRequirementsPage } from './../pages/special-requirements/special-requirements';
@@ -59,7 +60,8 @@ import { GetJobsService } from "../services/get-jobs";
     LinenInfoPage,
     RubbishInfoPage,
     SpecialRequirementsPage,
-    DepartureChecklistPage
+    DepartureChecklistPage,
+    JobAcceptingPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -92,7 +94,8 @@ import { GetJobsService } from "../services/get-jobs";
     LinenInfoPage,
     RubbishInfoPage,
     SpecialRequirementsPage,
-    DepartureChecklistPage
+    DepartureChecklistPage,
+    JobAcceptingPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

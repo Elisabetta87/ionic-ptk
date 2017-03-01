@@ -1,6 +1,5 @@
+import { JobAcceptingPage } from './../job-accepting/job-accepting';
 import { GetJobsService } from './../../services/get-jobs';
-import { JobsListPage } from './../jobs-list/jobs-list';
-import { TabsPage } from './../tabs/tabs';
 import { Component } from '@angular/core';
 import {NavController, LoadingController, NavParams} from "ionic-angular/index";
 
@@ -38,7 +37,7 @@ export class MarketPage {
 
     this.params_market = {
       start_date: this.date.toISOString().slice(0, 10),
-      end_date: this.twoWeeksAfter.toISOString().slice(0, 10),
+      end_date: this.date.toISOString().slice(0, 10),//this.twoWeeksAfter.toISOString().slice(0, 10),
       status: 'available,accepted',
       user_id: 31 //|| navParams.get('id')
     }
@@ -57,6 +56,15 @@ export class MarketPage {
                   }  
             });
 
+  }
+
+
+  pushPage(id:string, status: string) {
+    for (let i = 0; i < this.jobs.length; i++) {
+      if (this.jobs[i].id === id && status !== 'Accepted') {
+        this.navCtrl.push(JobAcceptingPage, {job: this.jobs[i]});
+      }
+    } 
   }
 
 }

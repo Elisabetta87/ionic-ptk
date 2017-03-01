@@ -1,5 +1,5 @@
 //import { Injectable } from '@angular/core';
-import { Component } from '@angular/core';
+//import { Component } from '@angular/core';
 
 //@Injectable()
 export class URLs{
@@ -14,7 +14,6 @@ export class URLs{
     getGuestJobMatch: URLs.home + 'api/v2/job_match/'
     };
     
-    //?key=value&key=value
     static  getParams(params?:Object) { 
         let url_string: string = '?';
         if (params == null || undefined) {

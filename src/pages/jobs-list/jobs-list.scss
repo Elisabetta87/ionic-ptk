@@ -3,17 +3,14 @@ page-jobs-list, page-market {
     .Complete {
       background-color: #B6D8AD;
     }
-    .red {
+    .Failed {
       background-color: #EB999B;
     }
-    .orange {
-      background-color: #FACBA2;
-    }
-    .yellow {
+    .Accepted {
       background-color: #FFE6A3;
     }
-    .grey {
-      background-color: #ededed;
+    .Available {
+      background-color: #ffffff;
     }
     ion-list {
         border: 1px solid #c0c0c0;

@@ -1,0 +1,22 @@
+job-accepting-page {
+    ion-content.content.content-md {
+        background-color: #679BE4;
+        #card-bg {
+            background-color: #ffffff;
+            border: 2px solid #000000;
+            margin-top: 1.5rem;
+        }
+        h4 {
+            margin: 1rem auto 0;
+            color: #ffffff;
+            padding: 0 40px;
+        }
+        .btn-accept, .btn-discard {
+            width: 70px;
+            height: 45px;
+            background-color: #ffffff;
+            border: 2px solid black;
+            box-shadow: 1.2px 1.2px 0 0;
+        }
+    }
+}

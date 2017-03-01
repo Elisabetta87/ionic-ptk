@@ -21,6 +21,7 @@ export class JobsListPage {
   private setDay: string;
   private date: string;
   private time: string;
+  private green: string;
   
   constructor(
     public  loadingCtrl: LoadingController,
@@ -38,7 +39,6 @@ export class JobsListPage {
 
         this.date = navParams.get('date');
         this.time = navParams.get('time');
-        
       
         this.params = {
           start_date: this.today.toISOString().slice(0, 10),
@@ -50,58 +50,21 @@ export class JobsListPage {
         this.getJobsService
             .lopadJobs(this.params)
             .subscribe( resp => {
-                  loading.dismiss();
                   if( resp.jobsAvailable ){
                       this.jobsAvailable = true;
                       this.jobs = resp.jobs;
                   }
                   else{
                     this.message = resp.message;
-                  }  
+                  } 
+                  loading.dismiss(); 
             });
-
-        // if (this.params['user_id'] != undefined) {
-        //     this.getJobsService.getJobs(this.params)
-        //     .subscribe(resp => {
-        //       this.jobs = [];
-        //       this.jobsAvailable = true;
-        //       if (resp.results.length == 0) {
-        //         this.jobsAvailable = false;
-        //         this.message = 'Sorry, no jobs available!!';
-        //         this.loading.dismiss();
-        //       } else {
-        //           for(let i=0; i< resp.results.length; i++) {
-        //               this.jobs.push(resp.results[i]);
-        //           };
-        //           this.loading.dismiss();
-        //       }
-        //     });
-        // } else {
-        //   this.jobsAvailable = false;
-        //   this.message = 'Sorry, no jobs available!!';
-        //   this.loading.dismiss();
-        // }
-        
-        // let getJobsInfo = this.getJobsService.loadJobs(this.params, this.loading);
-        // console.log(getJobsInfo);
-        // this.jobs = getJobsInfo.jobs;
-        // this.jobsAvailable = getJobsInfo.jobsAvailable;
-        // this.message = getJobsInfo.message;
-        // console.log(this.jobs, this.jobsAvailable, this.message);
-        // loading.dismiss();
         
   }
-//ionViewDidEnter
-  // ionViewDidEnter() {
-  //   let getJobsInfo = this.getJobsService.loadJobs(this.params, this.loading);
-  //       console.log(getJobsInfo);
-  //       let view = this.nav.getActive();
-  //       console.log(view.component.name);
-  // }
 
   pushPage(id:string, status: string) {
     for (let i = 0; i < this.jobs.length; i++) {
-      if (this.jobs[i].id === id && status !== 'red') {
+      if (this.jobs[i].id === id && status !== 'Failed') {
         this.navCtrl.push(JobDetailsPage, {
                     address : this.jobs[i].property_address,
                    services : this.jobs[i].services_string,
@@ -112,7 +75,7 @@ export class JobsListPage {
                        time : this.jobs[i].time
           }
         );
-      } else if (this.jobs[i].id === id && status === 'red') {
+      } else if (this.jobs[i].id === id && status === 'Failed') {
           console.log('job no more available!!!');
       }
     }

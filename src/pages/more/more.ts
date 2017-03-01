@@ -2,7 +2,6 @@ import { SecureStorage } from 'ionic-native/dist/es5/index';
 import { Component } from '@angular/core';
 import {NavController} from "ionic-angular/index";
 import {LogInPage} from "../log-in/log-in";
-import { TabsPage } from './../tabs/tabs';
 
 
 

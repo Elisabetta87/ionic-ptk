@@ -5,7 +5,7 @@ import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/map';
 import {NavController, App, Platform} from "ionic-angular/index";
-import {LogInPage} from "../pages/log-in/log-in";
+//import {LogInPage} from "../pages/log-in/log-in";
 import {SecureStorage} from "ionic-native/dist/es5/index";
 import {Subject} from "rxjs/Subject";
 
@@ -14,7 +14,7 @@ import {Subject} from "rxjs/Subject";
 export class PtkHttp extends Http {
 
   public navCtrl: NavController;
-  private token: string;
+  //private token: string;
   private isStorageReady: boolean = false;
 
   constructor(
@@ -43,7 +43,6 @@ export class PtkHttp extends Http {
 
 
   get(url: string, options?: RequestOptionsArgs): Observable<Response>{
-    //return this.request(this.setCustomRequest( url, 'GET', options ));
     return this.getObsCustomReq(url, 'GET', options);
   }
 
@@ -88,7 +87,7 @@ export class PtkHttp extends Http {
           },
           err => {
             if( (options && options.withCredentials) ){
-              console.log('DO SOMETHING IF THE TOKEN DOESN\'T EXIST AND YOU NEED IT 3333');
+              console.log('DO SOMETHING IF THE TOKEN DOESN\'T EXIST AND YOU NEED IT');
             }
             else{
               console.log('YOU DON\'T NEED TOKEN', options);
