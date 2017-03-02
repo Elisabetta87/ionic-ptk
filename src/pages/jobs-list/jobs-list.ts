@@ -26,6 +26,7 @@ export class JobsListPage {
   private tomorrow: any = new Date();
   private day: any;
 
+
   constructor(
     public  loadingCtrl: LoadingController,
     public navCtrl:NavController,

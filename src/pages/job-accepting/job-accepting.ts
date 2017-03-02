@@ -40,7 +40,7 @@ export class JobAcceptingPage {
             this.storage.get('user_id').then(
                 user_id => {
                     this.job['provider'] = +user_id;
-                    this.jobService.updateJobs(this.jobId, this.job).subscribe(res => this.navCtrl.popTo(MarketPage));
+                    this.jobService.updateJobs(this.jobId, this.job).subscribe(res => {this.navCtrl.push(MarketPage, {forceGetRequest: true}); console.log(this.jobId) });
                 },
                 error => console.log(error)
             )
@@ -52,3 +52,4 @@ export class JobAcceptingPage {
     }
 
 }
+

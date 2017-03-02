@@ -18,12 +18,15 @@ export class MarketPage {
   private date: any = new Date();
   private twoWeeksAfter: any =  new Date(+new Date + 12096e5);
   private jobsAvailable:boolean;
-  private jobs:any;
+  private jobs:any = {};
   private message: string;
   private market:boolean = true;
   private tomorrow: any = new Date();
   private params = {};
   private today: any = new Date(); 
+  private time_stamp = new Date();
+  private loading:any;
+  private forceGetRequest:boolean = false;
 
   constructor(
     public loadingCtrl: LoadingController,
@@ -36,41 +39,70 @@ export class MarketPage {
 
     this.date.setDate(this.date.getDate() + 1);
     this.twoWeeksAfter.setDate(this.twoWeeksAfter.getDate() + 1);
+
+    this.forceGetRequest = this.navParams.get('forceGetRequest');
     
-    let loading = this.loadingCtrl.create({
+    this.loading = this.loadingCtrl.create({
         content: 'Please wait...'
     });
         
-    loading.present();
+    this.loading.present();
 
     this.params_market = {
       start_date: this.date.toISOString().slice(0, 10),
       end_date: this.twoWeeksAfter.toISOString().slice(0, 10),
       status: 'available,accepted',
-      user_id: 31 //|| navParams.get('id')
+      user_id: 30 //|| navParams.get('id')
     }
 
     this.tomorrow = this.params_market['start_date'];
     this.params = {start_date: this.today.toISOString().slice(0, 10)};
-  
-  //On Market Page Load: -create 'market-last-update' into the storage (width time_stamp), everytime page loads check:  if not MLU: Get and create MLU else if (Now-MLC)>=10mins then get update MLC 
-
-    this.getJobsService
-            .loadJobs(this.params_market)
-            .subscribe( resp => {
-                  loading.dismiss();
-                  console.log(resp);
-                  if( resp.jobsAvailable ){
-                      this.jobsAvailable = true;
-                      this.jobs = resp.jobs;
-                  }
-                  else{
-                    this.message = resp.message;
-                  }  
-            });
 
   }
 
+  ionViewWillEnter() {
+    let date = new Date();
+    let newTime = date.getTime();
+    if (this.jobs.length>0) {
+      this.getJobs(newTime);
+    }
+    else if(this.isStorageReady) {  
+      this.storage.get('market-last-update').then(
+        res => {
+            let start_time = +res;
+            let diff_time_mins = (newTime - start_time)/60000;
+            console.log(diff_time_mins);
+            if(diff_time_mins > 10 || this.forceGetRequest) {
+              this.getJobs(newTime);
+            }
+        },
+        error => this.getJobs(newTime)
+      ) 
+    }
+  }
+
+  getJobs(time_stamp:any) {
+    this.getJobsService
+      .loadJobs(this.params_market)
+      .subscribe( resp => {
+        console.log(resp);
+            if(this.isStorageReady) {
+              this.storage.set('market-last-update', time_stamp.toString()).then(
+                done => {
+                      if( resp.jobsAvailable ){
+                        this.jobsAvailable = true;
+                        this.jobs = resp.jobs;
+                      }
+                      else{
+                        this.message = resp.message;
+                      } 
+                      this.loading.dismiss(); 
+                    },
+                error => console.log(error)    
+                )
+            }  
+      });
+  }
 
   pushPage(id:string, status: string) {
     for (let i = 0; i < this.jobs.length; i++) {

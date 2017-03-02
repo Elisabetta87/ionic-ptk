@@ -52,13 +52,6 @@ export class MyApp {
    
   }
 
-
-  ionViewDidEnter(){
-        
-      
-    }
-
-
 }
 
 
