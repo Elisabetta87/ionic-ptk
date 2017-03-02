@@ -1,3 +1,4 @@
+import { SecureStorage } from 'ionic-native';
 import { JobAcceptingPage } from './../job-accepting/job-accepting';
 import { GetJobsService } from './../../services/get-jobs';
 import { Component } from '@angular/core';
@@ -12,6 +13,7 @@ import {NavController, LoadingController, NavParams} from "ionic-angular/index";
 })
 export class MarketPage {
 
+  private isStorageReady: boolean;
   private params_market = {};
   private date: any = new Date();
   private twoWeeksAfter: any =  new Date(+new Date + 12096e5);
@@ -19,13 +21,19 @@ export class MarketPage {
   private jobs:any;
   private message: string;
   private market:boolean = true;
+  private tomorrow: any = new Date();
+  private params = {};
+  private today: any = new Date(); 
 
   constructor(
     public loadingCtrl: LoadingController,
     public navCtrl:NavController,
     private navParams: NavParams,
-    private getJobsService: GetJobsService
+    private getJobsService: GetJobsService,
+    private storage: SecureStorage
   ) {
+    this.storage.create('ptkStorage').then(res => this.isStorageReady = true);
+
     this.date.setDate(this.date.getDate() + 1);
     this.twoWeeksAfter.setDate(this.twoWeeksAfter.getDate() + 1);
     
@@ -41,9 +49,14 @@ export class MarketPage {
       status: 'available,accepted',
       user_id: 31 //|| navParams.get('id')
     }
-    
+
+    this.tomorrow = this.params_market['start_date'];
+    this.params = {start_date: this.today.toISOString().slice(0, 10)};
+  
+  //On Market Page Load: -create 'market-last-update' into the storage (width time_stamp), everytime page loads check:  if not MLU: Get and create MLU else if (Now-MLC)>=10mins then get update MLC 
+
     this.getJobsService
-            .lopadJobs(this.params_market)
+            .loadJobs(this.params_market)
             .subscribe( resp => {
                   loading.dismiss();
                   console.log(resp);

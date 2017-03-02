@@ -22,7 +22,7 @@ export class GetJobsService {
                .map(data => JSON.parse(data['_body']))
   }
 
-  lopadJobs(params): Observable<any> {
+  loadJobs(params): Observable<any> {
       let subj = new Subject();    
       if (params['user_id'] != undefined) {
             this.getJobs(params)

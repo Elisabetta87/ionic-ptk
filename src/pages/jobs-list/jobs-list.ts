@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { NavController, LoadingController, NavParams, Nav } from 'ionic-angular/index';
 import { JobDetailsPage } from '../job-details/job-details';
 import {GetJobsService} from "../../services/get-jobs";
+import {DatePipe}  from "@angular/common";
 
 
 @Component({
@@ -18,12 +19,13 @@ export class JobsListPage {
   private today: any = new Date();
   private twoWeeksAfter: any =  new Date(+new Date + 12096e5);
   private message: string;
-  private setDay: string;
   private date: string;
   private time: string;
   private green: string;
   private schedule:boolean = true;
-  
+  private tomorrow: any = new Date();
+  private day: any;
+
   constructor(
     public  loadingCtrl: LoadingController,
     public navCtrl:NavController,
@@ -40,20 +42,24 @@ export class JobsListPage {
 
         this.date = navParams.get('date');
         this.time = navParams.get('time');
+
+        this.day = this.tomorrow.setDate(this.tomorrow.getDate()+1);
+        this.tomorrow = this.tomorrow.toISOString().slice(0, 10);
       
         this.params = {
           start_date: this.today.toISOString().slice(0, 10),
           end_date: this.twoWeeksAfter.toISOString().slice(0, 10),
-          status: 'accepted,completed',
-          user_id: 31 || navParams.get('id')
+          status: 'accepted,complete',
+          user_id: 30 || navParams.get('id')
         }
 
         this.getJobsService
-            .lopadJobs(this.params)
+            .loadJobs(this.params)
             .subscribe( resp => {
                   if( resp.jobsAvailable ){
                       this.jobsAvailable = true;
                       this.jobs = resp.jobs;
+                      console.log(this.jobs);
                   }
                   else{
                     this.message = resp.message;

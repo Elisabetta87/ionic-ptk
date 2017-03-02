@@ -1,5 +1,14 @@
 page-jobs-list, page-market {
   ion-content {
+    p.date {
+      border-bottom: 2px solid;
+      font-weight: 500;
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+    ion-list.m-3.mt-4.item-text-wrap.list.list-md {
+      border: none;
+    }
     ion-label {
       white-space: inherit;
     }
