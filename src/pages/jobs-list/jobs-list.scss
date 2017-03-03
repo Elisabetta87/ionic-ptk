@@ -1,10 +1,16 @@
 page-jobs-list, page-market {
   ion-content {
+    ion-grid > ion-row {
+      padding-right: 5px;
+    }
     p.date {
       border-bottom: 2px solid;
       font-weight: 500;
       margin-left: 15px;
       margin-right: 15px;
+    }
+    p.time {
+      font-weight: 500;
     }
     ion-list.m-3.mt-4.item-text-wrap.list.list-md {
       border: none;
@@ -40,14 +46,11 @@ page-jobs-list, page-market {
         p {
           font-size: 1.2rem;
           margin: 0.4rem;
-          //white-space: pre-wrap;
-          //line-height: initial;
         }
         ion-icon {
-          // position: relative;
-          // float: right;
-          // top: -45px;
           font-size: 40px;
+          position: relative;
+          margin-left: auto;
         }
       }
      }
@@ -68,5 +71,7 @@ page-market {
     width: 30px;
     height: 30px;
     border-radius:100%;
+    position: relative;
+    margin-left: auto;
   }
 }
