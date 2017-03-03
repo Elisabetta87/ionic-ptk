@@ -10,7 +10,7 @@ export class URLs{
            tokenAuth: URLs.home + 'api/token-auth/',
            getUserId: URLs.home + 'api/v2/users/',
              getJobs: URLs.home + 'api/v2/jobs/',
-         checklistId: URLs.home + 'api/v2/cleaningchecklists/',
+         checklistId: URLs.home + 'api/v2/',     //cleaningchecklists/',
     getGuestJobMatch: URLs.home + 'api/v2/job_match/'
     };
     
@@ -34,6 +34,11 @@ export class URLs{
 
     static getId(id?:number) {
         let url_string: string = id + '/';
+        return url_string
+    }
+
+    static checklistId(service:string, checklistId:number) {
+        let url_string: string = service.toLowerCase() + 'checklists' + '/' + checklistId + '/';
         return url_string
     }
 

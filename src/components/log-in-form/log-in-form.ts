@@ -92,7 +92,7 @@ export class LogInForm implements OnInit {
                                     .subscribe(resp => {
                                         console.log(resp);
                                         console.log(resp.results[0].id);
-                                        let user_id = 30 || resp.results[0].id;
+                                        let user_id = resp.results[0].id;
                                         this.storage.set('user_id', user_id.toString());
                                         this.menuService.displayMenu();
                                         this.navCtrl.push(JobsListPage, {id: user_id});

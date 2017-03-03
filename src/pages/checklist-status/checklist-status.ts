@@ -1,14 +1,14 @@
-import { UpdateChecklist } from './../../services/update-checklist';
+import { SecureStorage } from 'ionic-native';
+import { Component } from '@angular/core';
+import { NavController, NavParams, LoadingController, Platform } from 'ionic-angular/index';
+//My Imports
+import { ChecklistService } from './../../services/checklist';
 import { DepartureChecklistPage } from './../complete-departure-checklist/complete-departure-checklist';
 import { SpecialRequirementsPage } from './../special-requirements/special-requirements';
 import { RubbishInfoPage } from './../rubbish-info/rubbish-info';
 import { LinenInfoPage } from './../linen-info/linen-info';
 import { PhotosPage } from './../photos/photos';
-import { SecureStorage } from 'ionic-native';
-import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, Platform } from 'ionic-angular/index';
 import {ChecklistPage} from "../checklist/checklist";
-
 
 
 @Component({
@@ -43,7 +43,7 @@ export class ChecklistStatusPage {
     private storage: SecureStorage,
     private loadingCtrl: LoadingController,
     private platform: Platform,
-    private updateChecklist: UpdateChecklist
+    private checklistService: ChecklistService
   ) {
     this.id = navParams.get('id');
     this.jobId = navParams.get('jobId');
@@ -232,7 +232,7 @@ export class ChecklistStatusPage {
                     let checklist = 'checklist-'+this.id;
                     this.storage.set(checklist, stringifyObj);
                     this.storage.set('checklistStage-job-'+this.jobId, JSON.stringify(obj)).then(res => console.log(res));
-                    this.updateChecklist.putChecklist(this.id, this.checklistObj)
+                    this.checklistService.putChecklist('checklist service as paramater as well', this.id, this.checklistObj)
                                         .subscribe(res => {
                                             //this.navCtrl.popTo(ChecklistStatusPage);
                                             console.log(res);

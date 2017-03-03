@@ -1,3 +1,4 @@
+import { ChecklistService } from './../services/checklist';
 import { JobAcceptingPage } from './../pages/job-accepting/job-accepting';
 import { DepartureChecklistPage } from './../pages/complete-departure-checklist/complete-departure-checklist';
 import { Platform } from 'ionic-angular/index';
@@ -6,8 +7,6 @@ import { RubbishInfoPage } from './../pages/rubbish-info/rubbish-info';
 import { LinenInfoPage } from './../pages/linen-info/linen-info';
 import { PhotosPage } from './../pages/photos/photos';
 import { MenuService } from './../services/menu';
-import { UpdateChecklist } from './../services/update-checklist';
-import { GetChecklistId } from './../services/get-checklist-id';
 import { TabsPage } from './../pages/tabs/tabs';
 import { URLs } from './../services/URLs';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -104,8 +103,7 @@ import { GetJobsService } from "../services/get-jobs";
     LogInService,
     UserIdService,
     GetJobsService,
-    GetChecklistId,
-    UpdateChecklist,
+    ChecklistService,
     MenuService,
     {
       provide: PtkHttp,

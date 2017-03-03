@@ -1,5 +1,5 @@
+import { ChecklistService } from './../../services/checklist';
 import { SecureStorage } from 'ionic-native/dist/es5/index';
-import { GetChecklistId } from './../../services/get-checklist-id';
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular/index';
 import { ChecklistStatusPage } from '../checklist-status/checklist-status';
@@ -27,12 +27,15 @@ export class JobDetailsPage {
   private date: string;
   private time: string;
   private platform_ready: boolean;
+  private checklists: Object;
+  private submitButton: boolean;
+  private today = new Date();
 
   constructor(
     public navCtrl: NavController,
     private navParams: NavParams,
     private storage: SecureStorage,
-    private getChecklistId: GetChecklistId,
+    private checklistService: ChecklistService,
     private platform: Platform
   ) {
     this.job = this.navParams.get('job');
@@ -45,6 +48,8 @@ export class JobDetailsPage {
     this.time = this.job['time'];
     this.property_latitude = +this.job['property_latitude'];
     this.property_longitude = +this.job['property_longitude'];
+//Jobs retrivied from the API now have new attribute: checklists
+    this.checklists = this.job['checklists'];
 
 
     
@@ -52,27 +57,63 @@ export class JobDetailsPage {
 
 
   ionViewWillEnter() {
-    this.storage = new SecureStorage();
-    this.platform.ready().then(() => {
-      this.platform_ready = true;
-      this.storage.create('ptkStorage').then(
-        () => {
-          this.isStorageReady = true;
-          if(this.isStorageReady) {
-          this.storage.get('checklistStage-job-'+this.jobId).then(
-            res => {
-              let resObj = JSON.parse(res);
-              console.log(resObj.status);
-              this.button_txt = resObj.status != 6 ? 'Continue Job' : 'Job Completed';
-            },
-            error => {
-              console.log(error);
-              this.button_txt = 'Check-In';
-            }
-            );
-          }
-      });
-    })
+//when accessing Job overview page: 
+    if(Object.keys(this.checklists).length==0 || this.date !== this.today.toISOString().slice(0,10)) {
+      this.submitButton = false;
+    } else {
+      this.storage = new SecureStorage();
+      this.platform.ready().then(() => {
+        this.platform_ready = true;
+        this.storage.create('ptkStorage').then(
+          () => {
+            this.isStorageReady = true;
+            this.storage.get('job_tracker-'+this.jobId).then(
+              res => {
+                let jobTracker = JSON.parse(res);
+                for(let key in this.checklists) {
+                  this.checklistService.getChecklist(key, this.checklists[key])
+                      .subscribe(checklistObj => {
+                        console.log(checklistObj);
+                        this.storage.set('checklist-'+key, JSON.stringify(checklistObj));
+                        this.storage.set('checklist-info-'+key, this.checklists[key]);
+                      })
+                  // if(this.checklists['checked_out']) {
+                  //   jobTracker.checked_in = true;
+                  //   this.storage.get()
+                  // }
+                }
+                this.button_txt = jobTracker.checked_out ? 'Job Completed' : (jobTracker.checked_in ? 'Continue Job' : 'Check-In');
+              },
+              error => {
+                console.log(error);
+                this.button_txt = 'Check-In';
+              }
+              );
+        });
+    }
+
+
+    // this.storage = new SecureStorage();
+    // this.platform.ready().then(() => {
+    //   this.platform_ready = true;
+    //   this.storage.create('ptkStorage').then(
+    //     () => {
+    //       this.isStorageReady = true;
+    //       if(this.isStorageReady) {
+    //       this.storage.get('checklistStage-job-'+this.jobId).then(
+    //         res => {
+    //           let resObj = JSON.parse(res);
+    //           console.log(resObj.status);
+    //           this.button_txt = resObj.status != 6 ? 'Continue Job' : 'Job Completed';
+    //         },
+    //         error => {
+    //           console.log(error);
+    //           this.button_txt = 'Check-In';
+    //         }
+    //         );
+    //       }
+    //   });
+    // })
   }
 
   completeChecklist() {

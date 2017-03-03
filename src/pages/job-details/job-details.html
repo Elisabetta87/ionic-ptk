@@ -30,6 +30,6 @@
     <ion-col width-80>{{ services }}</ion-col>
   </ion-row>
 </ion-grid>
-  <button *ngIf="isStorageReady && platform_ready" class="button-go-to-checklist" (click)="completeChecklist()">{{ button_txt }}</button>
+  <button *ngIf="isStorageReady && platform_ready && submitButton" class="button-go-to-checklist" (click)="completeChecklist()">{{ button_txt }}</button>
 </ion-content>
 
