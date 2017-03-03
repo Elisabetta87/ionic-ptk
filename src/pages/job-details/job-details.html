@@ -19,15 +19,15 @@
   </ion-row>
   <ion-row>
     <ion-col width-30>Date </ion-col>
-    <ion-col width-80 class="pl-4">{{ date }}</ion-col>
+    <ion-col width-80>{{ date | date:"fullDate" }}</ion-col>
   </ion-row>
   <ion-row>
     <ion-col width-30>Time </ion-col>
-    <ion-col width-80 class="pl-4">{{ time }}</ion-col>
+    <ion-col width-80>{{ time.slice(0,-3) }} {{ time.slice(0,-6)>=12 ? 'pm' : 'am' }}</ion-col>
   </ion-row>
   <ion-row>
     <ion-col width-30>Notes </ion-col>
-    <ion-col width-80 class="pl-4">{{ services }}</ion-col>
+    <ion-col width-80>{{ services }}</ion-col>
   </ion-row>
 </ion-grid>
   <button *ngIf="isStorageReady && platform_ready" class="button-go-to-checklist" (click)="completeChecklist()">{{ button_txt }}</button>

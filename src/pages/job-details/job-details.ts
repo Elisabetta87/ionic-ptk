@@ -3,6 +3,7 @@ import { GetChecklistId } from './../../services/get-checklist-id';
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular/index';
 import { ChecklistStatusPage } from '../checklist-status/checklist-status';
+import {DatePipe}  from "@angular/common";
 
 @Component({
   selector: 'page-job-details',
@@ -14,6 +15,7 @@ export class JobDetailsPage {
   property_latitude: number;
   property_longitude: number;
 
+  private job: Object;
   private jobId: number;
   private id: number = 0;
   private address: string;
@@ -33,13 +35,19 @@ export class JobDetailsPage {
     private getChecklistId: GetChecklistId,
     private platform: Platform
   ) {
-    this.address = navParams.get('address');
-    this.services = navParams.get('services');
-    this.jobId = navParams.get('id');
-    this.date = navParams.get('date');
-    this.time = navParams.get('time');
-    this.property_latitude = navParams.get('property_latitude');
-    this.property_longitude = navParams.get('property_longitude');
+    this.job = this.navParams.get('job');
+    console.log(this.job);
+
+    this.address = this.job['property_address'];
+    this.services = this.job['services_string'];
+    this.jobId = this.job['id'];
+    this.date = this.job['date'];
+    this.time = this.job['time'];
+    this.property_latitude = +this.job['property_latitude'];
+    this.property_longitude = +this.job['property_longitude'];
+
+
+    
   }
 
 

@@ -1,43 +1,44 @@
 import { TabsPage } from './../tabs/tabs';
 import { MenuService } from './../../services/menu';
-import { Component } from '@angular/core';
-import { SecureStorage } from 'ionic-native/dist/es5/index';
-import { NavController } from 'ionic-angular/index';
+import { Component, OnInit } from '@angular/core';
+import { NavController, NavParams } from 'ionic-angular/index';
 import { LogInPage } from '../log-in/log-in';
 import { GuestEntryPage } from '../guest-entry/guest-entry';
 
 
 @Component({
   selector: 'page-home-guest',
-  templateUrl: 'home-guest.html',
-  providers: [SecureStorage]
+  templateUrl: 'home-guest.html'
 })
 export class HomePageGuest {
 
   private checklist: boolean;
+  private job: Object;
 
   constructor(
-    public navCtrl: NavController,
-    private storage: SecureStorage,
+         public navCtrl: NavController,
+      private navParams: NavParams,
     private menuService: MenuService
   ) {
-    this.storage = new SecureStorage();
-    this.storage.create('logInfo');
-    //set storage with new info home guest
     this.checklist = true;
+
+    this.job = this.navParams.get('job');
+    console.log(this.job);
   }
 
   ionViewDidEnter() {
     this.menuService.hideMenu();
-    console.log('ciao');
   }
 
   accept() {
-    this.navCtrl.setRoot(GuestEntryPage);
+    this.navCtrl.push(GuestEntryPage, {job: this.job});
   }
 
   discard() {
     this.navCtrl.setRoot(LogInPage);
   }
+
+
+
 
 }

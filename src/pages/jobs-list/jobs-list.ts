@@ -73,16 +73,7 @@ export class JobsListPage {
   pushPage(id:string, status: string) {
     for (let i = 0; i < this.jobs.length; i++) {
       if (this.jobs[i].id === id && status !== 'Failed') {
-        this.navCtrl.push(JobDetailsPage, {
-                    address : this.jobs[i].property_address,
-                   services : this.jobs[i].services_string,
-                         id : this.jobs[i].id,
-          property_latitude : +this.jobs[i].property_latitude,
-         property_longitude : +this.jobs[i].property_longitude,
-                       date : this.jobs[i].date,
-                       time : this.jobs[i].time
-          }
-        );
+        this.navCtrl.push(JobDetailsPage, {job: this.jobs[i]});
       } else if (this.jobs[i].id === id && status === 'Failed') {
           console.log('job no more available!!!');
       }

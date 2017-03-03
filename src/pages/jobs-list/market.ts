@@ -63,7 +63,7 @@ export class MarketPage {
   ionViewWillEnter() {
     let date = new Date();
     let newTime = date.getTime();
-    if (this.jobs.length>0) {
+    if (Object.keys(this.jobs).length==0) {
       this.getJobs(newTime);
     }
     else if(this.isStorageReady) {  
@@ -74,6 +74,8 @@ export class MarketPage {
             console.log(diff_time_mins);
             if(diff_time_mins > 10 || this.forceGetRequest) {
               this.getJobs(newTime);
+            } else {
+              console.log(res);
             }
         },
         error => this.getJobs(newTime)
@@ -82,10 +84,8 @@ export class MarketPage {
   }
 
   getJobs(time_stamp:any) {
-    this.getJobsService
-      .loadJobs(this.params_market)
+    this.getJobsService.loadJobs(this.params_market)
       .subscribe( resp => {
-        console.log(resp);
             if(this.isStorageReady) {
               this.storage.set('market-last-update', time_stamp.toString()).then(
                 done => {
@@ -98,7 +98,7 @@ export class MarketPage {
                       } 
                       this.loading.dismiss(); 
                     },
-                error => console.log(error)    
+                error => console.log('market-last-update has not been created')    
                 )
             }  
       });

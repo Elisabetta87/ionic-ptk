@@ -111,7 +111,6 @@ export class LogInForm implements OnInit {
         location: location,
         datetime: today.toISOString()
       };
-      console.log(location);
       this.logInService.getGuestJobMatch(params).subscribe(
         resp => {
         if(resp.results.length == 0) {
@@ -120,16 +119,7 @@ export class LogInForm implements OnInit {
         } else {
           console.log(resp.results);
           let job = resp.results[0];
-          this.navCtrl.push(HomePageGuest, {
-              jobId : job.id,
-              services : job.services_string,
-              date : job.date,
-              time : job.time,
-              start: job.start_time,
-              end: job.end_time,
-              property : job.property_address,
-              detail : job.detail
-          });
+          this.navCtrl.push(HomePageGuest, {job: job});
         }
       },
       error => console.log('no job found!')
