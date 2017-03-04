@@ -87,10 +87,11 @@ export class JobDetailsPage {
               error => {
                 console.log(error);
                 this.button_txt = 'Check-In';
-              }
-              );
-        });
+              })
+          })
+      })
     }
+  }        
 
 
     // this.storage = new SecureStorage();
@@ -114,7 +115,7 @@ export class JobDetailsPage {
     //       }
     //   });
     // })
-  }
+  //}
 
   completeChecklist() {
     console.log(this.id);
@@ -124,16 +125,16 @@ export class JobDetailsPage {
                   job: this.jobId,
         check_in_stamp: this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16)
       }
-      this.getChecklistId.checklistId(this.checklistBody).subscribe(
-        checklist => {
-          this.id = checklist.id;
-          this.navCtrl.push(ChecklistStatusPage, {
-              id: checklist.id,
-              jobId: checklist.job,
-              services: this.services,
-              checklistObj: this.checklistBody
-            });
-        })
+      // this.checklistService.getChecklist(this.checklistBody).subscribe(
+      //   checklist => {
+      //     this.id = checklist.id;
+      //     this.navCtrl.push(ChecklistStatusPage, {
+      //         id: checklist.id,
+      //         jobId: checklist.job,
+      //         services: this.services,
+      //         checklistObj: this.checklistBody
+      //       });
+      //   })
       })
     } else {
       if(this.isStorageReady) {

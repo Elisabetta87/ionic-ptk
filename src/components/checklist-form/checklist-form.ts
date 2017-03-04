@@ -1,5 +1,5 @@
+import { ChecklistService } from './../../services/checklist';
 import { ChecklistStatusPage } from './../../pages/checklist-status/checklist-status';
-import { UpdateChecklist } from './../../services/update-checklist';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormsModule } from '@angular/forms';
 import { GeolocationService } from '../../services/geolocation-service';
@@ -31,12 +31,16 @@ export class PropertyForm implements OnInit {
     private geoService: GeolocationService,
     private storage: SecureStorage,
     private navParams: NavParams,
-    private updateChecklist: UpdateChecklist,
+    private checklist: ChecklistService,
     private platform: Platform
   ) {
+
+
+    //needs to be changed !!!!!!
     this.id = navParams.get('id');
     this.jobId = navParams.get('jobId');
     this.checklistObj = navParams.get('checklistObj');
+    //
     this.storage = new SecureStorage();
     platform.ready().then(() => {
       this.storage.create('ptkStorage');
@@ -76,7 +80,7 @@ export class PropertyForm implements OnInit {
     if (this.isStorageReady) {
       this.storage.set(checklist, stringifyForm).then(res => console.log(res));
       this.storage.set('checklistStage-job-'+this.jobId, stringifyTracker);
-      this.updateChecklist.putChecklist(this.id, this.checklistObj)
+      this.checklist.putChecklist('service name', this.id, this.checklistObj)
                           .subscribe(res => {
                             this.navCtrl.popTo(ChecklistStatusPage);
                           });

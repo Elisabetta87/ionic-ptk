@@ -1,3 +1,4 @@
+import { SecureStorage } from 'ionic-native';
 import { TabsPage } from './../tabs/tabs';
 import { MenuComponent } from './../../components/menu/menu';
 import { Component } from '@angular/core';
@@ -14,7 +15,7 @@ import {DatePipe}  from "@angular/common";
 export class JobsListPage {
 
   private jobsAvailable:boolean;
-  private jobs:any;
+  private jobs:any = {};
   private params: Object;
   private today: any = new Date();
   private twoWeeksAfter: any =  new Date(+new Date + 12096e5);
@@ -25,49 +26,92 @@ export class JobsListPage {
   private schedule:boolean = true;
   private tomorrow: any = new Date();
   private day: any;
-
+  private loading:any;
+  private isStorageReady:boolean;
 
   constructor(
     public  loadingCtrl: LoadingController,
     public navCtrl:NavController,
     private navParams: NavParams,
     private getJobsService: GetJobsService,
-    public nav: Nav
+    public nav: Nav,
+    private storage: SecureStorage
   ) {
+        this.storage = new SecureStorage();
+        this.storage.create('ptkStorage').then(res=> this.isStorageReady=true);
 
-        let loading = this.loadingCtrl.create({
+        this.loading = this.loadingCtrl.create({
           content: 'Please wait...'
         });
-        
-        loading.present();
 
         this.date = navParams.get('date');
         this.time = navParams.get('time');
 
         this.day = this.tomorrow.setDate(this.tomorrow.getDate()+1);
         this.tomorrow = this.tomorrow.toISOString().slice(0, 10);
-      
+      }
+
+  ionViewWillEnter() {
+    let date = new Date();
+    let newTime = date.getTime();
+    if (Object.keys(this.jobs).length==0) {
+      this.loading.present();
+      this.getJobs(newTime);
+    }
+    else if(this.isStorageReady) {  
+      this.storage.get('schedule-last-update').then(
+        res => {
+            console.log(res);
+            let start_time = +res;
+            let diff_time_mins = (newTime - start_time)/60000;
+            console.log(diff_time_mins);
+            if(diff_time_mins > 10) {
+              this.loading.present();
+              this.getJobs(newTime);
+            } else {
+              console.log(res);
+            }
+        },
+        error => {
+          this.loading.present();
+          this.getJobs(newTime);
+        }
+      ) 
+    }
+  }
+
+  getJobs(time_stamp:any) {
+    if(this.isStorageReady) {
+      this.storage.get('user_id').then(res => {
+        let user_id = +res;
         this.params = {
           start_date: this.today.toISOString().slice(0, 10),
           end_date: this.twoWeeksAfter.toISOString().slice(0, 10),
           status: 'accepted,complete',
-          user_id: 30 || navParams.get('id')
+          user_id: user_id
         }
-
-        this.getJobsService
-            .loadJobs(this.params)
-            .subscribe( resp => {
-                  if( resp.jobsAvailable ){
+        this.getJobsService.loadJobs(this.params)
+        .subscribe( resp => {
+            this.storage.set('schedule-last-update', time_stamp.toString()).then(
+              done => {
+                    if( resp.jobsAvailable ){
                       this.jobsAvailable = true;
                       this.jobs = resp.jobs;
                       console.log(this.jobs);
-                  }
-                  else{
-                    this.message = resp.message;
-                  } 
-                  loading.dismiss(); 
-            });
-        
+                    }
+                    else{
+                      this.message = resp.message;
+                    } 
+                    this.loading.dismiss();
+                  },
+              error => {
+                console.log('schedule-last-update has not been created');
+                this.loading.dismiss();
+               }   
+            )
+        });
+      })
+    }
   }
 
   pushPage(id:string, status: string) {

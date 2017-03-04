@@ -1,4 +1,4 @@
-import { UpdateChecklist } from './../../services/update-checklist';
+import { ChecklistService } from './../../services/checklist';
 import { Platform } from 'ionic-angular/index';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ChecklistStatusPage } from './../checklist-status/checklist-status';
@@ -31,7 +31,7 @@ export class DepartureChecklistPage implements OnInit {
         private storage: SecureStorage,
         private navParams: NavParams,
         private platform: Platform,
-        private updateChecklist: UpdateChecklist
+        private checklist: ChecklistService
     ){
         this.id = navParams.get('id');
         this.jobId = this.navParams.get('jobId');
@@ -100,10 +100,10 @@ export class DepartureChecklistPage implements OnInit {
         this.storage.set(checklist, stringifyForm);
         this.storage.set('checklistStage-job-'+this.jobId, stringifyTracker).then(res => console.log(res));
         console.log(this.id);
-        this.updateChecklist.putChecklist(this.id, this.checklistObj)
-                            .subscribe(res => {
-                                this.navCtrl.popTo(ChecklistStatusPage);
-                            });
+        this.checklist.putChecklist('service name', this.id, this.checklistObj)
+                      .subscribe(res => {
+                        this.navCtrl.popTo(ChecklistStatusPage);
+                      });
         }
     }
 }

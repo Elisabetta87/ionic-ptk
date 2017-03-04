@@ -1,11 +1,10 @@
+import { MarketPage } from './../jobs-list/market';
 import { Component } from '@angular/core';
 import { SecureStorage } from 'ionic-native/dist/es5/index';
 import { NavController } from 'ionic-angular/index';
 import { LogInPage } from '../log-in/log-in';
 import { JobsListPage } from '../jobs-list/jobs-list';
-import { MarketPage } from '../market/market';
 import { MorePage } from '../more/more';
-
 
 @Component({
   selector: 'page-home',

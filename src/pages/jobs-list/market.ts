@@ -45,17 +45,7 @@ export class MarketPage {
     this.loading = this.loadingCtrl.create({
         content: 'Please wait...'
     });
-        
-    this.loading.present();
-
-    this.params_market = {
-      start_date: this.date.toISOString().slice(0, 10),
-      end_date: this.twoWeeksAfter.toISOString().slice(0, 10),
-      status: 'available,accepted',
-      user_id: 30 //|| navParams.get('id')
-    }
-
-    this.tomorrow = this.params_market['start_date'];
+      
     this.params = {start_date: this.today.toISOString().slice(0, 10)};
 
   }
@@ -64,6 +54,7 @@ export class MarketPage {
     let date = new Date();
     let newTime = date.getTime();
     if (Object.keys(this.jobs).length==0) {
+      this.loading.present();
       this.getJobs(newTime);
     }
     else if(this.isStorageReady) {  
@@ -73,35 +64,52 @@ export class MarketPage {
             let diff_time_mins = (newTime - start_time)/60000;
             console.log(diff_time_mins);
             if(diff_time_mins > 10 || this.forceGetRequest) {
+              this.loading.present();
               this.getJobs(newTime);
             } else {
               console.log(res);
             }
         },
-        error => this.getJobs(newTime)
+        error => {
+          this.loading.present();
+          this.getJobs(newTime);
+        }
       ) 
     }
   }
 
   getJobs(time_stamp:any) {
-    this.getJobsService.loadJobs(this.params_market)
-      .subscribe( resp => {
-            if(this.isStorageReady) {
-              this.storage.set('market-last-update', time_stamp.toString()).then(
-                done => {
-                      if( resp.jobsAvailable ){
-                        this.jobsAvailable = true;
-                        this.jobs = resp.jobs;
-                      }
-                      else{
-                        this.message = resp.message;
-                      } 
-                      this.loading.dismiss(); 
-                    },
-                error => console.log('market-last-update has not been created')    
-                )
-            }  
-      });
+    if(this.isStorageReady) {
+      this.storage.get('user_id').then(res => {
+        let user_id = +res;
+        this.params_market = {
+          start_date: this.date.toISOString().slice(0, 10),
+          end_date: this.twoWeeksAfter.toISOString().slice(0, 10),
+          status: 'available,accepted',
+          user_id: user_id
+        };
+        this.tomorrow = this.params_market['start_date'];
+        this.getJobsService.loadJobs(this.params_market)
+        .subscribe( resp => {
+            this.storage.set('market-last-update', time_stamp.toString()).then(
+              done => {
+                    if( resp.jobsAvailable ){
+                      this.jobsAvailable = true;
+                      this.jobs = resp.jobs;
+                      console.log(this.jobs);
+                    }
+                    else{
+                      this.message = resp.message;
+                    } 
+                    this.loading.dismiss();
+                  },
+              error => {
+                console.log('market-last-update has not been created');
+               }   
+            )
+        });
+      })
+    }
   }
 
   pushPage(id:string, status: string) {
