@@ -28,7 +28,7 @@ export class JobDetailsPage {
   private time: string;
   private platform_ready: boolean;
   private checklists: Object;
-  private submitButton: boolean;
+  private submitButton: boolean = true;
   private today = new Date();
 
   constructor(
@@ -48,93 +48,66 @@ export class JobDetailsPage {
     this.time = this.job['time'];
     this.property_latitude = +this.job['property_latitude'];
     this.property_longitude = +this.job['property_longitude'];
-//Jobs retrivied from the API now have new attribute: checklists
     this.checklists = this.job['checklists'];
-
-
-    
   }
 
 
   ionViewWillEnter() {
-//when accessing Job overview page: 
-    if(Object.keys(this.checklists).length==0 || this.date !== this.today.toISOString().slice(0,10)) {
+    if(['Future', 'Past', 'Urgent', 'Untracked', 'Upcoming'].indexOf(this.job['action_status']) !== -1) {
       this.submitButton = false;
-    } else {
+    } else if(['Transit', 'Late Check-In'].indexOf(this.job['action_status'])!== -1) {
+      this.button_txt = 'Check-In';
       this.storage = new SecureStorage();
       this.platform.ready().then(() => {
         this.platform_ready = true;
         this.storage.create('ptkStorage').then(
           () => {
             this.isStorageReady = true;
-            this.storage.get('job_tracker-'+this.jobId).then(
-              res => {
-                let jobTracker = JSON.parse(res);
-                for(let key in this.checklists) {
-                  this.checklistService.getChecklist(key, this.checklists[key])
-                      .subscribe(checklistObj => {
-                        console.log(checklistObj);
-                        this.storage.set('checklist-'+key, JSON.stringify(checklistObj));
-                        this.storage.set('checklist-info-'+key, this.checklists[key]);
-                      })
-                  // if(this.checklists['checked_out']) {
-                  //   jobTracker.checked_in = true;
-                  //   this.storage.get()
-                  // }
+            for(let key in this.checklists) {
+              this.checklistService.getChecklist(key, this.checklists[key])
+                  .subscribe(checklistObj => {
+                    console.log(checklistObj);
+                    this.storage.set('checklist-'+this.checklists[key], JSON.stringify(checklistObj));
+                    this.storage.set('checklist-info-'+this.checklists[key], key);
+                  })
                 }
-                this.button_txt = jobTracker.checked_out ? 'Job Completed' : (jobTracker.checked_in ? 'Continue Job' : 'Check-In');
               },
               error => {
                 console.log(error);
                 this.button_txt = 'Check-In';
               })
           })
-      })
+      } else if(['Checked-In', 'Late Check-Out'].indexOf(this.job['action_status']) !== -1) {
+        this.button_txt = 'Continue Job'; //do I have to add the service name????
+      } else if(this.job['action_status'] == 'Checked-Out') {
+        this.button_txt = 'Checklist Completed';
+      }
     }
-  }        
-
-
-    // this.storage = new SecureStorage();
-    // this.platform.ready().then(() => {
-    //   this.platform_ready = true;
-    //   this.storage.create('ptkStorage').then(
-    //     () => {
-    //       this.isStorageReady = true;
-    //       if(this.isStorageReady) {
-    //       this.storage.get('checklistStage-job-'+this.jobId).then(
-    //         res => {
-    //           let resObj = JSON.parse(res);
-    //           console.log(resObj.status);
-    //           this.button_txt = resObj.status != 6 ? 'Continue Job' : 'Job Completed';
-    //         },
-    //         error => {
-    //           console.log(error);
-    //           this.button_txt = 'Check-In';
-    //         }
-    //         );
-    //       }
-    //   });
-    // })
-  //}
 
   completeChecklist() {
     console.log(this.id);
     if(this.button_txt == 'Check-In') {
       this.platform.ready().then(() => {
-      this.checklistBody = {
-                  job: this.jobId,
-        check_in_stamp: this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16)
-      }
-      // this.checklistService.getChecklist(this.checklistBody).subscribe(
-      //   checklist => {
-      //     this.id = checklist.id;
-      //     this.navCtrl.push(ChecklistStatusPage, {
-      //         id: checklist.id,
-      //         jobId: checklist.job,
-      //         services: this.services,
-      //         checklistObj: this.checklistBody
-      //       });
-      //   })
+        this.checklistBody = {
+                    job: this.jobId,
+        check_in_stamp: this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16),
+                  stage: '1'
+        };
+        for(let key in this.checklists) {
+          if(this.isStorageReady) {
+            this.storage.get('agent_name').then(
+              res => {
+                this.checklistBody['agent_name'] = res;
+                this.uploadChecklist(key, this.checklists[key], this.checklistBody);
+              },
+              error => {
+                console.log('LOGGED IN');
+                this.uploadChecklist(key, this.checklists[key], this.checklistBody);
+              }
+            )
+          }
+        }
+      
       })
     } else {
       if(this.isStorageReady) {
@@ -155,9 +128,24 @@ export class JobDetailsPage {
         }
         )
       }
-    }
-    
+    }  
   }
+
+
+  uploadChecklist(service, checklistId, checklistBody:Object) {
+    this.checklistService.putChecklist(service, checklistId, checklistBody).subscribe(
+        checklist => {
+          console.log(checklist);
+          this.id = checklist.id;
+          this.navCtrl.push(ChecklistStatusPage, {
+              id: checklist.id,
+              jobId: checklist.job,
+              services: this.services,
+              checklistObj: this.checklistBody
+            });
+        })
+  }
+
 
 }
 
