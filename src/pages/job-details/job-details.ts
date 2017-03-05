@@ -78,7 +78,7 @@ export class JobDetailsPage {
               })
           })
       } else if(['Checked-In', 'Late Check-Out'].indexOf(this.job['action_status']) !== -1) {
-        this.button_txt = 'Continue Job'; //do I have to add the service name????
+        this.button_txt = 'Continue Job'; // I have to add the service name!!!
       } else if(this.job['action_status'] == 'Checked-Out') {
         this.button_txt = 'Checklist Completed';
       }

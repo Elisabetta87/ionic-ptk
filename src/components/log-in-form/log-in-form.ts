@@ -48,7 +48,6 @@ export class LogInForm implements OnInit {
         });
     loading.present();
     this.storage = new SecureStorage();
-    console.log(this.storage);
     this.platform.ready().then(() => {
       this.storage.create('ptkStorage').then(
       () => this.isStorageReady = true); 
@@ -59,6 +58,7 @@ export class LogInForm implements OnInit {
       });
     })
   }
+
 
   ngOnInit(){
     this.logInForm = this.fb.group({
@@ -82,7 +82,6 @@ export class LogInForm implements OnInit {
       let username = this.logInForm.value.username;
       this.logInService.getUserToken(this.logInForm.value)
          .subscribe(resp => {
-           console.log(resp);
             let token = resp.token;
             if(this.isStorageReady){
               Observable.fromPromise(this.storage.set('authToken', token))
