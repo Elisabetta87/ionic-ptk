@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ services }}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="status-bar">
+  <ion-grid>
+    <ion-row>
+      <ion-col width-10><div class="greenBar stage-one"></div></ion-col>
+      <ion-col width-10 class="text-right">1.</ion-col>
+      <ion-col width-80>
+        <ion-row>
+          <ion-col width-60>
+            <p>Check-In</p>
+          </ion-col>
+          <ion-col width-20>
+            <ion-icon class="green-tick" name="checkmark"></ion-icon>
+          </ion-col>
+        </ion-row>  
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col width-10><div class="stage-two" [ngClass]="{'greenBar': isToggled}"></div></ion-col>
+      <ion-col width-10 class="text-right">2.</ion-col>
+      <ion-col width-50>
+            <p>Guest Greeted</p>
+      </ion-col>
+      <ion-col width-20>
+            <ion-toggle [(ngModel)]="isToggled" (ionChange)="guestGreeted()" color="ptkgreen" class="toggle" mode="ios"></ion-toggle>
+      </ion-col>
+      <ion-col width-10>
+        <ion-icon  *ngIf="isToggled" class="green-tick" name="checkmark"></ion-icon>
+      </ion-col> 
+    </ion-row>
+    <ion-row>
+      <ion-col width-10><div class="stage-three" [ngClass]="{'greenBar': enableTickStatus_3}"></div></ion-col>
+      <ion-col width-10 class="text-right">3.</ion-col>
+      <ion-col width-80>
+        <ion-row>
+          <ion-col width-70>
+            <button (click)="greetingChecklist()" [disabled]="!isToggled">Greeting Checklist</button>
+          </ion-col>
+          <ion-col width-10>
+            <ion-icon  *ngIf="enableTickStatus_3" class="green-txt" name="checkmark"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col width-10><div class="stage-four" [ngClass]="{'greenBar': check_out}"></div></ion-col>
+      <ion-col width-10 class="text-right">4.</ion-col>
+      <ion-col width-50><p>Check-Out</p></ion-col>
+      <ion-col width-20> <ion-toggle [disabled]="!enableTickStatus_3 || check_out" [(ngModel)]="check_out" (ionChange)="checkOut()" color="ptkgreen" class="toggle" mode="ios"></ion-toggle></ion-col>
+      <ion-col width-10>
+        <ion-icon  *ngIf="check_out" class="green-tick" name="checkmark"></ion-icon>
+      </ion-col> 
+    </ion-row>
+  </ion-grid>
+</ion-content>

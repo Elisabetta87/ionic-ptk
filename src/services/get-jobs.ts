@@ -12,6 +12,12 @@ export class GetJobsService {
 
   constructor(private ptkHttp: PtkHttp){}
 
+
+  getJob(id) {
+    return this.ptkHttp.get(URLs.APIs.getJobs + URLs.getId(id), {withCredentials: true})
+               .map(data => JSON.parse(data['_body']))
+  }
+
   getJobs(params){
     return this.ptkHttp.get(URLs.APIs.getJobs + URLs.getParams(params), {withCredentials: true})
                .map(data => JSON.parse(data['_body']))

@@ -1,8 +1,13 @@
+//my pages
+import { CleaningOverviewPage } from './../cleaning-overview/cleaning-overview';
+import { GetJobsService } from './../../services/get-jobs';
 import { ChecklistService } from './../../services/checklist';
+import { GreetingOverview } from './../greeting-overview/greeting-overview';
+//ionic 
 import { SecureStorage } from 'ionic-native/dist/es5/index';
-import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular/index';
-import { ChecklistStatusPage } from '../checklist-status/checklist-status';
+//angular
+import { Component } from '@angular/core';
 import {DatePipe}  from "@angular/common";
 
 @Component({
@@ -30,16 +35,25 @@ export class JobDetailsPage {
   private checklists: Object;
   private submitButton: boolean = true;
   private today = new Date();
+  private arrChecklists:any;
+  private buttonInfo:string;
+  private setChecklistPage:Object;
 
   constructor(
     public navCtrl: NavController,
     private navParams: NavParams,
     private storage: SecureStorage,
     private checklistService: ChecklistService,
-    private platform: Platform
+    private platform: Platform,
+    private jobService: GetJobsService
   ) {
     this.job = this.navParams.get('job');
     console.log(this.job);
+    this.storage = new SecureStorage();
+    this.platform.ready().then(() => {
+      this.platform_ready = true;
+      this.storage.create('ptkStorage').then(
+        () => this.isStorageReady = true)});
 
     this.address = this.job['property_address'];
     this.services = this.job['services_string'];
@@ -49,86 +63,106 @@ export class JobDetailsPage {
     this.property_latitude = +this.job['property_latitude'];
     this.property_longitude = +this.job['property_longitude'];
     this.checklists = this.job['checklists'];
+    this.arrChecklists = [];
+    for(let key in this.checklists) {
+      this.arrChecklists.push(key);
+    }
+    this.setChecklistPage = {
+      Greeting: GreetingOverview,
+      Cleaning: CleaningOverviewPage
+    }
+
   }
 
 
   ionViewWillEnter() {
-    if(['Future', 'Past', 'Urgent', 'Untracked', 'Upcoming'].indexOf(this.job['action_status']) !== -1) {
-      this.submitButton = false;
-    } else if(['Transit', 'Late Check-In'].indexOf(this.job['action_status'])!== -1) {
-      this.button_txt = 'Check-In';
-      this.storage = new SecureStorage();
-      this.platform.ready().then(() => {
-        this.platform_ready = true;
-        this.storage.create('ptkStorage').then(
-          () => {
-            this.isStorageReady = true;
-            for(let key in this.checklists) {
-              this.checklistService.getChecklist(key, this.checklists[key])
+    this.jobService.getJob(this.jobId)
+        .subscribe(job => {
+          console.log(job);
+          if(this.isStorageReady && this.platform_ready) {
+            if(['Future', 'Past', 'Urgent', 'Untracked', 'Upcoming'].indexOf(job['action_status']) !== -1) {
+              this.submitButton = false;
+            } else {
+              for(let key in this.checklists) {
+                console.log(this.arrChecklists);
+                this.checklistService.getChecklist(key, this.checklists[key])
                   .subscribe(checklistObj => {
                     console.log(checklistObj);
                     this.storage.set('checklist-'+this.checklists[key], JSON.stringify(checklistObj));
                     this.storage.set('checklist-info-'+this.checklists[key], key);
-                  })
-                }
-              },
-              error => {
-                console.log(error);
-                this.button_txt = 'Check-In';
-              })
-          })
-      } else if(['Checked-In', 'Late Check-Out'].indexOf(this.job['action_status']) !== -1) {
-        this.button_txt = 'Continue Job'; // I have to add the service name!!!
-      } else if(this.job['action_status'] == 'Checked-Out') {
-        this.button_txt = 'Checklist Completed';
-      }
-    }
+                    if(['Transit', 'Late Check-In'].indexOf(job['action_status'])!== -1) {
+                      this.submitButton = true;
+                      this.button_txt = ' Check-In';
+                    } else if(['Checked-In', 'Late Check-Out'].indexOf(job['action_status']) !== -1) {
+                      this.submitButton = true;
+                      // this.storage.get('checklist-'+this.checklists[key]).then(checklist => {
+                      //   let checklistStage = JSON.parse(checklist).stage;
+                      //   if(checklistStage == '6' && Object.keys(this.checklists).indexOf(key)<Object.keys(this.checklists).length) {
 
-  completeChecklist() {
-    console.log(this.id);
-    if(this.button_txt == 'Check-In') {
-      this.platform.ready().then(() => {
-        this.checklistBody = {
-                    job: this.jobId,
-        check_in_stamp: this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16),
-                  stage: '1'
-        };
-        for(let key in this.checklists) {
-          if(this.isStorageReady) {
-            this.storage.get('agent_name').then(
-              res => {
-                this.checklistBody['agent_name'] = res;
-                this.uploadChecklist(key, this.checklists[key], this.checklistBody);
-              },
-              error => {
-                console.log('LOGGED IN');
-                this.uploadChecklist(key, this.checklists[key], this.checklistBody);
+                      //   } 
+                      // })
+                      this.button_txt = 'Continue ' + key + ' Checklist';
+                      this.buttonInfo = 'Continue ';
+                    } else if(job['action_status'] == 'Checked-Out') {
+                      this.submitButton = true;
+                      this.button_txt = 'Checklist ' + key + ' Completed';
+                    }
+                  })
               }
-            )
+            }    
           }
-        }
-      
       })
-    } else {
-      if(this.isStorageReady) {
-        this.storage.get('checklistStage-job-'+this.jobId).then(
-          res => {
-            this.id = JSON.parse(res).id;
-            this.jobId = JSON.parse(res).job;
-            console.log(this.id, res);
-            this.storage.get('checklist-'+this.id).then(
-              res => { this.navCtrl.push(ChecklistStatusPage, {
-                id: this.id,
-                jobId: this.jobId,
-                services: this.services,
-                checklistObj: JSON.parse(res)
-              })
+  }
+
+  completeChecklist(serviceName:string) {
+    for(let key in this.checklists) {
+      if(this.platform_ready && this.isStorageReady && this.button_txt == key + ' Check-In') {
+          this.checklistBody = {
+                      job: this.jobId,
+          check_in_stamp: this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16),
+                    stage: '1'
+          };
+          this.storage.get('agent_name').then(
+            res => {
+              this.checklistBody['agent_name'] = res;
+              this.uploadChecklist(key, this.checklists[key], this.checklistBody);
+            },
+            error => {
+              console.log('LOGGED IN');
+              this.uploadChecklist(key, this.checklists[key], this.checklistBody);
+            }
+          )
+      } else if(this.platform_ready && this.isStorageReady && this.button_txt == 'Continue ' + key + ' Checklist') {
+        for(let index in this.setChecklistPage) {
+          if(index === serviceName) {
+            this.storage.get('checklist-'+this.checklists[key]).then(
+              res => {
+                this.navCtrl.push(this.setChecklistPage[index], {
+                            id: JSON.parse(res).id,
+                        jobId: JSON.parse(res).job,
+                      service: serviceName,
+                  checklistObj: this.checklists
+                })
+              },
+              error => console.log(error)
+              )
           }
-        )
         }
-        )
-      }
-    }  
+      //   console.log(key, this.checklists);
+      //   console.log('entry');
+      //    this.storage.get('checklist-'+this.checklists[key]).then(
+      //     res => {
+      //       this.navCtrl.push(CleaningOverviewPage, {
+      //                   id: JSON.parse(res).id,
+      //                jobId: JSON.parse(res).job,
+      //              service: this.services,
+      //         checklistObj: this.checklists
+      //       })
+      //     },
+      //     error => console.log(error)
+      //     )
+      } //else if completed?????
+    }   
   }
 
 
@@ -137,7 +171,7 @@ export class JobDetailsPage {
         checklist => {
           console.log(checklist);
           this.id = checklist.id;
-          this.navCtrl.push(ChecklistStatusPage, {
+          this.navCtrl.push(CleaningOverviewPage, {
               id: checklist.id,
               jobId: checklist.job,
               services: this.services,

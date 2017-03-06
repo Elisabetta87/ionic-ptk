@@ -4,11 +4,11 @@ import {NavController, NavParams} from 'ionic-angular/index';
 
 
 @Component({
-  selector: 'page-checklist',
-  templateUrl: 'checklist.html',
+  selector: 'cleaning-checklist',
+  templateUrl: 'cleaning-checklist.html',
   providers: [SecureStorage]
 })
-export class ChecklistPage {
+export class CleaningChecklistPage {
 
   private id: string;
 

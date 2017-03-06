@@ -1,7 +1,7 @@
+import { CleaningOverviewPage } from './../cleaning-overview/cleaning-overview';
 import { ChecklistService } from './../../services/checklist';
 import { Platform } from 'ionic-angular/index';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ChecklistStatusPage } from './../checklist-status/checklist-status';
 import { SecureStorage } from 'ionic-native/dist/es5/index';
 import { NavController, NavParams } from 'ionic-angular/index';
 import { Component, OnInit } from '@angular/core';
@@ -10,11 +10,11 @@ import { Component, OnInit } from '@angular/core';
 
 
 @Component({
-    selector: 'departure-checklist-page',
-    templateUrl: 'complete-departure-checklist.html'
+    selector: 'cleaning-checklist-2',
+    templateUrl: 'cleaning-checklist-2.html'
 })
 
-export class DepartureChecklistPage implements OnInit {
+export class CleaningChecklistSecondPage implements OnInit {
 
     private jobId: number;
     private id: number;
@@ -23,7 +23,6 @@ export class DepartureChecklistPage implements OnInit {
     private departureChecklistForm: FormGroup;
     private damages_reported: boolean;
     private delivery_during_clean: boolean;
-    public checklistTracker: Object = {};
 
     constructor(
         private fb: FormBuilder,
@@ -90,19 +89,18 @@ export class DepartureChecklistPage implements OnInit {
         this.checklistObj['number_of_beds_made'] = departureChecklist['number_of_beds_made'];
         this.checklistObj['comments'] = departureChecklist['comments'] != 'Leave any comments here......' ? comments : '';
         console.log(this.checklistObj);
-        this.checklistTracker['job'] = this.checklistObj['job'];
-        this.checklistTracker['status'] = 5;
-        this.checklistTracker['id'] = this.id;
-        let stringifyTracker = JSON.stringify(this.checklistTracker);
+        this.checklistObj['job'] = this.jobId;
+        this.checklistObj['stage'] = '5';
+        this.checklistObj['id'] = this.id;
         let stringifyForm = JSON.stringify(this.checklistObj);
         let checklist = 'checklist-'+this.id;
         if (this.isStorageReady) {
         this.storage.set(checklist, stringifyForm);
-        this.storage.set('checklistStage-job-'+this.jobId, stringifyTracker).then(res => console.log(res));
+        this.storage.set('checklist-'+this.id, stringifyForm).then(res => console.log(res));
         console.log(this.id);
-        this.checklist.putChecklist('service name', this.id, this.checklistObj)
+        this.checklist.putChecklist(Object.keys(this.checklistObj)[0], this.id, this.checklistObj)
                       .subscribe(res => {
-                        this.navCtrl.popTo(ChecklistStatusPage);
+                        this.navCtrl.popTo(CleaningOverviewPage);
                       });
         }
     }

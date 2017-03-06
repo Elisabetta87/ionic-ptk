@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Greeting Checklist</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <form padding [formGroup]="greetingForm" (ngSubmit)="onSubmit()">
+  <ion-row>
+    <ion-col width-100>
+      <p>Comments:</p>
+    </ion-col>
+  </ion-row>
+  <ion-row>  
+    <ion-col width-100>
+      <ion-textarea id="text-box" formControlName="comments"></ion-textarea>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col width-100>
+      <button type="submit" class="my-5 customise" [disabled]="!greetingForm.valid">Submit</button>
+    </ion-col>
+  </ion-row>
+</form>
+</ion-content>

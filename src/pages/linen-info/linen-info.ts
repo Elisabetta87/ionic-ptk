@@ -1,4 +1,4 @@
-import { ChecklistStatusPage } from './../checklist-status/checklist-status';
+import { CleaningOverviewPage } from './../cleaning-overview/cleaning-overview';
 import { SecureStorage } from 'ionic-native/dist/es5/index';
 import { NavController, NavParams } from 'ionic-angular/index';
 import { Component } from '@angular/core';
@@ -15,6 +15,7 @@ export class LinenInfoPage {
 
     private jobId: number;
     private isStorageReady: boolean;
+    private id:number;
 
     constructor(
         private navCtrl: NavController,
@@ -22,6 +23,7 @@ export class LinenInfoPage {
         private navParams: NavParams
     ){
         this.jobId = this.navParams.get('jobId');
+        this.id = this.navParams.get('id');
     }
 
     send() {
@@ -30,13 +32,13 @@ export class LinenInfoPage {
           ready => {
               this.isStorageReady = true;
               if(this.isStorageReady) {
-              this.storage.get('checklistStage-job-'+this.jobId).then(
+              this.storage.get('checklist-'+this.id).then(
                 data => {
                     let obj = JSON.parse(data);
-                    obj.status = 3.2;
+                    obj.stage = '3.2';
                     data = JSON.stringify(obj);
-                    this.storage.set('checklistStage-job-'+this.jobId, data);
-                    this.navCtrl.popTo(ChecklistStatusPage);
+                    this.storage.set('checklist-'+this.id, data);
+                    this.navCtrl.popTo(CleaningOverviewPage);
                 },
                 error => console.log(error)
                 )

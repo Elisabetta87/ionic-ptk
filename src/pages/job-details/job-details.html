@@ -29,7 +29,15 @@
     <ion-col width-30>Notes </ion-col>
     <ion-col width-80>{{ services }}</ion-col>
   </ion-row>
+  <ion-row *ngIf="isStorageReady && platform_ready && submitButton">
+    <ion-col width-100>
+      <ion-row  *ngFor="let checklist of arrChecklists">
+        <ion-col>
+           <button class="button-go-to-checklist" (click)="completeChecklist(checklist)">{{ buttonInfo }} {{ checklist }} Checklist</button>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
 </ion-grid>
-  <button *ngIf="isStorageReady && platform_ready && submitButton" class="button-go-to-checklist" (click)="completeChecklist()">{{ button_txt }}</button>
 </ion-content>
 
