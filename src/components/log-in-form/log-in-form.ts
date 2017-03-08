@@ -2,8 +2,8 @@ import { MenuService } from './../../services/menu';
 import { JobsListPage } from './../../pages/jobs-list/jobs-list';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NavController, LoadingController, Platform } from 'ionic-angular/index';
-import {SecureStorage} from 'ionic-native';
+import { NavController, LoadingController, Platform, AlertController } from 'ionic-angular/index';
+import {SecureStorage, Diagnostic} from 'ionic-native';
 import {HomePage} from "../../pages/home/home";
 import {HomePageGuest} from "../../pages/home-guest/home-guest";
 import {LogInService} from "../../services/log-in-service";
@@ -30,9 +30,11 @@ export class LogInForm implements OnInit {
   private lat: number;
   private lng: number; 
   private message: string;
+  private platformReady: boolean;
 
   constructor(
     public navCtrl: NavController,
+    private alertCtrl: AlertController,
     private fb: FormBuilder,
     private storage: SecureStorage,
     private logInService: LogInService,
@@ -49,16 +51,59 @@ export class LogInForm implements OnInit {
     loading.present();
     this.storage = new SecureStorage();
     this.platform.ready().then(() => {
-      this.storage.create('ptkStorage').then(
-      () => this.isStorageReady = true); 
-      this.geolocation.getGeoPosition().then((resp) => {
-        this.lat = resp.coords.latitude;
-        this.lng = resp.coords.longitude;
-        loading.dismiss();
-      });
-    })
+      console.log('core = ' + this.platform.is('core'), 'mobileweb = ' + this.platform.is('mobileweb'), 'android = ' + this.platform.is('android'), 'mobile = ' + this.platform.is('mobile'));
+      console.log('cordova = ' + this.platform.is('cordova'));
+      // if( !(this.platform.is('core') || this.platform.is('mobileweb')) ) {
+      //   Diagnostic.isLocationEnabled().then(isAvailable => {
+      //     console.log('Is available? ' + isAvailable);
+      //     if(isAvailable){
+      //       this.storage.create('ptkStorage').then(() => this.isStorageReady = true); 
+      //       this.geolocation.getGeoPosition().then((resp) => {
+      //         this.lat = resp.coords.latitude;
+      //         this.lng = resp.coords.longitude;
+      //         loading.dismiss();
+      //       });
+      //     } else {
+      //       let alert = this.alertCtrl.create({
+      //       title: 'Location',
+      //       subTitle: 'Please Enable GPS',
+      //       buttons: [{
+      //         text: 'Dismiss',
+      //         handler: data => {
+      //           //this.platform.exitApp();
+      //           Diagnostic.switchToLocationSettings();
+      //         }
+      //       }]
+      //     });
+      //     alert.present();
+      //     loading.dismiss();
+      //     }
+      //   },
+      //   error => {
+      //     console.log(error);
+      //     let alert = this.alertCtrl.create({
+      //     title: 'Location',
+      //     subTitle: 'Please Enable GPS',
+      //     buttons: [{
+      //       text: 'Dismiss',
+      //       handler: data => {
+      //         this.platform.exitApp();
+      //       }
+      //     }]
+      //     });
+      //     alert.present();
+      //     loading.dismiss();
+      //   })
+      // } else {
+        this.storage.create('ptkStorage').then(() => this.isStorageReady = true); 
+        this.geolocation.getGeoPosition().then((resp) => {
+          this.lat = resp.coords.latitude;
+          this.lng = resp.coords.longitude;
+          loading.dismiss();
+        })
+      //} 
+    });
   }
-
 
   ngOnInit(){
     this.logInForm = this.fb.group({

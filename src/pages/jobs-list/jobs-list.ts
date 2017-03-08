@@ -1,4 +1,5 @@
-import { SecureStorage } from 'ionic-native';
+import { MenuService } from './../../services/menu';
+import { SecureStorage, Diagnostic } from 'ionic-native';
 import { TabsPage } from './../tabs/tabs';
 import { MenuComponent } from './../../components/menu/menu';
 import { Component } from '@angular/core';
@@ -35,23 +36,29 @@ export class JobsListPage {
     private navParams: NavParams,
     private getJobsService: GetJobsService,
     public nav: Nav,
-    private storage: SecureStorage
+    private storage: SecureStorage,
+    private menuService: MenuService
   ) {
-        this.storage = new SecureStorage();
-        this.storage.create('ptkStorage').then(res=> this.isStorageReady=true);
+      this.storage = new SecureStorage();
+      this.storage.create('ptkStorage').then(res=> this.isStorageReady=true);
 
-        this.loading = this.loadingCtrl.create({
-          content: 'Please wait...'
-        });
+      this.loading = this.loadingCtrl.create({
+        content: 'Please wait...'
+      });
 
-        this.date = navParams.get('date');
-        this.time = navParams.get('time');
+      this.date = navParams.get('date');
+      this.time = navParams.get('time');
 
-        this.day = this.tomorrow.setDate(this.tomorrow.getDate()+1);
-        this.tomorrow = this.tomorrow.toISOString().slice(0, 10);
-      }
+      this.day = this.tomorrow.setDate(this.tomorrow.getDate()+1);
+      this.tomorrow = this.tomorrow.toISOString().slice(0, 10);
+  }
+
+  ionViewDidEnter() {
+    this.menuService.displayMenu();
+  }    
 
   ionViewWillEnter() {
+
     let date = new Date();
     let newTime = date.getTime();
     if (Object.keys(this.jobs).length==0) {
@@ -117,7 +124,10 @@ export class JobsListPage {
   pushPage(id:string, status: string) {
     for (let i = 0; i < this.jobs.length; i++) {
       if (this.jobs[i].id === id && status !== 'Failed') {
-        this.navCtrl.push(JobDetailsPage, {job: this.jobs[i]});
+        this.navCtrl.push(JobDetailsPage, {
+          job: this.jobs[i],
+          agentName: ''
+        });
       } else if (this.jobs[i].id === id && status === 'Failed') {
           console.log('job no more available!!!');
       }

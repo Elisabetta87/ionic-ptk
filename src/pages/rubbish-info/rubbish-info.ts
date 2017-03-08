@@ -11,41 +11,26 @@ import { Component } from '@angular/core';
 
 export class RubbishInfoPage {
 
-    private jobId: number;
+    private checklistObj: Object;
     private isStorageReady: boolean;
-    private id:number;
 
     constructor(
         private navCtrl: NavController,
         private storage: SecureStorage,
         private navParams: NavParams
     ){
-       this.jobId = this.navParams.get('jobId');
-       this.id = this.navParams.get('id');
-       console.log(this.navParams.get('jobId'), 'ciao');
-       this.storage = new SecureStorage();
+        this.checklistObj = this.navParams.get('checklistObj');
+        this.storage = new SecureStorage();
+        this.storage.create('ptkStorage').then(()=> this.isStorageReady = true);
     }
 
 
 
     send() {
-      this.storage = new SecureStorage();
-      this.storage.create('ptkStorage').then(
-          ready => {
-              this.isStorageReady = true;
-              if(this.isStorageReady) {
-                this.storage.get('checklist-'+this.id).then(
-                data => {
-                    let obj = JSON.parse(data);
-                    obj.stage = '3.3';
-                    data = JSON.stringify(obj);
-                    this.storage.set('checklist-'+this.id, data);
-                    this.navCtrl.popTo(CleaningOverviewPage);
-                },
-                error => console.log(error)
-                )
-            }
-          }
-      );
+        if(this.isStorageReady) {
+            this.checklistObj['stage'] = '3.3';
+            this.storage.set('checklist-'+this.checklistObj['id'], JSON.stringify(this.checklistObj));
+            this.navCtrl.popTo(CleaningOverviewPage);
+        }
     }
 }

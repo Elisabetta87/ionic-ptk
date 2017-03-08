@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{ services }}</ion-title>
+    <ion-title>{{ checklistName }}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content class="status-bar">
@@ -86,7 +86,7 @@
             <p>Complete Clean</p>
       </ion-col>
       <ion-col width-20>
-            <ion-toggle [disabled]="!+status>=3.4" [(ngModel)]="isToggled" (ionChange)="completeClean()" color="ptkgreen" class="toggle" mode="ios"></ion-toggle>
+            <ion-toggle [disabled]="!+status>=3.4 || isToggled" [(ngModel)]="isToggled" (ionChange)="completeClean()" color="ptkgreen" class="toggle" mode="ios"></ion-toggle>
       </ion-col>
       <ion-col width-10>
         <ion-icon  *ngIf="isToggled || +status>=4" class="green-tick" name="checkmark"></ion-icon>
@@ -110,9 +110,9 @@
       <ion-col width-10><div class="stage-six" [ngClass]="{'greenBar': check_out}"></div></ion-col>
       <ion-col width-10 class="text-right">6.</ion-col>
       <ion-col width-50><p>Check-Out</p></ion-col>
-      <ion-col width-20> <ion-toggle [disabled]="!+status>=5" [(ngModel)]="check_out" (ionChange)="checkOut()" color="ptkgreen" class="toggle" mode="ios"></ion-toggle></ion-col>
+      <ion-col width-20> <ion-toggle [disabled]="!+status>=5 || check_out" [(ngModel)]="check_out" (ionChange)="checkOut()" color="ptkgreen" class="toggle" mode="ios"></ion-toggle></ion-col>
       <ion-col width-10>
-        <ion-icon  *ngIf="check_out" class="green-tick" name="checkmark"></ion-icon>
+        <ion-icon  *ngIf="check_out || +status==6" class="green-tick" name="checkmark"></ion-icon>
       </ion-col> 
     </ion-row>
   </ion-grid>

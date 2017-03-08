@@ -1,7 +1,7 @@
 //ionic
 import { Platform } from 'ionic-angular/index';
 import { IonicApp, IonicModule, IonicErrorHandler, App } from 'ionic-angular';
-import { SecureStorage } from 'ionic-native';
+import { SecureStorage, Diagnostic } from 'ionic-native';
 //angular
 import { NgModule, ErrorHandler } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -32,7 +32,7 @@ import { ChecklistService } from './../services/checklist';
 import { JobAcceptingPage } from './../pages/job-accepting/job-accepting';
 import { CleaningChecklistSecondPage } from './../pages/cleaning-checklist-2/cleaning-checklist-2';
 import { CleaningChecklistForm } from './../components/cleaning-checklist-form/cleaning-checklist-form';
-import { GreetingOverview } from './../pages/greeting-overview/greeting-overview';
+import { GreetingOverviewPage } from './../pages/greeting-overview/greeting-overview';
 import { GreetingChecklistPage } from './../pages/greeting-checklist/greeting-checklist';
 //my Services
 import { PtkHttp } from "../services/ptkHttp";
@@ -41,6 +41,7 @@ import { UserIdService } from "../services/user-id-service";
 import { GetJobsService } from "../services/get-jobs";
 import { URLs } from './../services/URLs';
 import { GeolocationService } from '../services/geolocation-service';
+import { StorageST } from './../services/StorageST';
 
 
 
@@ -69,7 +70,7 @@ import { GeolocationService } from '../services/geolocation-service';
     CleaningChecklistSecondPage,
     JobAcceptingPage,
     GreetingChecklistPage,
-    GreetingOverview
+    GreetingOverviewPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -105,17 +106,19 @@ import { GeolocationService } from '../services/geolocation-service';
     CleaningChecklistSecondPage,
     JobAcceptingPage,
     GreetingChecklistPage,
-    GreetingOverview
+    GreetingOverviewPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GeolocationService,
     SecureStorage,
+    Diagnostic,
     LogInService,
     UserIdService,
     GetJobsService,
     ChecklistService,
     MenuService,
+    StorageST,
     {
       provide: PtkHttp,
       useFactory: (backend: XHRBackend, options: RequestOptions, storage: SecureStorage, app: App, platform: Platform) => new PtkHttp(backend, options, storage, app, platform),

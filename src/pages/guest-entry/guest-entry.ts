@@ -34,22 +34,11 @@ export class GuestEntryPage {
   }
 
   onSubmit() {
-    if(this.isStorageReady) {
-     let body = JSON.stringify(this.guestForm.value['agent_name']);
-     console.log(this.guestForm.value['agent_name']);
-     this.storage.set('agent_name', JSON.stringify(this.guestForm.value['agent_name'])).then(
-       res => {
-          this.navCtrl.push(JobDetailsPage, {job: this.job});
-       },
-       error => console.log(error)
-     )
-    }
+    this.navCtrl.push(JobDetailsPage, {
+      job: this.job,
+      agentName: this.guestForm.value['agent_name']
+    });
   }
-
-  moveToJobDetails() {
-
-  }
-
 
 }
 

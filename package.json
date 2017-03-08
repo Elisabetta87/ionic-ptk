@@ -22,7 +22,7 @@
     "@ionic/storage": "^1.1.9",
     "angular2-google-maps": "^0.17.0",
     "ionic-angular": "2.0.0",
-    "ionic-native": "2.4.1",
+    "ionic-native": "^2.4.1",
     "ionicons": "3.0.0",
     "rxjs": "5.0.0-beta.12",
     "sw-toolbox": "3.4.0",
@@ -38,6 +38,7 @@
     "cordova-plugin-statusbar",
     "cordova-plugin-console",
     "cordova-plugin-device",
+    "cordova.plugins.diagnostic",
     "cordova-plugin-splashscreen",
     "ionic-plugin-keyboard"
   ],

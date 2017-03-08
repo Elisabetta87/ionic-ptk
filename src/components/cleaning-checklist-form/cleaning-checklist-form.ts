@@ -20,13 +20,11 @@ import {Subject} from "rxjs/Subject";
 
 export class CleaningChecklistForm implements OnInit {
 
-  private id: string;
-  private jobId: number;
+  private job: Object;
   public propertyForm: FormGroup;
   private are_keys_in_there: boolean = false;
   private checklistObj: Object = {};
   private isStorageReady: boolean;
-  private service:string;
 
   constructor(
     public navCtrl: NavController,
@@ -37,15 +35,10 @@ export class CleaningChecklistForm implements OnInit {
     private checklist: ChecklistService,
     private platform: Platform
   ) {
-    this.id = navParams.get('id');
-    this.jobId = navParams.get('jobId');
-    this.service = navParams.get('services');
     this.checklistObj = navParams.get('checklistObj');
-    
     this.storage = new SecureStorage();
     platform.ready().then(() => {
-      this.storage.create('ptkStorage');
-      this.isStorageReady = true;
+      this.storage.create('ptkStorage').then(() => this.isStorageReady = true);
     })
   }
 
@@ -68,23 +61,21 @@ export class CleaningChecklistForm implements OnInit {
 
   onSubmit() {
     let arrivalChecklist = this.propertyForm.value;
+    console.log(arrivalChecklist);
     this.checklistObj['keys_in_keysafe'] = arrivalChecklist['keys_in_keysafe'];
     this.checklistObj['clean_linen_count_start'] = arrivalChecklist['clean_linen_count_start'];
     this.checklistObj['dirty_linen_count_start'] = arrivalChecklist['dirty_linen_count_start'];
     this.checklistObj['stage'] = '2';
-    this.checklistObj['job'] = this.jobId;
-    let stringifyForm = JSON.stringify(this.checklistObj);
-    let checklist = 'checklist-'+this.id;
-    console.log(Object.keys(this.checklistObj)[0]);
     if (this.isStorageReady) {
-      this.storage.set(checklist, stringifyForm).then(res => console.log(res));
-      this.checklist.putChecklist(Object.keys(this.checklistObj)[0], this.id, this.checklistObj)
-                    .subscribe(res => {
-                      console.log(res);
-                      this.navCtrl.popTo(CleaningOverviewPage);
-                    });
+      this.storage.set('checklist-'+this.checklistObj['id'], JSON.stringify(this.checklistObj));
+    } else {
+      console.log('onSubmit storage not ready');
+      // do we need action here? And, if not, is this if statement needed at all?
     }
+    this.checklist.putChecklist('Cleaning', this.checklistObj['id'], this.checklistObj)
+      .subscribe(() => {
+        this.navCtrl.popTo(CleaningOverviewPage);
+      });
   };
-
 
 }

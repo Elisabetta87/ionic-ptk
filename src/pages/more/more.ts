@@ -25,9 +25,11 @@ export class MorePage {
 
   logOut() {
     if (this.isStorageReady) {
-        this.storage.remove('authToken').then(
-          resp =>  {console.log('token deleted'); this.navCtrl.setRoot(LogInPage)}
-        );
+        this.storage.remove('authToken').then(resp =>  {
+          console.log('token deleted'); 
+          this.storage.remove('user_id').then(resp => this.navCtrl.setRoot(LogInPage))
+        }
+      );
     }
   }
 }

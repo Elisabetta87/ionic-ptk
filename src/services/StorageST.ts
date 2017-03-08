@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class StorageST {
+    
     private static st:SecureStorage = null;
     
     public static getStorage(): Observable<SecureStorage>{
@@ -21,16 +22,28 @@ export class StorageST {
         }
         return storage;
     }
+
+//    getStorage(storage:SecureStorage): Observable<any> {
+//        let subj = new Subject();
+//        storage = new SecureStorage();
+//        Observable.fromPromise(storage.create('ptkStorage')).subscribe(ready => subj.next(ready));
+//        return subj;
+//     }
+
+
+
+
+
 }
 
 
 /* HOW TO USE */
-let subj = new Subject();
-StorageST.getStorage()
-         .subscribe((storage) => {
-             Observable.fromPromise(storage.get('key')).subscribe((data) => { subj.next(data); })
-             storage.set('key', 'value').then(() => { /* your code here (or emit new value for observers) */ });
-             storage.remove('key').then(() => { /* your code here (or emit new value for observers) */ });
-         })
+// let subj = new Subject();
+// StorageST.getStorage()
+//          .subscribe((storage) => {
+//              Observable.fromPromise(storage.get('key')).subscribe((data) => { subj.next(data); })
+//              storage.set('key', 'value').then(() => { /* your code here (or emit new value for observers) */ });
+//              storage.remove('key').then(() => { /* your code here (or emit new value for observers) */ });
+//          })
 // if youu need to return a value/Observable
 // return subj;         

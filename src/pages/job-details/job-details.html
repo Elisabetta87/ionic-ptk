@@ -3,8 +3,7 @@
     <ion-title>Job Overview</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
-
+<ion-content padding *ngIf="job">
   <!-- this creates a google map on the page with the given lat/lng from -->
   <!-- the component as the initial center of the map: -->
   <sebm-google-map [latitude]="property_latitude" [longitude]="property_longitude" [zoom]="12">
@@ -12,32 +11,42 @@
   </sebm-google-map>
 
 
-<ion-grid class="my-4">
-  <ion-row>
-    <ion-col width-30>Location </ion-col>
-    <ion-col width-80>{{ address }} </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col width-30>Date </ion-col>
-    <ion-col width-80>{{ date | date:"fullDate" }}</ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col width-30>Time </ion-col>
-    <ion-col width-80>{{ time.slice(0,-3) }} {{ time.slice(0,-6)>=12 ? 'pm' : 'am' }}</ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col width-30>Notes </ion-col>
-    <ion-col width-80>{{ services }}</ion-col>
-  </ion-row>
-  <ion-row *ngIf="isStorageReady && platform_ready && submitButton">
-    <ion-col width-100>
-      <ion-row  *ngFor="let checklist of arrChecklists">
-        <ion-col>
-           <button class="button-go-to-checklist" (click)="completeChecklist(checklist)">{{ buttonInfo }} {{ checklist }} Checklist</button>
-        </ion-col>
-      </ion-row>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+  <ion-grid class="my-4">
+    <ion-row>
+      <ion-col width-30>Location </ion-col>
+      <ion-col width-80>{{ job.property_address }} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col width-30>Date </ion-col>
+      <ion-col width-80>{{ job.date | date:"fullDate" }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col width-30>Time </ion-col>
+      <ion-col width-80>{{ job.time.slice(0,-3) }} {{ job.time.slice(0,-6)>=12 ? 'pm' : 'am' }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col width-30>Notes </ion-col>
+      <ion-col width-80>{{ job.detail }}</ion-col>
+    </ion-row>
+    <ion-row *ngIf="submitButton">
+      <ion-col width-100>
+        <ion-row  *ngIf="buttonStatus=='Check-In'">
+          <ion-col>
+            <button class="button-go-to-checklist" (click)="checkinChecklist()">Check-In</button>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="buttonStatus!=='Check-In'">
+          <ion-col>
+            <ion-row *ngFor="let checklist of arrChecklists">
+              <ion-col>
+                 <button class="button-go-to-checklist" (click)="completeChecklist(checklist)">{{ buttonStatus }} {{ checklist }} Checklist</button>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
 

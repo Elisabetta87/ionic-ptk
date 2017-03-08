@@ -16,8 +16,6 @@ import { Component, OnInit } from '@angular/core';
 
 export class CleaningChecklistSecondPage implements OnInit {
 
-    private jobId: number;
-    private id: number;
     private checklistObj: Object;
     private isStorageReady: boolean;
     private departureChecklistForm: FormGroup;
@@ -32,15 +30,12 @@ export class CleaningChecklistSecondPage implements OnInit {
         private platform: Platform,
         private checklist: ChecklistService
     ){
-        this.id = navParams.get('id');
-        this.jobId = this.navParams.get('jobId');
         this.checklistObj = this.navParams.get('checklistObj');
         this.damages_reported = false;
         this.delivery_during_clean = false;
         this.storage = new SecureStorage();
         platform.ready().then(() => {
-        this.storage.create('ptkStorage');
-        this.isStorageReady = true;
+          this.storage.create('ptkStorage').then(() => this.isStorageReady = true);
         })  
     }
 
@@ -81,27 +76,19 @@ export class CleaningChecklistSecondPage implements OnInit {
         this.checklistObj['clean_linen_count_end'] = departureChecklist['clean_linen_count_end'];
         this.checklistObj['dirty_linen_count_end'] = departureChecklist['dirty_linen_count_end'];
         this.checklistObj['damages_reported'] = departureChecklist['damages_reported'];
-        console.log(departureChecklist['damages_description'], departureChecklist['comments']);
         let damage_description = departureChecklist['damages_description']; 
         let comments = departureChecklist['comments'];
         this.checklistObj['damages_description'] = departureChecklist['damages_description'] != 'Please describe any damages here....' ? damage_description : '';
         this.checklistObj['delivery_during_clean'] = departureChecklist['delivery_during_clean'];
         this.checklistObj['number_of_beds_made'] = departureChecklist['number_of_beds_made'];
         this.checklistObj['comments'] = departureChecklist['comments'] != 'Leave any comments here......' ? comments : '';
-        console.log(this.checklistObj);
-        this.checklistObj['job'] = this.jobId;
         this.checklistObj['stage'] = '5';
-        this.checklistObj['id'] = this.id;
-        let stringifyForm = JSON.stringify(this.checklistObj);
-        let checklist = 'checklist-'+this.id;
         if (this.isStorageReady) {
-        this.storage.set(checklist, stringifyForm);
-        this.storage.set('checklist-'+this.id, stringifyForm).then(res => console.log(res));
-        console.log(this.id);
-        this.checklist.putChecklist(Object.keys(this.checklistObj)[0], this.id, this.checklistObj)
-                      .subscribe(res => {
-                        this.navCtrl.popTo(CleaningOverviewPage);
-                      });
+            this.storage.set('checklist-'+this.checklistObj['id'],  JSON.stringify(this.checklistObj)).then(res => console.log(res));
+            this.checklist.putChecklist('Cleaning', this.checklistObj['id'], this.checklistObj)
+                        .subscribe(res => {
+                            this.navCtrl.popTo(CleaningOverviewPage);
+                        });
         }
     }
 }
