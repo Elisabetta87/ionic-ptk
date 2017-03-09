@@ -1,3 +1,4 @@
+import { StorageST } from './../services/StorageST';
 import { LogInPage } from './../pages/log-in/log-in';
 import { NavController } from 'ionic-angular/index';
 import { MarketPage } from './../pages/market/market';

@@ -39,11 +39,6 @@ export class TabsPage {
     constructor(
         private navCtrl: NavController,
         private storage: SecureStorage
-        ) {}
-
-
-    ionViewWillEnter() {
-        console.log(StorageST.getKeys());
-    }    
+        ) {}   
 
 }

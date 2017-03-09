@@ -29,6 +29,7 @@ export class JobsListPage {
   private tomorrow: any = new Date();
   private day: any;
   private loading:any;
+  private user_id: number;
 
   constructor(
     public  loadingCtrl: LoadingController,
@@ -43,6 +44,7 @@ export class JobsListPage {
       });
       this.date = navParams.get('date');
       this.time = navParams.get('time');
+      this.user_id = navParams.get('user_id');
       this.day = this.tomorrow.setDate(this.tomorrow.getDate()+1);
       this.tomorrow = this.tomorrow.toISOString().slice(0, 10);
   }
@@ -52,13 +54,14 @@ export class JobsListPage {
   }    
 
   ionViewWillEnter() {
+    console.log(StorageST.getKeys());
     let date = new Date();
     let newTime = date.getTime();
     if (Object.keys(this.jobs).length==0) {
       this.loading.present();
       this.getJobs(newTime);
     }
-    else if(StorageST.getKeys().indexOf('schedule-last-update') !== -1) { 
+    else {//if(StorageST.getKeys().indexOf('schedule-last-update') !== -1) { 
       StorageST.get('schedule-last-update')
                .subscribe(
                  res => {
@@ -72,14 +75,16 @@ export class JobsListPage {
                     }
                  }
                )
-    } else {
-      this.loading.present();
-      this.getJobs(newTime);
-    } 
+     } //else {
+    //   this.loading.present();
+    //   this.getJobs(newTime);
+    //   console.log('no schedule-last-update in the storage');
+    // } 
   }
 
   getJobs(time_stamp:any) {
-    if(StorageST.getKeys().indexOf('user_id') !== -1) {
+    console.log(StorageST.getKeys());
+    //if(StorageST.getKeys().indexOf('user_id') !== -1) {
       StorageST.get('user_id')
                .subscribe(res => {
                   let user_id = +res;
@@ -89,6 +94,7 @@ export class JobsListPage {
                     status: 'accepted,complete',
                     user_id: user_id
                   }
+                  console.log(this.params);
                   this.getJobsService.loadJobs(this.params)
                       .subscribe( resp => {
                           StorageST.set('schedule-last-update', time_stamp.toString())
@@ -100,11 +106,35 @@ export class JobsListPage {
                                       else{
                                         this.message = resp.message;
                                       } 
+                                      console.log(this.jobs);
                                       this.loading.dismiss();
                                    })
                       })
                })
-    }
+    // } else {
+    //   this.params = {
+    //     start_date: this.today.toISOString().slice(0, 10),
+    //     end_date: this.twoWeeksAfter.toISOString().slice(0, 10),
+    //     status: 'accepted,complete',
+    //     user_id: this.user_id
+    //   }
+    //   console.log(this.params);
+    //   this.getJobsService.loadJobs(this.params)
+    //       .subscribe( resp => {
+    //          StorageST.set('schedule-last-update', time_stamp.toString())
+    //                   .subscribe(() => {
+    //                     if( resp.jobsAvailable ){
+    //                       this.jobsAvailable = true;
+    //                       this.jobs = resp.jobs;
+    //                     }
+    //                     else{
+    //                       this.message = resp.message;
+    //                     } 
+    //                     console.log(this.jobs);
+    //                     this.loading.dismiss();
+    //                   })
+    //         })
+    // }
   }
 
   pushPage(id:string, status: string) {

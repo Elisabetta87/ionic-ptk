@@ -26,7 +26,7 @@
             <p class="mb-0">Guest Greeted</p>
       </ion-col>
       <ion-col width-20>
-            <ion-toggle [(ngModel)]="isToggled" (ionChange)="guestGreeted()" color="ptkgreen" class="toggle" mode="ios"></ion-toggle>
+            <ion-toggle [disabled]="!+stage>=1 || isToggled" [(ngModel)]="isToggled" (ionChange)="guestGreeted()" color="ptkgreen" class="toggle" mode="ios"></ion-toggle>
       </ion-col>
       <ion-col width-10>
         <ion-icon  *ngIf="isToggled || +stage>=1" class="green-tick" name="checkmark"></ion-icon>

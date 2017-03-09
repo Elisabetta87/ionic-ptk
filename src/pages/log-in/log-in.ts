@@ -20,18 +20,21 @@ export class LogInPage {
 
   ionViewDidEnter() {
     this.menuService.hideMenu(); 
-    console.log(StorageST.getKeys()); 
   }
 
   ionViewWillEnter() {
     this.platform.ready().then(() => {
-      console.log(StorageST.getKeys());
-      if(StorageST.getKeys() !== undefined  && StorageST.getKeys().indexOf('user_id') !== -1) {
-        StorageST.get('user_id').subscribe(user_id => {
-          console.log(user_id);
-          this.navCtrl.push(JobsListPage, {id: +user_id});
-        })
-      }
+      StorageST.getStorage().subscribe(() => {
+        StorageST.get('user_id').subscribe(userId => {
+          this.navCtrl.push(JobsListPage, {user_id: +userId});
+        });
+        // if(StorageST.getKeys() !== undefined  && StorageST.getKeys().indexOf('user_id') !== -1) {
+        //   StorageST.get('user_id').subscribe(user_id => {
+            
+        //   })
+        // }
+     })
+      
     })
 
     

@@ -1,4 +1,4 @@
-import { SecureStorage } from 'ionic-native/dist/es5/index';
+import { StorageST } from './../../services/StorageST';
 import { Component } from '@angular/core';
 import {NavController} from "ionic-angular/index";
 import {LogInPage} from "../log-in/log-in";
@@ -12,25 +12,18 @@ import {LogInPage} from "../log-in/log-in";
 })
 export class MorePage {
 
-  private isStorageReady: boolean;
-
   constructor(
-    public navCtrl: NavController,
-    private storage: SecureStorage
-  ) { 
-    this.storage = new SecureStorage();
-    this.storage.create('logIn').then(resp => this.isStorageReady = true);
-  }
+    public navCtrl: NavController
+  ) {}
 
 
   logOut() {
-    if (this.isStorageReady) {
-        this.storage.remove('authToken').then(resp =>  {
-          console.log('token deleted'); 
-          this.storage.remove('user_id').then(resp => this.navCtrl.setRoot(LogInPage))
-        }
-      );
-    }
+    let storageKeys = StorageST.getKeys();
+    console.log(storageKeys);
+    for(let i=0; i<storageKeys.length; i++) {
+      StorageST.remove(storageKeys[i]).subscribe();
+    } 
+    this.navCtrl.setRoot(LogInPage); 
   }
 }
 

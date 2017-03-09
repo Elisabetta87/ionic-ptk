@@ -55,7 +55,7 @@ export class MarketPage {
       this.loading.present();
       this.getJobs(newTime);
     }
-    else if(StorageST.getKeys().indexOf('market-last-update') !== -1) { 
+    else {//if(StorageST.getKeys().indexOf('market-last-update') !== -1) { 
       StorageST.get('market-last-update')
                .subscribe(res => {
                   let start_time = +res;
@@ -66,14 +66,15 @@ export class MarketPage {
                     this.getJobs(newTime);
                   }
                })
-    } else {
-      this.loading.present();
-      this.getJobs(newTime);
-    } 
+    } //else {
+    //   this.loading.present();
+    //   this.getJobs(newTime);
+    // } 
   }
 
   getJobs(time_stamp:any) {
-    if(StorageST.getKeys().indexOf('user_id') !== -1) {
+    console.log(StorageST.getKeys());
+//if(StorageST.getKeys().indexOf('user_id') !== -1) {
       StorageST.get('user_id')
                .subscribe(res => {
                   let user_id = +res;
@@ -100,7 +101,7 @@ export class MarketPage {
                                    })
                       });
                })
-    }
+   // }
   }
 
   pushPage(id:string, status: string) {

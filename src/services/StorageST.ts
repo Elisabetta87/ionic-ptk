@@ -16,7 +16,7 @@ export class StorageST {
         if( StorageST.st === null ){
             StorageST.st = new SecureStorage();
             StorageST.keys = [];
-            Observable.fromPromise(StorageST.st.create('ptkStorage2'))
+            Observable.fromPromise(StorageST.st.create('ptkStorage'))
                       .subscribe(() => { storage.next(StorageST.st); })
         }
         else{

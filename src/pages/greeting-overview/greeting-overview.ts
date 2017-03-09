@@ -33,8 +33,6 @@ export class GreetingOverviewPage {
         this.job = navParams.get('job');
         this.checklistName = navParams.get('checklistName');
         this.greenBar = this.checklistId ? 'greenBar' : '';
-        this.isToggled = false;
-        this.check_out = false;
     }
 
     ionViewWillEnter() {
@@ -53,11 +51,11 @@ export class GreetingOverviewPage {
                     this.stage = this.checklistObj['stage'];
                     StorageST.set('checklist-'+this.checklistId, checklistObj).subscribe();
                     StorageST.set('checklist-info-'+this.checklistId, this.checklistName).subscribe(); 
-                    if (+this.stage>=1) {
+                    if (+this.stage>=2) {
                         this.isToggled = true;
-                        if(+this.stage==4) {
-                            this.check_out = true;
-                        }
+                    }
+                    if(+this.stage==4) {
+                        this.check_out = true;
                     }
                 })
             loading.dismiss(); 
@@ -69,11 +67,11 @@ export class GreetingOverviewPage {
                         console.log(this.checklistObj);
                         this.stage = this.checklistObj['stage'];
                         console.log(+this.stage);
-                        if (+this.stage>=1) {
+                        if (+this.stage>=2) {
                             this.isToggled = true;
-                            if(+this.stage==4) {
-                                this.check_out = true;
-                            }
+                        }
+                        if(+this.stage==4) {
+                            this.check_out = true;
                         }
                         loading.dismiss();
                      }
