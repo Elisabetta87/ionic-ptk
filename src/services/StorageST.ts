@@ -6,44 +6,71 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class StorageST {
-    
+
+    //I need to check if platform is ready (for all native functionality!!!!)
     private static st:SecureStorage = null;
+    private static keys: string[];
     
     public static getStorage(): Observable<SecureStorage>{
         let storage = new Subject<SecureStorage>();
-
         if( StorageST.st === null ){
             StorageST.st = new SecureStorage();
-            Observable.fromPromise(this.st.create('ptkStorage'))
+            StorageST.keys = [];
+            Observable.fromPromise(StorageST.st.create('ptkStorage2'))
                       .subscribe(() => { storage.next(StorageST.st); })
         }
         else{
-            storage.next(StorageST.st);
+            return Observable.of(StorageST.st);
         }
         return storage;
     }
 
-//    getStorage(storage:SecureStorage): Observable<any> {
-//        let subj = new Subject();
-//        storage = new SecureStorage();
-//        Observable.fromPromise(storage.create('ptkStorage')).subscribe(ready => subj.next(ready));
-//        return subj;
-//     }
+    public static set(key:string, value:any): Observable<any>{
+        let observableSet = new Subject();
+        let val = typeof value !== 'string' ? JSON.stringify(value) : value;
+        StorageST.getStorage()
+                 .subscribe(st => {
+                    Observable.fromPromise(st.set(key, val))
+                              .subscribe( (setResp) => { 
+                                  StorageST.keys.push(key);
+                                  observableSet.next(setResp); 
+                                });
+                 });
+        return observableSet;
+    }
+
+    public static get(key:string): Observable<any>{
+        let observableGet = new Subject();
+        StorageST.getStorage()
+                 .subscribe(st => {
+                    Observable.fromPromise(st.get(key))
+                              .subscribe( value => { observableGet.next(value); });
+                 })
+        return observableGet;
+    }
 
 
+    public static remove(key:string): Observable<any>{
+        let observableRemove = new Subject();
+        StorageST.getStorage()
+                 .subscribe(st => {
+                    Observable.fromPromise(st.remove(key))
+                              .subscribe( (removeResp) => { 
+                                  this.removeKey(key);
+                                  observableRemove.next(removeResp); 
+                                });
+                 });
+        return observableRemove;
+    }
 
+    public static getKeys(): string[]{
+        return StorageST.keys;
+    }
+
+    private static removeKey(key){
+        StorageST.keys.splice(StorageST.keys.indexOf(key),1);
+    }
 
 
 }
-
-
-/* HOW TO USE */
-// let subj = new Subject();
-// StorageST.getStorage()
-//          .subscribe((storage) => {
-//              Observable.fromPromise(storage.get('key')).subscribe((data) => { subj.next(data); })
-//              storage.set('key', 'value').then(() => { /* your code here (or emit new value for observers) */ });
-//              storage.remove('key').then(() => { /* your code here (or emit new value for observers) */ });
-//          })
-// if youu need to return a value/Observable
-// return subj;         
+        

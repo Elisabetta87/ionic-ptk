@@ -1,4 +1,5 @@
-import { SecureStorage } from 'ionic-native/dist/es5/index';
+import { StorageST } from './../../services/StorageST';
+import { SecureStorage } from 'ionic-native';
 import { JobsListPage } from './../jobs-list/jobs-list';
 import { MarketPage} from '../../pages/jobs-list/market';
 import { NavController } from 'ionic-angular/index';
@@ -11,7 +12,7 @@ import {MorePage} from '../../pages/more/more';
 
 @Component({
     templateUrl: 'tabs.html',
-    providers: [SecureStorage]
+    providers: [SecureStorage, StorageST]
 })
 
 
@@ -38,8 +39,11 @@ export class TabsPage {
     constructor(
         private navCtrl: NavController,
         private storage: SecureStorage
-        ) {
-        
-    }
+        ) {}
+
+
+    ionViewWillEnter() {
+        console.log(StorageST.getKeys());
+    }    
 
 }

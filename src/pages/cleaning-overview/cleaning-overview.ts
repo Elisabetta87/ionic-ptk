@@ -1,4 +1,4 @@
-import { SecureStorage } from 'ionic-native';
+import { StorageST } from './../../services/StorageST';
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, Platform } from 'ionic-angular/index';
 //My Imports
@@ -21,16 +21,11 @@ import { JobDetailsPage } from './../job-details/job-details';
 })
 export class CleaningOverviewPage {
 
-  //private id: number;
   private job: Object;
-  //private jobId: number;
   private checklistName: string;
-  //private service: string = '';
   private greenBar: string;
   private checklistId:number;
   private checklistObj:Object;
-
-  private isStorageReady: boolean;
   private status: string;
   private isToggled: boolean;
   private check_out: boolean;
@@ -39,15 +34,11 @@ export class CleaningOverviewPage {
   constructor(
     public navCtrl: NavController,
     private navParams: NavParams,
-    private storage: SecureStorage,
     private loadingCtrl: LoadingController,
     private platform: Platform,
     private checklistService: ChecklistService
   ) {
-    // this.id = navParams.get('id');
-    // this.jobId = navParams.get('jobId');
     this.job = navParams.get('job');
-    console.log(this.job);
     this.checklistId = navParams.get('checklistId');
     this.checklistName = navParams.get('checklistName');
     this.greenBar = this.checklistId ? 'greenBar' : '';
@@ -59,55 +50,46 @@ export class CleaningOverviewPage {
         content: 'Please wait...'
     });
     loading.present();
-    this.storage = new SecureStorage();
     this.platform.ready().then(() => {
-      this.storage.create('ptkStorage').then(
-        () => {
-          this.isStorageReady = true;
-          this.storage.get('checklist-'+this.checklistId).then(
-            checklistString => {
-              this.checklistObj = JSON.parse(checklistString);
-              console.log(this.checklistObj);
-              this.status = this.checklistObj['stage'];
-              console.log(this.status);
-              if (+this.status>=4) {
-                this.isToggled = true;
-              } else {
-                this.isToggled = false;
-              }
-              if(+this.status==6) {
-                this.check_out = true;
-              } else {
-                this.check_out = false;
-              }
-              loading.dismiss();
-            },
-            error => {
-              console.log(error);
-              this.checklistService.getChecklist(this.checklistName, this.checklistId)
-                .subscribe(checklistObj => {
-                  console.log(checklistObj);
-                  this.checklistObj = checklistObj;
-                  this.storage.set('checklist-'+this.checklistId, JSON.stringify(checklistObj));
-                  this.storage.set('checklist-info-'+this.checklistId, this.checklistName); 
-                  this.status = checklistObj['stage'];
-                  if (+this.status>=4) {
-                    this.isToggled = true;
-                  } else {
-                    this.isToggled = false;
-                  }
-                  if(+this.status==6) {
-                    this.check_out = true;
-                  } else {
-                    this.check_out = false;
-                  }
-                  loading.dismiss();
-                })
-            }
-          ); 
+        if(StorageST.getKeys().indexOf('checklist-'+this.checklistId) == -1) {
+           this.checklistService.getChecklist(this.checklistName, this.checklistId)
+                  .subscribe(checklistObj => {
+                      this.checklistObj = checklistObj;
+                      this.status = this.checklistObj['stage'];
+                      StorageST.set('checklist-'+this.checklistId, checklistObj).subscribe();
+                      StorageST.set('checklist-info-'+this.checklistId, this.checklistName).subscribe();
+                      if (+this.status>=4) {
+                        this.isToggled = true;
+                      } else {
+                        this.isToggled = false;
+                      }
+                      if(+this.status==6) {
+                        this.check_out = true;
+                      } else {
+                        this.check_out = false;
+                      }
+                      loading.dismiss();
+                  })
+        } else {
+          StorageST.get('checklist-'+this.checklistId)
+                 .subscribe(
+                   checklistString => {
+                      this.checklistObj = JSON.parse(checklistString);
+                      this.status = this.checklistObj['stage'];
+                      if (+this.status>=4) {
+                        this.isToggled = true;
+                      } else {
+                        this.isToggled = false;
+                      }
+                      if(+this.status==6) {
+                        this.check_out = true;
+                      } else {
+                        this.check_out = false;
+                      }
+                      loading.dismiss();
+                   })      
         }
-      )
-    });
+    })
   } 
 
   checklist() {
@@ -144,12 +126,7 @@ export class CleaningOverviewPage {
     }
     if (+this.checklistObj['stage'] < 4) {
       this.checklistObj['stage'] = '4';
-      if(this.isStorageReady) {      
-        this.storage.set('checklist-'+this.checklistId, JSON.stringify(this.checklistObj)).then(res => console.log(res));
-      } else {
-        console.log('completeClean() - storage not ready');
-        // do we need action here? And, if not, is this if statement needed at all?
-      }
+      StorageST.set('checklist-'+this.checklistId, this.checklistObj).subscribe();
     }
   }
 
@@ -158,9 +135,9 @@ export class CleaningOverviewPage {
   }
 
   checkOut() {
-    if (!this.check_out) {
-      return;
-    }
+    // if (!this.check_out) {
+    //   return;
+    // }
     this.checklistObj['stage'] = '6';
     this.checklistObj['check_out_stamp'] = this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16);
     this.checklistService.putChecklist(this.checklistName, this.checklistId, this.checklistObj)
@@ -176,31 +153,18 @@ export class CleaningOverviewPage {
           // }
           this.navCtrl.popTo(JobDetailsPage);
       });
-    if(this.isStorageReady) {      
-      this.storage.set('checklist-'+this.checklistId, JSON.stringify(this.checklistObj));
-    } else {
-      console.log('checkOut() - storage not ready')
-      // do we need action here? And, if not, is this if statement needed at all?
-    }
+    StorageST.set('checklist-'+this.checklistId, this.checklistObj).subscribe();
   }
 
   sendToFormComponent(page:any) {
-    if(this.isStorageReady) {
-      this.storage.get('checklist-'+this.checklistId).then(
-        res => {
-          this.checklistObj = JSON.parse(res);
-          this.navCtrl.push(page, {
-            checklistObj: this.checklistObj
-          });
-          
-        },
-        error => {
-          this.navCtrl.push(page, {
-            checklistObj: this.checklistObj
-          });
-        }
-      )
-    } 
+    StorageST.get('checklist-'+this.checklistId)
+             .subscribe(
+               res => {
+                this.checklistObj = JSON.parse(res);
+                this.navCtrl.push(page, {checklistObj: this.checklistObj});
+               },
+               error => this.navCtrl.push(page, {checklistObj: this.checklistObj})
+             ) 
   }
 
 }

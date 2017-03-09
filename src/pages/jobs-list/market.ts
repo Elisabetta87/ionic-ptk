@@ -1,4 +1,4 @@
-import { SecureStorage } from 'ionic-native';
+import { StorageST } from './../../services/StorageST';
 import { JobAcceptingPage } from './../job-accepting/job-accepting';
 import { GetJobsService } from './../../services/get-jobs';
 import { Component } from '@angular/core';
@@ -32,10 +32,8 @@ export class MarketPage {
     public loadingCtrl: LoadingController,
     public navCtrl:NavController,
     private navParams: NavParams,
-    private getJobsService: GetJobsService,
-    private storage: SecureStorage
+    private getJobsService: GetJobsService
   ) {
-    this.storage.create('ptkStorage').then(res => this.isStorageReady = true);
 
     this.date.setDate(this.date.getDate() + 1);
     this.twoWeeksAfter.setDate(this.twoWeeksAfter.getDate() + 1);
@@ -57,58 +55,51 @@ export class MarketPage {
       this.loading.present();
       this.getJobs(newTime);
     }
-    else if(this.isStorageReady) {  
-      this.storage.get('market-last-update').then(
-        res => {
-            let start_time = +res;
-            let diff_time_mins = (newTime - start_time)/60000;
-            console.log(diff_time_mins);
-            if(diff_time_mins > 10 || this.forceGetRequest) {
-              this.loading.present();
-              this.getJobs(newTime);
-            } else {
-              console.log(res);
-            }
-        },
-        error => {
-          this.loading.present();
-          this.getJobs(newTime);
-        }
-      ) 
-    }
+    else if(StorageST.getKeys().indexOf('market-last-update') !== -1) { 
+      StorageST.get('market-last-update')
+               .subscribe(res => {
+                  let start_time = +res;
+                  let diff_time_mins = (newTime - start_time)/60000;
+                  console.log(diff_time_mins);
+                  if(diff_time_mins > 10 || this.forceGetRequest) {
+                    this.loading.present();
+                    this.getJobs(newTime);
+                  }
+               })
+    } else {
+      this.loading.present();
+      this.getJobs(newTime);
+    } 
   }
 
   getJobs(time_stamp:any) {
-    if(this.isStorageReady) {
-      this.storage.get('user_id').then(res => {
-        let user_id = +res;
-        this.params_market = {
-          start_date: this.date.toISOString().slice(0, 10),
-          end_date: this.twoWeeksAfter.toISOString().slice(0, 10),
-          status: 'available,accepted',
-          user_id: user_id
-        };
-        this.tomorrow = this.params_market['start_date'];
-        this.getJobsService.loadJobs(this.params_market)
-        .subscribe( resp => {
-            this.storage.set('market-last-update', time_stamp.toString()).then(
-              done => {
-                    if( resp.jobsAvailable ){
-                      this.jobsAvailable = true;
-                      this.jobs = resp.jobs;
-                      console.log(this.jobs);
-                    }
-                    else{
-                      this.message = resp.message;
-                    } 
-                    this.loading.dismiss();
-                  },
-              error => {
-                console.log('market-last-update has not been created');
-               }   
-            )
-        });
-      })
+    if(StorageST.getKeys().indexOf('user_id') !== -1) {
+      StorageST.get('user_id')
+               .subscribe(res => {
+                  let user_id = +res;
+                  this.params_market = {
+                    start_date: this.date.toISOString().slice(0, 10),
+                    end_date: this.twoWeeksAfter.toISOString().slice(0, 10),
+                    status: 'available,accepted',
+                    user_id: user_id
+                  };
+                  this.tomorrow = this.params_market['start_date'];
+                  this.getJobsService.loadJobs(this.params_market)
+                      .subscribe( resp => {
+                          StorageST.set('market-last-update', time_stamp.toString())
+                                   .subscribe(() => {
+                                      if( resp.jobsAvailable ){
+                                        this.jobsAvailable = true;
+                                        this.jobs = resp.jobs;
+                                        console.log(this.jobs);
+                                      }
+                                      else{
+                                        this.message = resp.message;
+                                      } 
+                                      this.loading.dismiss();
+                                   })
+                      });
+               })
     }
   }
 

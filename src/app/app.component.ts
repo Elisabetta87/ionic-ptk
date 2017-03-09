@@ -30,7 +30,6 @@ export class MyApp {
     //   { title: 'Checklist', component: TabsPage, tabComponent: MarketPage},
     //   { title: 'Checklist', component: TabsPage, tabComponent: MarketPage}
     // ];
-
   }
 
   initializeApp() {

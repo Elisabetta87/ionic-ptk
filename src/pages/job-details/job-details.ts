@@ -4,7 +4,6 @@ import { GetJobsService } from './../../services/get-jobs';
 import { ChecklistService } from './../../services/checklist';
 import { GreetingOverviewPage } from './../greeting-overview/greeting-overview';
 //ionic 
-import { SecureStorage } from 'ionic-native/dist/es5/index';
 import { NavController, NavParams, Platform } from 'ionic-angular/index';
 //angular
 import { Component } from '@angular/core';
@@ -12,8 +11,7 @@ import {DatePipe}  from "@angular/common";
 
 @Component({
   selector: 'page-job-details',
-  templateUrl: 'job-details.html',
-  providers: [SecureStorage]
+  templateUrl: 'job-details.html'
 })
 export class JobDetailsPage {
   /*set lat and lng for google map */
@@ -21,7 +19,6 @@ export class JobDetailsPage {
   private property_longitude: number;
   private job: Object;
   private current_date: Date = new Date();
-  private isStorageReady: boolean;
   private platform_ready: boolean;
   private submitButton: boolean = true;
   private today = new Date();
@@ -33,7 +30,6 @@ export class JobDetailsPage {
   constructor(
     public navCtrl: NavController,
     private navParams: NavParams,
-    private storage: SecureStorage,
     private checklistService: ChecklistService,
     private platform: Platform,
     private jobService: GetJobsService
@@ -42,11 +38,8 @@ export class JobDetailsPage {
     this.agentName = this.navParams.get('agentName');
     console.log(this.job);
     console.log(this.agentName);
-    this.storage = new SecureStorage();
     this.platform.ready().then(() => {
       this.platform_ready = true;
-      this.storage.create('ptkStorage').then(
-        () => this.isStorageReady = true)
     });
     
     this.property_latitude = +this.job['property_latitude'];
@@ -64,7 +57,7 @@ export class JobDetailsPage {
 
 
   ionViewWillEnter() {
-    if(!(this.isStorageReady && this.platform_ready)) {
+    if(!(this.platform_ready)) {
       return;
     }
     this.jobService.getJob(this.job['id'])
@@ -96,7 +89,7 @@ export class JobDetailsPage {
   }
 
   checkinChecklist() {
-    if(!(this.platform_ready && this.isStorageReady)) {
+    if(!(this.platform_ready)) {
       return;
     }
     for(let checklistName in this.job['checklists']) {
@@ -104,11 +97,14 @@ export class JobDetailsPage {
       let checklistObj = {};
       checklistObj['check_in_stamp'] = this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16);
       checklistObj['stage'] = '1';
+      checklistObj['job'] = this.job['id'];
       if (this.agentName) {checklistObj['agent_name'] = this.agentName;}
       this.checklistService.putChecklist(checklistName, checklistId, checklistObj).subscribe(checklist => {});  
     }
     let checklistName = this.arrChecklists[0];
     let checklistId = this.job['checklists'][checklistName];
+    console.log(this.arrChecklists[0]+'OverviewPage');
+    //console.log(this.arrChecklists[1]+'OverviewPage');
     this.navCtrl.push(this.arrChecklists[0]+'OverviewPage', {
                 job: this.job,
       checklistName: checklistName,
@@ -117,7 +113,7 @@ export class JobDetailsPage {
   }
 
   completeChecklist(checklistName:string) {
-    if(!(this.platform_ready && this.isStorageReady)) {
+    if(!(this.platform_ready)) {
       return;
     }
     let redirect = this.setChecklistPage[checklistName];

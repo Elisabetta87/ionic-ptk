@@ -1,12 +1,10 @@
+import { StorageST } from './../../services/StorageST';
 import { CleaningOverviewPage } from './../cleaning-overview/cleaning-overview';
 import { ChecklistService } from './../../services/checklist';
 import { Platform } from 'ionic-angular/index';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SecureStorage } from 'ionic-native/dist/es5/index';
 import { NavController, NavParams } from 'ionic-angular/index';
 import { Component, OnInit } from '@angular/core';
-
-
 
 
 @Component({
@@ -17,7 +15,7 @@ import { Component, OnInit } from '@angular/core';
 export class CleaningChecklistSecondPage implements OnInit {
 
     private checklistObj: Object;
-    private isStorageReady: boolean;
+    //private platformReady: boolean;
     private departureChecklistForm: FormGroup;
     private damages_reported: boolean;
     private delivery_during_clean: boolean;
@@ -25,7 +23,6 @@ export class CleaningChecklistSecondPage implements OnInit {
     constructor(
         private fb: FormBuilder,
         private navCtrl: NavController,
-        private storage: SecureStorage,
         private navParams: NavParams,
         private platform: Platform,
         private checklist: ChecklistService
@@ -33,10 +30,7 @@ export class CleaningChecklistSecondPage implements OnInit {
         this.checklistObj = this.navParams.get('checklistObj');
         this.damages_reported = false;
         this.delivery_during_clean = false;
-        this.storage = new SecureStorage();
-        platform.ready().then(() => {
-          this.storage.create('ptkStorage').then(() => this.isStorageReady = true);
-        })  
+        // platform.ready().then(() => {this.platformReady = true)})  
     }
 
     ngOnInit() {
@@ -70,7 +64,6 @@ export class CleaningChecklistSecondPage implements OnInit {
     }
 
 
-
     onSubmit() {
         let departureChecklist = this.departureChecklistForm.value;
         this.checklistObj['clean_linen_count_end'] = departureChecklist['clean_linen_count_end'];
@@ -83,12 +76,8 @@ export class CleaningChecklistSecondPage implements OnInit {
         this.checklistObj['number_of_beds_made'] = departureChecklist['number_of_beds_made'];
         this.checklistObj['comments'] = departureChecklist['comments'] != 'Leave any comments here......' ? comments : '';
         this.checklistObj['stage'] = '5';
-        if (this.isStorageReady) {
-            this.storage.set('checklist-'+this.checklistObj['id'],  JSON.stringify(this.checklistObj)).then(res => console.log(res));
-            this.checklist.putChecklist('Cleaning', this.checklistObj['id'], this.checklistObj)
-                        .subscribe(res => {
-                            this.navCtrl.popTo(CleaningOverviewPage);
-                        });
-        }
+        StorageST.set('checklist-'+this.checklistObj['id'], this.checklistObj).subscribe();
+        this.checklist.putChecklist('Cleaning', this.checklistObj['id'], this.checklistObj)
+                      .subscribe(res => {this.navCtrl.popTo(CleaningOverviewPage)});
     }
 }
