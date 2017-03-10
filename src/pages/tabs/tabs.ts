@@ -1,3 +1,4 @@
+import { MessengerPage } from './../messenger/messenger';
 import { StorageST } from './../../services/StorageST';
 import { SecureStorage } from 'ionic-native';
 import { JobsListPage } from './../jobs-list/jobs-list';
@@ -24,7 +25,7 @@ export class TabsPage {
         JobsListPage,
         MarketPage,
         MorePage,
-        JobsListPage
+        MessengerPage
     ];
 
     tab1Root: any = this.tabRoots[0];

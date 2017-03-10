@@ -1,7 +1,7 @@
 //ionic
 import { Platform } from 'ionic-angular/index';
 import { IonicApp, IonicModule, IonicErrorHandler, App } from 'ionic-angular';
-import { SecureStorage, Diagnostic } from 'ionic-native';
+import { SecureStorage, Diagnostic, Keyboard } from 'ionic-native';
 //angular
 import { NgModule, ErrorHandler } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -34,6 +34,7 @@ import { CleaningChecklistSecondPage } from './../pages/cleaning-checklist-2/cle
 import { CleaningChecklistForm } from './../components/cleaning-checklist-form/cleaning-checklist-form';
 import { GreetingOverviewPage } from './../pages/greeting-overview/greeting-overview';
 import { GreetingChecklistPage } from './../pages/greeting-checklist/greeting-checklist';
+import { MessengerPage } from './../pages/messenger/messenger';
 //my Services
 import { PtkHttp } from "../services/ptkHttp";
 import { LogInService } from "../services/log-in-service";
@@ -42,6 +43,8 @@ import { GetJobsService } from "../services/get-jobs";
 import { URLs } from './../services/URLs';
 import { GeolocationService } from '../services/geolocation-service';
 import { StorageST } from './../services/StorageST';
+import { MessengerService } from './../services/messenger-service';
+
 
 
 
@@ -70,7 +73,8 @@ import { StorageST } from './../services/StorageST';
     CleaningChecklistSecondPage,
     JobAcceptingPage,
     GreetingChecklistPage,
-    GreetingOverviewPage
+    GreetingOverviewPage,
+    MessengerPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -106,12 +110,14 @@ import { StorageST } from './../services/StorageST';
     CleaningChecklistSecondPage,
     JobAcceptingPage,
     GreetingChecklistPage,
-    GreetingOverviewPage
+    GreetingOverviewPage,
+    MessengerPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GeolocationService,
     SecureStorage,
+    Keyboard,
     Diagnostic,
     LogInService,
     UserIdService,
@@ -119,6 +125,7 @@ import { StorageST } from './../services/StorageST';
     ChecklistService,
     MenuService,
     StorageST,
+    MessengerService,
     {
       provide: PtkHttp,
       useFactory: (backend: XHRBackend, options: RequestOptions, storage: SecureStorage, app: App, platform: Platform) => new PtkHttp(backend, options, storage, app, platform),

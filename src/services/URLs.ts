@@ -11,7 +11,8 @@ export class URLs{
            getUserId: URLs.home + 'api/v2/users/',
              getJobs: URLs.home + 'api/v2/jobs/',
          checklistId: URLs.home + 'api/v2/',     //cleaningchecklists/',
-    getGuestJobMatch: URLs.home + 'api/v2/job_match/'
+    getGuestJobMatch: URLs.home + 'api/v2/job_match/',
+            messages: URLs.home + 'api/v2/messages/'
     };
     
     static  getParams(params?:Object) { 
@@ -19,11 +20,11 @@ export class URLs{
         if (params == null || undefined) {
             url_string = '';
         }
-        for (let index in params) {
+        for (let param in params) {
             if (Object.keys(params).length == 1) {
-                url_string += index + '=' + params[index]
+                url_string += param + '=' + params[param]
             } else {
-                url_string += index + '=' + params[index] + '&';
+                url_string += param + '=' + params[param] + '&';
             }
         }  
         if (url_string.substr(url_string.length-1) === '&') {
