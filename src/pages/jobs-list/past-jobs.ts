@@ -8,21 +8,19 @@ import {NavController, LoadingController, NavParams} from "ionic-angular/index";
 
 
 @Component({
-  selector: 'page-market',
+  selector: 'page-pastJobs',
   templateUrl: 'jobs-list.html'
 })
-export class MarketPage {
+export class PastJobsPage {
 
-  private params_market = {};
-  private date: any = new Date();
-  private twoWeeksAfter: any =  new Date(+new Date + 12096e5);
+  private params_pastJobs = {};
+  private twoWeeksBefore: any =  new Date();
   private jobsAvailable:boolean;
   private jobs:any = {};
   private message: string;
   private market:boolean = true;
-  private tomorrow: any = new Date();
   private params = {};
-  private today: any = new Date(); 
+  private yesterday: any = new Date(); 
   private time_stamp = new Date();
   private loading:any;
   private forceGetRequest:boolean = false;
@@ -34,8 +32,10 @@ export class MarketPage {
     private getJobsService: GetJobsService
   ) {
 
-    this.date.setDate(this.date.getDate() + 1);
-    this.twoWeeksAfter.setDate(this.twoWeeksAfter.getDate() + 1);
+    this.yesterday.setDate(this.yesterday.getDate() - 1);
+    this.twoWeeksBefore.setDate(this.twoWeeksBefore.getDate() - 14);
+    console.log(this.yesterday);
+    console.log(this.twoWeeksBefore);
 
     this.forceGetRequest = this.navParams.get('forceGetRequest');
     
@@ -43,7 +43,7 @@ export class MarketPage {
         content: 'Please wait...'
     });
       
-    this.params = {start_date: this.today.toISOString().slice(0, 10)};
+    this.params = {start_date: this.yesterday.toISOString().slice(0, 10)};
 
   }
 
@@ -55,7 +55,7 @@ export class MarketPage {
       this.getJobs(newTime);
     }
     else {
-      StorageST.get('market-last-update')
+      StorageST.get('pastJobs-last-update')
                .subscribe(res => {
                   let start_time = +res;
                   let diff_time_mins = (newTime - start_time)/60000;
@@ -72,16 +72,17 @@ export class MarketPage {
       StorageST.get('user_id')
                .subscribe(res => {
                   let user_id = +res;
-                  this.params_market = {
-                    start_date: this.date.toISOString().slice(0, 10),
-                    end_date: this.twoWeeksAfter.toISOString().slice(0, 10),
-                    status: 'available,accepted',
+                  this.params_pastJobs = {
+                    start_date: this.yesterday.toISOString().slice(0, 10),
+                    end_date: this.twoWeeksBefore.toISOString().slice(0, 10),
+                    status: 'complete',
                     user_id: user_id
                   };
-                  this.tomorrow = this.params_market['start_date'];
-                  this.getJobsService.loadJobs(this.params_market)
+                  console.log(this.params_pastJobs);
+                  this.yesterday = this.params_pastJobs['start_date'];
+                  this.getJobsService.loadJobs(this.params_pastJobs)
                       .subscribe( resp => {
-                          StorageST.set('market-last-update', time_stamp.toString())
+                          StorageST.set('pastJobs-last-update', time_stamp.toString())
                                    .subscribe(() => {
                                       if( resp.jobsAvailable ){
                                         this.jobsAvailable = true;
@@ -97,13 +98,4 @@ export class MarketPage {
                })
   }
 
-  pushPage(id:string, status: string) {
-    for (let i = 0; i < this.jobs.length; i++) {
-      if (this.jobs[i].id === id && status !== 'Accepted') {
-        this.navCtrl.push(JobAcceptingPage, {job: this.jobs[i]});
-      }
-    } 
-  }
-
 }
-

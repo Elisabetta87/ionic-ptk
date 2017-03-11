@@ -24,17 +24,9 @@ export class LogInPage {
 
   ionViewWillEnter() {
     this.platform.ready().then(() => {
-      StorageST.getStorage().subscribe(() => {
         StorageST.get('user_id').subscribe(userId => {
           this.navCtrl.push(JobsListPage, {user_id: +userId});
-        });
-        // if(StorageST.getKeys() !== undefined  && StorageST.getKeys().indexOf('user_id') !== -1) {
-        //   StorageST.get('user_id').subscribe(user_id => {
-            
-        //   })
-        // }
-     })
-      
+        })
     })
 
     

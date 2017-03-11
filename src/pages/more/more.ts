@@ -1,3 +1,4 @@
+import { PastJobsPage } from './../jobs-list/past-jobs';
 import { StorageST } from './../../services/StorageST';
 import { Component } from '@angular/core';
 import {NavController} from "ionic-angular/index";
@@ -17,13 +18,17 @@ export class MorePage {
   ) {}
 
 
+
+  gotToPastJobsPage() {
+    this.navCtrl.push(PastJobsPage);
+  }
+
+
   logOut() {
-    let storageKeys = StorageST.getKeys();
-    console.log(storageKeys);
-    for(let i=0; i<storageKeys.length; i++) {
-      StorageST.remove(storageKeys[i]).subscribe();
-    } 
-    this.navCtrl.setRoot(LogInPage); 
+    StorageST.remove('user_id').subscribe(() => {
+      StorageST.remove('authToken').subscribe(() => this.navCtrl.push(LogInPage))
+    })
+     
   }
 }
 

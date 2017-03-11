@@ -35,6 +35,7 @@ import { CleaningChecklistForm } from './../components/cleaning-checklist-form/c
 import { GreetingOverviewPage } from './../pages/greeting-overview/greeting-overview';
 import { GreetingChecklistPage } from './../pages/greeting-checklist/greeting-checklist';
 import { MessengerPage } from './../pages/messenger/messenger';
+import { PastJobsPage } from './../pages/jobs-list/past-jobs';
 //my Services
 import { PtkHttp } from "../services/ptkHttp";
 import { LogInService } from "../services/log-in-service";
@@ -74,7 +75,8 @@ import { MessengerService } from './../services/messenger-service';
     JobAcceptingPage,
     GreetingChecklistPage,
     GreetingOverviewPage,
-    MessengerPage
+    MessengerPage,
+    PastJobsPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -111,7 +113,8 @@ import { MessengerService } from './../services/messenger-service';
     JobAcceptingPage,
     GreetingChecklistPage,
     GreetingOverviewPage,
-    MessengerPage
+    MessengerPage,
+    PastJobsPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

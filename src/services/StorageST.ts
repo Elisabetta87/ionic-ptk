@@ -44,7 +44,10 @@ export class StorageST {
         StorageST.getStorage()
                  .subscribe(st => {
                     Observable.fromPromise(st.get(key))
-                              .subscribe( value => { observableGet.next(value); });
+                              .subscribe( 
+                                  value => { observableGet.next(value); },
+                                  err => console.log(err)
+                               );
                  })
         return observableGet;
     }
