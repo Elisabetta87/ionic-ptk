@@ -1,5 +1,5 @@
+import { MorePage } from './../more/more';
 import { StorageST } from './../../services/StorageST';
-import { JobAcceptingPage } from './../job-accepting/job-accepting';
 import { GetJobsService } from './../../services/get-jobs';
 import { Component } from '@angular/core';
 import {NavController, LoadingController, NavParams} from "ionic-angular/index";
@@ -18,10 +18,9 @@ export class PastJobsPage {
   private jobsAvailable:boolean;
   private jobs:any = {};
   private message: string;
-  private market:boolean = true;
+  private pastJobs:boolean = true;
   private params = {};
   private yesterday: any = new Date(); 
-  private time_stamp = new Date();
   private loading:any;
   private forceGetRequest:boolean = false;
 
@@ -96,6 +95,10 @@ export class PastJobsPage {
                                    })
                       });
                })
+  }
+
+  ionViewDidLeave() {
+    this.navCtrl.push(MorePage);
   }
 
 }

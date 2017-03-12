@@ -45,6 +45,8 @@ import { URLs } from './../services/URLs';
 import { GeolocationService } from '../services/geolocation-service';
 import { StorageST } from './../services/StorageST';
 import { MessengerService } from './../services/messenger-service';
+//directives
+import { KeyboardAttachDirective } from './../directives/keyboard-attach-directive';
 
 
 
@@ -76,7 +78,8 @@ import { MessengerService } from './../services/messenger-service';
     GreetingChecklistPage,
     GreetingOverviewPage,
     MessengerPage,
-    PastJobsPage
+    PastJobsPage,
+    KeyboardAttachDirective,
   ],
   imports: [
     IonicModule.forRoot(MyApp),

@@ -1,3 +1,4 @@
+import { KeyboardAttachDirective } from './../../directives/keyboard-attach-directive';
 import { MessengerPage } from './../messenger/messenger';
 import { StorageST } from './../../services/StorageST';
 import { SecureStorage } from 'ionic-native';
@@ -13,7 +14,7 @@ import {MorePage} from '../../pages/more/more';
 
 @Component({
     templateUrl: 'tabs.html',
-    providers: [SecureStorage, StorageST]
+    providers: [SecureStorage, StorageST, KeyboardAttachDirective]
 })
 
 

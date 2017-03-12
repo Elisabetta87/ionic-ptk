@@ -3,8 +3,8 @@ import { LoadingController } from 'ionic-angular/index';
 import { StorageST } from './../../services/StorageST';
 import { MessengerService } from './../../services/messenger-service';
 import { Platform, Content } from 'ionic-angular';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit, Input, Directive } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Input, Directive, ViewChild } from '@angular/core';
 import { Keyboard } from 'ionic-native';
 
 
@@ -16,18 +16,17 @@ import { Keyboard } from 'ionic-native';
 })
 
 
-export class MessengerPage  {
+export class MessengerPage implements OnInit {
+    @ViewChild(Content) content: Content;
 
-    // @Input('keyboardAttach') content: Content;
-
-    //private messagingForm: FormGroup;
+    private messagingForm: FormGroup;
     private user_id: number;
     private msgs: {}[];
     private loading: any;
     private params: {};
 
     constructor(
-        //private fb: FormBuilder,
+        private fb: FormBuilder,
         public keyboard: Keyboard,
         public platform: Platform,
         private messengerService: MessengerService,
@@ -55,33 +54,57 @@ export class MessengerPage  {
         this.messengerService.getMessages(this.params)
                             .subscribe(messagesObj => {
                                 let messages = messagesObj.results;
+                                // if(messages['length-1'] !== this.msgs.length-1) {
+                                //     console.log('notify');
+                                // }
                                 this.msgs = [];
                                 for(let i=messages.length-1; i>=0; i--) {
                                     this.msgs.push(messages[i]);
                                 }
+                                console.log(this.msgs);
                                 this.loading.dismiss(); 
                             })
 
     }
 
-
-    //  ngOnInit() {
-    //     this.messagingForm = this.fb.group({
-    //         message: ['', {ValidateEvent: 'blur'}]
-    //     }); 
-    // }
-
-
-    // onSubmit() {
-    //     let message = this.messagingForm.value;
-    //     console.log(message);
-    // }
-
-    keyboardCheck() {
-      //console.log('The keyboard is open:', this.keyboard.show());
+    ionViewDidEnter() {
+        this.scrollToBottom();
     }
 
 
+     ngOnInit() {
+        this.messagingForm = this.fb.group({
+            message: ['', Validators.required]
+        });
+    }
 
+
+    onSubmit() {
+        let message = this.messagingForm.value;
+        message.provider = this.params['user_id'];
+        message.outgoing = false;
+        console.log(message);
+        this.messengerService.postMessages(message).subscribe(() => {
+            this.messengerService.getMessages(this.params)
+                            .subscribe(messagesObj => {
+                                let messages = messagesObj.results;
+                                this.msgs = [];
+                                for(let i=messages.length-1; i>=0; i--) {
+                                    this.msgs.push(messages[i]);
+                                }
+                                this.messagingForm.reset('');
+                                this.scrollToBottom();
+                            })
+        })
+    }
+
+
+    scrollToBottom(){
+        console.log(this.content.contentBottom);
+        let dimensions = this.content.getContentDimensions();
+        //this.content.scrollTo(0, this.content.contentBottom+115, 300);
+        this.content.scrollToBottom();
+        console.log(dimensions);
+    }
 
 }

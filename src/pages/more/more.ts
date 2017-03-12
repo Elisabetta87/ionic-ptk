@@ -17,8 +17,6 @@ export class MorePage {
     public navCtrl: NavController
   ) {}
 
-
-
   gotToPastJobsPage() {
     this.navCtrl.push(PastJobsPage);
   }

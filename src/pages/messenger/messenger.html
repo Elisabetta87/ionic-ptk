@@ -1,25 +1,10 @@
-<ion-header>
-</ion-header>
-
-<ion-content padding-top>
-    <!--<form [formGroup]="messagingForm" (ngSubmit)="onSubmit()">
-        <ion-grid>
-            <ion-row>
-                <ion-col width-80>
-                    <ion-textarea formControlName="message"></ion-textarea>
-                </ion-col>
-                <ion-col width-20>
-                    <button type="submit" class=""><ion-icon name="send"></ion-icon></button>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </form>-->
+<ion-content padding-top #content content>
     <ion-grid *ngFor="let msg of msgs">
         <ion-row *ngIf="!msg.outgoing" class="messageSent">
             <ion-col width-90 class="pr-0">
                 <div class="messageContainer p-3">
-                    {{ msg.message }}
-                    <div class="time">{{ msg.created.slice(11, 16) }} {{msg.created.slice(11, 13)>=12 ? 'P.M.' : 'A.M.'}}</div>
+                    <div class="message-text"><span>{{ msg.message }}</span></div>
+                    <div class="time">{{ msg.created.slice(11, 16) }}</div>
                 </div>
             </ion-col>
             <ion-col width-10 class="pl-0">
@@ -32,19 +17,18 @@
             </ion-col>
             <ion-col width-90 class="pl-0">
                 <div class="messageContainer p-3">
-                    {{ msg.message }}
-                    <div class="time">{{ msg.created.slice(11, 16) }} {{msg.created.slice(11, 13)>=12 ? 'P.M.' : 'A.M.'}}</div>
+                    <div class="message-text"><span>{{ msg.message }}</span></div>
+                    <div class="time">{{ msg.created.slice(11, 16) }}</div>
                 </div>
             </ion-col>
         </ion-row>
     </ion-grid>
-    <ion-footer>
-        <ion-toolbar>
-            <input class="messageInput" type="text">
-            <ion-icon class="sendIcon" name="send"></ion-icon>
-        </ion-toolbar>
-    </ion-footer>
 </ion-content>
-
-
-<!--[disabled]="!messangingForm.valid"-->
+<ion-footer [keyboardAttach]="content">
+    <ion-toolbar>
+        <form [formGroup]="messagingForm" (ngSubmit)="onSubmit()">
+            <input class="messageInput" type="text" formControlName="message">
+            <button class="send-msg" type="submit" [disabled]="!messagingForm.valid"><ion-icon class="sendIcon" name="send"></ion-icon></button>
+        </form>
+    </ion-toolbar>
+</ion-footer>
