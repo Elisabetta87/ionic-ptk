@@ -7,9 +7,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input, Directive, ViewChild } from '@angular/core';
 import { Keyboard } from 'ionic-native';
 
-
-
-
 @Component({
     selector: 'messenger-page',
  templateUrl: 'messenger.html'
@@ -39,6 +36,7 @@ export class MessengerPage implements OnInit {
         this.loading = this.loadingCtrl.create({
             content: 'Please wait...'
         });
+        
     }
 
     ionViewWillEnter() {
@@ -52,19 +50,16 @@ export class MessengerPage implements OnInit {
         });
         this.loading.present();
         this.messengerService.getMessages(this.params)
-                            .subscribe(messagesObj => {
+                          .subscribe(messagesObj => {
                                 let messages = messagesObj.results;
-                                // if(messages['length-1'] !== this.msgs.length-1) {
-                                //     console.log('notify');
-                                // }
                                 this.msgs = [];
                                 for(let i=messages.length-1; i>=0; i--) {
                                     this.msgs.push(messages[i]);
                                 }
+                                StorageST.set('messages', {length: this.msgs.length, lastMsg: this.msgs[this.msgs.length-1]['message']});
                                 console.log(this.msgs);
                                 this.loading.dismiss(); 
                             })
-
     }
 
     ionViewDidEnter() {

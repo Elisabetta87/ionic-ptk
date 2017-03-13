@@ -1,17 +1,17 @@
 <ion-content padding-bottom *ngIf="jobsAvailable">
   <ion-list inset *ngFor="let job of jobs; let i = index" class="m-3 mt-4 item-text-wrap">
-    <div *ngIf="i==0 && params.start_date && tomorrow">
+    <div *ngIf="i==0">
       <p class="text-center date">{{ job.date == params.start_date ? 'Today' : (job.date == tomorrow ? 'Tomorrow' : job.date | date:'fullDate') }}</p>
     </div>
-    <div *ngIf="i>0 && params.start_date &&  tomorrow">
+    <div *ngIf="i>0">
         <p class="text-center date" *ngIf="jobs[i-1].date != jobs[i].date">{{ job.date == params.start_date ? 'Today' : (job.date == tomorrow ? 'Tomorrow' : job.date | date:'fullDate') }}</p>
-    </div>    
-    <button ion-item class="{{ job.status }}" (click)="pushPage(job.id, job.status)">
+    </div> 
+    <button ion-item class="{{ job.status }}" (click)="!pastJobs ? pushPage(job.id, job.status) : nothing()">
       <ion-grid>
         <ion-row>
           <ion-col width-80>
             <div text-wrap>
-              <p class="time">{{ job.time.slice(0,-3) }} {{job.time.slice(0,-6)>=12 ? 'pm' : 'am'}} - {{ job.end_time.slice(0,-3) }} {{job.end_time.slice(0,-6)>=12 ? 'pm' : 'am'}}</p>
+              <p class="time">{{ job.time.slice(0,-3) }} - {{ job.end_time.slice(0,-3) }}</p> 
               <p>{{ job.property_address }}</p>
               <p>{{ job.services_string }}</p>
             </div>
@@ -29,3 +29,6 @@
 <ion-content padding *ngIf="!jobsAvailable">
   <h3 class="mt-5 text-center">{{ message }}</h3>
 </ion-content>  
+
+<!--{{job.time.slice(0,-6)>=12 ? 'pm' : 'am'}} - {{ job.end_time.slice(0,-3) }} {{job.end_time.slice(0,-6)>=12 ? 'pm' : 'am'}}-->
+<!--(job.date == yesterday ? 'Yesterday' : job.date | date:'fullDate')-->

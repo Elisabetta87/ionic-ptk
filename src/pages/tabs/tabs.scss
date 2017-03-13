@@ -1,0 +1,19 @@
+tabs {
+    ion-badge {
+        min-width: 20px;
+        font-weight: bold;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 100%;
+        color: white;
+        position: absolute;
+        top: 6%;
+        padding: 1px 6px;
+        height: auto;
+        font-size: 12px;
+        line-height: 16px;
+        right: calc(50% - 32px);
+        background-color: #f53d3d;
+    }
+}

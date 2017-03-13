@@ -20,8 +20,9 @@ export class PastJobsPage {
   private message: string;
   private pastJobs:boolean = true;
   private params = {};
-  private yesterday: any = new Date(); 
+  private date: any = new Date(); 
   private loading:any;
+  private yesterday: any;
   private forceGetRequest:boolean = false;
 
   constructor(
@@ -31,9 +32,9 @@ export class PastJobsPage {
     private getJobsService: GetJobsService
   ) {
 
-    this.yesterday.setDate(this.yesterday.getDate() - 1);
+    this.date.setDate(this.date.getDate() - 1);
     this.twoWeeksBefore.setDate(this.twoWeeksBefore.getDate() - 14);
-    console.log(this.yesterday);
+    console.log(this.date);
     console.log(this.twoWeeksBefore);
 
     this.forceGetRequest = this.navParams.get('forceGetRequest');
@@ -42,8 +43,9 @@ export class PastJobsPage {
         content: 'Please wait...'
     });
       
-    this.params = {start_date: this.yesterday.toISOString().slice(0, 10)};
-
+    this.params = {start_date: this.date.toISOString().slice(0, 10)};
+    this.yesterday = this.date.toISOString().slice(0, 10);
+    console.log(this.yesterday);
   }
 
   ionViewWillEnter() {
@@ -72,13 +74,13 @@ export class PastJobsPage {
                .subscribe(res => {
                   let user_id = +res;
                   this.params_pastJobs = {
-                    start_date: this.yesterday.toISOString().slice(0, 10),
-                    end_date: this.twoWeeksBefore.toISOString().slice(0, 10),
+                    start_date: this.twoWeeksBefore.toISOString().slice(0, 10),
+                    end_date: this.date.toISOString().slice(0, 10),
                     status: 'complete',
                     user_id: user_id
                   };
                   console.log(this.params_pastJobs);
-                  this.yesterday = this.params_pastJobs['start_date'];
+                  this.date = this.params_pastJobs['start_date'];
                   this.getJobsService.loadJobs(this.params_pastJobs)
                       .subscribe( resp => {
                           StorageST.set('pastJobs-last-update', time_stamp.toString())
@@ -87,6 +89,7 @@ export class PastJobsPage {
                                         this.jobsAvailable = true;
                                         this.jobs = resp.jobs;
                                         console.log(this.jobs);
+                                        console.log(this.jobs[0].date, this.date);
                                       }
                                       else{
                                         this.message = resp.message;
@@ -100,5 +103,7 @@ export class PastJobsPage {
   ionViewDidLeave() {
     this.navCtrl.push(MorePage);
   }
+
+  nothing() {}
 
 }
