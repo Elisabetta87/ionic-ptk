@@ -21,6 +21,9 @@ export class MessengerPage implements OnInit {
     private msgs: {}[];
     private loading: any;
     private params: {};
+    private scrollHeight;
+    private scrollRequired;
+    private intId;
 
     constructor(
         private fb: FormBuilder,
@@ -28,7 +31,8 @@ export class MessengerPage implements OnInit {
         public platform: Platform,
         private messengerService: MessengerService,
         private loadingCtrl: LoadingController,
-        private menuService: MenuService
+        private menuService: MenuService,
+        public plt: Platform
     ){
         StorageST.get('user_id').subscribe(id => {
             this.params = {user_id: +id}
@@ -36,18 +40,20 @@ export class MessengerPage implements OnInit {
         this.loading = this.loadingCtrl.create({
             content: 'Please wait...'
         });
-        
+        this.scrollHeight = 0;
     }
 
     ionViewWillEnter() {
-        Keyboard.onKeyboardShow().subscribe(res => {
-            console.log(res);
-            this.menuService.hideMenu();
-        });
-        Keyboard.onKeyboardHide().subscribe(res => {
-            console.log(res);
-            this.menuService.displayMenu();
-        });
+        this.plt.ready().then(() => {
+            Keyboard.onKeyboardShow().subscribe(res => {
+                console.log(res);
+                this.menuService.hideMenu();
+            });
+            Keyboard.onKeyboardHide().subscribe(res => {
+                console.log(res);
+                this.menuService.displayMenu();
+            });
+        });    
         this.loading.present();
         this.messengerService.getMessages(this.params)
                           .subscribe(messagesObj => {
@@ -57,15 +63,24 @@ export class MessengerPage implements OnInit {
                                     this.msgs.push(messages[i]);
                                 }
                                 StorageST.set('messages', {length: this.msgs.length, lastMsg: this.msgs[this.msgs.length-1]['message']});
-                                console.log(this.msgs);
+                                // turn checkScroll interval on
+                                setInterval(id => {
+                                    this.checkScroll();
+                                    this.intId = id;
+                                },100);
                                 this.loading.dismiss(); 
                             })
     }
 
-    ionViewDidEnter() {
-        this.scrollToBottom();
+    checkScroll() {
+        if (this.scrollHeight != this.content.getContentDimensions().scrollHeight) {
+            this.scrollHeight = this.content.getContentDimensions().scrollHeight;
+            console.log(this.scrollHeight);
+            this.scrollToBottom();
+            // turn interval off
+            clearInterval(this.intId);
+        }
     }
-
 
      ngOnInit() {
         this.messagingForm = this.fb.group({
@@ -88,18 +103,26 @@ export class MessengerPage implements OnInit {
                                     this.msgs.push(messages[i]);
                                 }
                                 this.messagingForm.reset('');
-                                this.scrollToBottom();
+                                setInterval(id => {
+                                    this.checkScroll();
+                                    this.intId = id;
+                                },100);
+                                // turn checkScroll interval on
                             })
         })
     }
 
 
+
     scrollToBottom(){
-        console.log(this.content.contentBottom);
-        let dimensions = this.content.getContentDimensions();
-        //this.content.scrollTo(0, this.content.contentBottom+115, 300);
+        let cd = this.content.getContentDimensions();
+        console.log(cd);
         this.content.scrollToBottom();
-        console.log(dimensions);
     }
+
+    //let dimensions = this.content.getContentDimensions();
+    //this.content.scrollTo(0, this.content.contentBottom+115, 300);
+    //let dimensions = this.content.getContentDimensions();
+    //this.content.scrollTo(0, this.content.contentBottom+115, 300);
 
 }

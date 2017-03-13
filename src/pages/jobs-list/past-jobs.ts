@@ -42,7 +42,7 @@ export class PastJobsPage {
     this.loading = this.loadingCtrl.create({
         content: 'Please wait...'
     });
-      
+    this.loading.present();  
     this.params = {start_date: this.date.toISOString().slice(0, 10)};
     this.yesterday = this.date.toISOString().slice(0, 10);
     console.log(this.yesterday);
@@ -52,7 +52,6 @@ export class PastJobsPage {
     let date = new Date();
     let newTime = date.getTime();
     if (Object.keys(this.jobs).length==0) {
-      this.loading.present();
       this.getJobs(newTime);
     }
     else {
@@ -62,7 +61,6 @@ export class PastJobsPage {
                   let diff_time_mins = (newTime - start_time)/60000;
                   console.log(diff_time_mins);
                   if(diff_time_mins > 10 || this.forceGetRequest) {
-                    this.loading.present();
                     this.getJobs(newTime);
                   }
                })
