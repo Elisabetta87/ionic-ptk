@@ -1,8 +1,8 @@
 import { MorePage } from './../more/more';
 import { StorageST } from './../../services/StorageST';
 import { GetJobsService } from './../../services/get-jobs';
-import { Component } from '@angular/core';
-import {NavController, LoadingController, NavParams} from "ionic-angular/index";
+import { Component, ViewChild } from '@angular/core';
+import {NavController, LoadingController, NavParams, Content} from "ionic-angular/index";
 
 
 
@@ -12,6 +12,7 @@ import {NavController, LoadingController, NavParams} from "ionic-angular/index";
   templateUrl: 'jobs-list.html'
 })
 export class PastJobsPage {
+   @ViewChild(Content) content: Content;
 
   private params_pastJobs = {};
   private twoWeeksBefore: any =  new Date();
@@ -91,8 +92,9 @@ export class PastJobsPage {
                                       }
                                       else{
                                         this.message = resp.message;
-                                      } 
+                                      }
                                       this.loading.dismiss();
+                                      this.content.resize(); 
                                    })
                       });
                })

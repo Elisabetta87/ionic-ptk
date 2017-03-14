@@ -44,6 +44,134 @@ export class CleaningOverviewPage {
     this.greenBar = this.checklistId ? 'greenBar' : '';
   }
 
+  /*
+
+  As well as getChecklist (should be "getChecklistObj"), we will also need getChecklistInfo
+  --> e.g. for Cleaning Checklist
+  this.checklistInfo = {
+    {
+      'section_name': 'Check-In',
+      'section_type': 'Check-In',
+      'section_fields': {
+        'check_in_stamp': {
+          'name': 'Check-In',
+          'type': 'datetime',
+        },
+      },
+      'section_stage': '1',
+    },
+    {
+      'section_name': 'Arrival Checklist',
+      'section_type': 'Questions',
+      'section_fields': {
+        'keys_in_keysafe': {
+          'name': 'Are The Keys In The Keysafe?',
+          'type': 'boolean',
+        },
+        'dirty_linen_count_start': {
+          'name': 'How Many Dirty Linens Are There?',
+          'type': 'number',
+        },
+        'clean_linen_count_start': {
+          'name': 'How Many Clean Linens Are There?',
+          'type': 'number',
+        }
+      },
+      'section_stage': '2',
+    },
+    {
+      'section_name': 'Learn',
+      'section_type': 'Property Info',
+      'section_fields': {},
+      },
+      'section_stage': '3',
+    },
+    {
+      'section_name': 'Complete Clean',
+      'section_type': 'Checklist Boolean',
+      'section_fields': {},
+      },
+      'section_stage': '4',
+    },
+    {
+      'section_name': 'Departure Checklist',
+      'section_type': 'Questions',
+      'section_fields': {
+        'dirty_linen_count_end': {
+          'name': 'How Many Dirty Linens Are There?',
+          'type': 'number',
+        },
+        ...
+      },
+      'section_stage': '5',
+    },
+    {
+      'section_name': 'Check-Out',
+      'section_type': 'Check-Out',
+      'section_fields': {
+        'check_out_stamp': {
+          'name': 'Check-Out',
+          'type': 'datetime',
+        },
+      },
+      'section_stage': '6',
+    },
+  }
+
+  AND
+
+  if there is a Property Info section required:
+
+  we will need to make a third API request --> /api/v2/properties/[this.job.property]/ -->
+
+  {
+    id: XX,
+    info: {
+      {
+        'name': 'Photos',
+        'pages': {
+          {
+            'text': 'Here is a photo of the front door',
+            'photo_url': 'https://.....',
+          },
+          {
+            'text': 'Here is a photo of the shower',
+            'photo_url': 'https://.....',
+          },
+        }
+      },
+      {
+        'name': 'Linen Info',
+        'pages': {
+          {
+            'text': 'Here is where the linen is stored',
+            'photo_url': 'https://.....',
+          },
+        }
+      },
+      {
+        'name': 'Rubbish Info',
+        'pages': {
+          {
+            'text': 'Here is where the bin is',
+            'photo_url': 'https://.....',
+          },
+        }
+      },
+      {
+        'name': 'Rubbish Info',
+        'pages': {
+          {
+            'text': 'Please adhere to the following special requirements: ...',
+            'photo_url': '',
+          },
+        }
+      },
+    }
+  }
+
+  */
+
 
   ionViewWillEnter() {
     let loading = this.loadingCtrl.create({

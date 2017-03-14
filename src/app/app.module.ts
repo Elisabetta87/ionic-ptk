@@ -1,3 +1,4 @@
+import { TestPage } from './../pages/test-code/test';
 //ionic
 import { Platform } from 'ionic-angular/index';
 import { IonicApp, IonicModule, IonicErrorHandler, App } from 'ionic-angular';
@@ -80,6 +81,7 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     MessengerPage,
     PastJobsPage,
     KeyboardAttachDirective,
+    TestPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -117,7 +119,8 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     GreetingChecklistPage,
     GreetingOverviewPage,
     MessengerPage,
-    PastJobsPage
+    PastJobsPage,
+    TestPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

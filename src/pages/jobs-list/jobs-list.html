@@ -1,4 +1,4 @@
-<ion-content padding-bottom *ngIf="jobsAvailable">
+<ion-content padding-bottom content *ngIf="jobsAvailable">
   <ion-list inset *ngFor="let job of jobs; let i = index" class="m-3 mt-4 item-text-wrap">
     <div *ngIf="i==0">
       <p class="text-center date">{{ job.date == params.start_date ? 'Today' : (job.date == tomorrow ? 'Tomorrow' : job.date | date:'fullDate') }}</p>

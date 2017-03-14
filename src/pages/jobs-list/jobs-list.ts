@@ -3,8 +3,8 @@ import { MenuService } from './../../services/menu';
 import { Diagnostic } from 'ionic-native';
 import { TabsPage } from './../tabs/tabs';
 import { MenuComponent } from './../../components/menu/menu';
-import { Component } from '@angular/core';
-import { NavController, LoadingController, NavParams, Nav } from 'ionic-angular/index';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, LoadingController, NavParams, Nav, Content} from 'ionic-angular/index';
 import { JobDetailsPage } from '../job-details/job-details';
 import {GetJobsService} from "../../services/get-jobs";
 import {DatePipe}  from "@angular/common";
@@ -15,6 +15,7 @@ import {DatePipe}  from "@angular/common";
   templateUrl: 'jobs-list.html'
 })
 export class JobsListPage {
+   @ViewChild(Content) content: Content;
 
   private jobsAvailable:boolean;
   private jobs:any = {};
@@ -103,6 +104,7 @@ export class JobsListPage {
                                       } 
                                       console.log(this.jobs);
                                       this.loading.dismiss();
+                                      this.content.resize();
                                    })
                       })
                })

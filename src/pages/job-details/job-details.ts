@@ -26,7 +26,6 @@ export class JobDetailsPage {
   private buttonStatus:string;
   private agentName:string;
   private setChecklistPage:Object;
-  greetingOverviewPage;
 
   constructor(
     public navCtrl: NavController,
@@ -44,7 +43,6 @@ export class JobDetailsPage {
     });
     this.property_latitude = +this.job['property_latitude'];
     this.property_longitude = +this.job['property_longitude'];
-    // this.checklists = this.job['checklists'];
     this.arrChecklists = [];
     for(let key in this.job['checklists']) {
       this.arrChecklists.push(key);
@@ -53,7 +51,6 @@ export class JobDetailsPage {
       'Greeting': GreetingOverviewPage,
       'Cleaning': CleaningOverviewPage
     }
-    this.setChecklistPage = GreetingOverviewPage;
   }
 
 
@@ -104,7 +101,8 @@ export class JobDetailsPage {
     }
     let checklistName = this.arrChecklists[0];
     let checklistId = this.job['checklists'][checklistName];
-    this.navCtrl.push(this.greetingOverviewPage, {
+    let redirect = this.setChecklistPage[checklistName];
+    this.navCtrl.push(redirect, {
                 job: this.job,
       checklistName: checklistName,
         checklistId: checklistId
@@ -115,8 +113,8 @@ export class JobDetailsPage {
     if(!(this.platform_ready)) {
       return;
     }
-    let redirect = this.setChecklistPage[checklistName];
     let checklistId = this.job['checklists'][checklistName];
+    let redirect = this.setChecklistPage[checklistName];
     this.navCtrl.push(redirect, {
                 job: this.job,
       checklistName: checklistName,

@@ -1,8 +1,8 @@
 import { StorageST } from './../../services/StorageST';
 import { JobAcceptingPage } from './../job-accepting/job-accepting';
 import { GetJobsService } from './../../services/get-jobs';
-import { Component } from '@angular/core';
-import {NavController, LoadingController, NavParams} from "ionic-angular/index";
+import { Component, ViewChild } from '@angular/core';
+import {NavController, LoadingController, NavParams, Content} from "ionic-angular/index";
 
 
 
@@ -12,6 +12,7 @@ import {NavController, LoadingController, NavParams} from "ionic-angular/index";
   templateUrl: 'jobs-list.html'
 })
 export class MarketPage {
+   @ViewChild(Content) content: Content;
 
   private params_market = {};
   private date: any = new Date();
@@ -92,6 +93,8 @@ export class MarketPage {
                                         this.message = resp.message;
                                       } 
                                       this.loading.dismiss();
+                                      this.content.resize();
+                                      console.log(this.content.resize());
                                    })
                       });
                })

@@ -16,9 +16,13 @@ import { ChecklistSecondPage } from '../../pages/checklist-second/checklist-seco
 export class CleaningChecklistForm implements OnInit {
 
   private job: Object;
-  public propertyForm: FormGroup;
-  private are_keys_in_there: boolean = false;
   private checklistObj: Object = {};
+  private sectionInfo: Object = {};
+  private sectionFields: Object = {};
+  private sectionForm: FormGroup;
+  private sectionFormBuilder: Object = {};
+  private fields:any = [];
+
   //private platformReady: boolean;
 
   constructor(
@@ -30,35 +34,72 @@ export class CleaningChecklistForm implements OnInit {
     private platform: Platform
   ) {
     this.checklistObj = navParams.get('checklistObj');
+
     // platform.ready().then(() => {this.platformReady = true)})
-  }
+    // remember to update service fix
 
-   ngOnInit(){
-     this.propertyForm = this.fb.group({
-        keys_in_keysafe: [this.checklistObj['keys_in_keysafe'] ? this.checklistObj['keys_in_keysafe'] : false, Validators.required],
-        dirty_linen_count_start: [this.checklistObj['dirty_linen_count_start'] ? this.checklistObj['dirty_linen_count_start'] : '', [Validators.required]],
-        clean_linen_count_start: [this.checklistObj['clean_linen_count_start'] ? this.checklistObj['clean_linen_count_start'] : '', [Validators.required]]
-     }); 
-  }
-
-  notify() {
-    if (this.are_keys_in_there == false) {
-      this.are_keys_in_there =  true;
-    } else {
-      this.are_keys_in_there =  false;
+    this.sectionInfo = { // this will be passed through from checklist-overview page
+      'section_name': 'Arrival Checklist',
+      'section_type': 'Checklist',
+      'section_fields': {
+        'keys_in_keysafe': {
+          'name': 'Are The Keys In The Keysafe?',
+          'type': 'boolean',
+        },
+        'dirty_linen_count_start': {
+          'name': 'How Many Dirty Linens Are There?',
+          'type': 'number',
+        },
+        'clean_linen_count_start': {
+          'name': 'How Many Clean Linens Are There?',
+          'type': 'number',
+        }
+      },
+      'section_stage': '2',
     }
-    return this.are_keys_in_there;
+    this.sectionFields = this.sectionInfo['section_fields'];
+    for(let e in this.sectionFields) {
+      this.fields.push({
+        field: e,
+        fieldName: this.sectionFields[e]['name'],
+        fieldType: this.sectionFields[e]['type'],
+      });
+    };
+  }
+
+  ngOnInit(){
+    for(let key in this.sectionFields) {
+      switch (this.sectionFields[key]) {
+        case 'boolean': {
+          this.sectionFormBuilder[key] = [this.checklistObj[key] ? this.checklistObj[key] : false, Validators.required];
+          break;
+        }
+        case 'number': {
+          this.sectionFormBuilder[key] = [this.checklistObj[key] ? this.checklistObj[key] : '', Validators.required];
+          break;
+        }
+        case 'number': {
+          this.sectionFormBuilder[key] = [this.checklistObj[key] ? this.checklistObj[key] : '', [Validators.required]];
+          break;
+        }
+      }
+    }   
+    this.sectionForm = this.fb.group(this.sectionFormBuilder);
   }
 
   onSubmit() {
-    let arrivalChecklist = this.propertyForm.value;
-    this.checklistObj['keys_in_keysafe'] = arrivalChecklist['keys_in_keysafe'];
-    this.checklistObj['clean_linen_count_start'] = arrivalChecklist['clean_linen_count_start'];
-    this.checklistObj['dirty_linen_count_start'] = arrivalChecklist['dirty_linen_count_start'];
-    this.checklistObj['stage'] = '2';
+    for(let e in this.sectionForm.value) {
+      this.checklistObj[e] = this.sectionForm.value[e];
+    };
+    this.checklistObj['stage'] = this.sectionInfo['section_stage'];
     StorageST.set('checklist-'+this.checklistObj['id'], this.checklistObj).subscribe();
     this.checklist.putChecklist('Cleaning', this.checklistObj['id'], this.checklistObj)
-                  .subscribe(() => {this.navCtrl.popTo(CleaningOverviewPage)});
+      .subscribe(() => {this.navCtrl.popTo(CleaningOverviewPage)});
   };
+
+  // generateFieldName(name:string) {
+  //   let fieldName = name.replace(/_/g,' ');
+  //   return fieldName.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  // }
 
 }

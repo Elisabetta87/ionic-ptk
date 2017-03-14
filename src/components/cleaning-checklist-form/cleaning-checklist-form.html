@@ -1,31 +1,18 @@
-<form padding [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
-  <ion-row>
+<form padding [formGroup]="sectionForm" (ngSubmit)="onSubmit()">
+  <ion-row *ngFor="let field of fields">
     <ion-col width-80>
-      <p>Are the keys in the keysafe?</p>
+      <p>{{ field.fieldName }}</p>
     </ion-col>
-    <ion-col width-20>
-      <ion-toggle color="ptkgreen" class="toggle" mode="ios" (ionChange)="notify()" formControlName="keys_in_keysafe"></ion-toggle>
+    <ion-col width-20 *ngIf="field.fieldType == 'boolean'">
+      <ion-toggle color="ptkgreen" class="toggle" mode="ios" formControlName="{{ field.field }}"></ion-toggle>
     </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col width-80>
-      <p>How many sets of dirty linen are there?</p>
-    </ion-col>
-    <ion-col width-20 class="align-center">
-      <input-number formControlName="dirty_linen_count_start" ></input-number>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col width-80>
-      <p>How many sets of clean linen are there?</p>
-    </ion-col>
-    <ion-col width-20 class="align-center">
-      <input-number formControlName="clean_linen_count_start" ></input-number>
+    <ion-col width-20 class="align-center" *ngIf="field.fieldType =='number'">
+      <input-number formControlName="{{ field.field }}" ></input-number>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col width-100>
-      <button type="submit" class="my-5 customise" [disabled]="!propertyForm.valid">Submit</button>
+      <button type="submit" class="my-5 customise" [disabled]="!sectionForm.valid">Submit</button>
     </ion-col>
   </ion-row>
 </form>
