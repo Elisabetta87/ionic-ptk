@@ -1,8 +1,7 @@
+import { ChecklistOverviewPage } from './../checklist-overview/checklist-overview';
 //my pages
-import { CleaningOverviewPage } from './../cleaning-overview/cleaning-overview';
 import { GetJobsService } from './../../services/get-jobs';
 import { ChecklistService } from './../../services/checklist';
-import { GreetingOverviewPage } from './../greeting-overview/greeting-overview';
 //ionic 
 import { NavController, NavParams, Platform } from 'ionic-angular/index';
 //angular
@@ -47,10 +46,10 @@ export class JobDetailsPage {
     for(let key in this.job['checklists']) {
       this.arrChecklists.push(key);
     }
-    this.setChecklistPage = {
-      'Greeting': GreetingOverviewPage,
-      'Cleaning': CleaningOverviewPage
-    }
+    // this.setChecklistPage = {
+    //   'Greeting': GreetingOverviewPage,
+    //   'Cleaning': CleaningOverviewPage
+    // }
   }
 
 
@@ -101,8 +100,9 @@ export class JobDetailsPage {
     }
     let checklistName = this.arrChecklists[0];
     let checklistId = this.job['checklists'][checklistName];
-    let redirect = this.setChecklistPage[checklistName];
-    this.navCtrl.push(redirect, {
+    //let redirect = this.setChecklistPage[checklistName];
+    //
+    this.navCtrl.push(ChecklistOverviewPage, {
                 job: this.job,
       checklistName: checklistName,
         checklistId: checklistId
@@ -114,8 +114,9 @@ export class JobDetailsPage {
       return;
     }
     let checklistId = this.job['checklists'][checklistName];
-    let redirect = this.setChecklistPage[checklistName];
-    this.navCtrl.push(redirect, {
+    //let redirect = this.setChecklistPage[checklistName];
+    //
+    this.navCtrl.push(ChecklistOverviewPage, {
                 job: this.job,
       checklistName: checklistName,
         checklistId: checklistId

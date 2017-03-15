@@ -4,7 +4,7 @@ import { NavController, NavParams, LoadingController, Platform } from 'ionic-ang
 //My Imports
 import { ChecklistService } from './../../services/checklist';
 import { CleaningChecklistSecondPage } from './../cleaning-checklist-2/cleaning-checklist-2';
-import { CleaningChecklistPage } from './../cleaning-checklist/cleaning-checklist';
+//import { CleaningChecklistPage } from './../cleaning-checklist/cleaning-checklist';
 import { SpecialRequirementsPage } from './../special-requirements/special-requirements';
 import { RubbishInfoPage } from './../rubbish-info/rubbish-info';
 import { LinenInfoPage } from './../linen-info/linen-info';
@@ -126,10 +126,10 @@ export class CleaningOverviewPage {
 
   {
     id: XX,
-    info: {
+    info: {[
       {
-        'name': 'Photos',
-        'pages': {
+        'title': 'Photos',
+        'slides': {[
           {
             'text': 'Here is a photo of the front door',
             'photo_url': 'https://.....',
@@ -138,36 +138,36 @@ export class CleaningOverviewPage {
             'text': 'Here is a photo of the shower',
             'photo_url': 'https://.....',
           },
-        }
+        ]}
       },
       {
-        'name': 'Linen Info',
-        'pages': {
+        'title': 'Linen Info',
+        'slides': {[
           {
             'text': 'Here is where the linen is stored',
             'photo_url': 'https://.....',
           },
-        }
+        ]}
       },
       {
-        'name': 'Rubbish Info',
-        'pages': {
+        'title': 'Rubbish Info',
+        'slides': {[
           {
             'text': 'Here is where the bin is',
             'photo_url': 'https://.....',
           },
-        }
+        ]}
       },
       {
-        'name': 'Rubbish Info',
-        'pages': {
+        'title': 'Special Requirements',
+        'slides': {[
           {
             'text': 'Please adhere to the following special requirements: ...',
             'photo_url': '',
           },
-        }
+        ]}
       },
-    }
+    ]}
   }
 
   */
@@ -221,7 +221,7 @@ export class CleaningOverviewPage {
   } 
 
   checklist() {
-    this.sendToFormComponent(CleaningChecklistPage);
+    //this.sendToFormComponent(CleaningChecklistPage);
   }
 
   photos() {

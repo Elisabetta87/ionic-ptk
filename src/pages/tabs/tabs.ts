@@ -1,4 +1,3 @@
-import { TestPage } from './../test-code/test';
 import { MessengerService } from './../../services/messenger-service';
 import { KeyboardAttachDirective } from './../../directives/keyboard-attach-directive';
 import { MessengerPage } from './../messenger/messenger';
@@ -32,8 +31,7 @@ export class TabsPage {
         JobsListPage,
         MarketPage,
         MorePage,
-        MessengerPage,
-        TestPage
+        MessengerPage
     ];
 
     tab1Root: any = this.tabRoots[0];
@@ -41,7 +39,6 @@ export class TabsPage {
     tab3Root: any = this.tabRoots[2];
     tab4Root: any = this.tabRoots[3];
     tab5Root: any = this.tabRoots[4];
-    tab6Root: any = this.tabRoots[5];
 
 
     hasToShowTabs: boolean = false;

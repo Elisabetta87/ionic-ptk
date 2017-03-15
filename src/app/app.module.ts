@@ -1,4 +1,4 @@
-import { TestPage } from './../pages/test-code/test';
+import { ChecklistOverviewPage } from './../pages/checklist-overview/checklist-overview';
 //ionic
 import { Platform } from 'ionic-angular/index';
 import { IonicApp, IonicModule, IonicErrorHandler, App } from 'ionic-angular';
@@ -27,14 +27,9 @@ import { LinenInfoPage } from './../pages/linen-info/linen-info';
 import { PhotosPage } from './../pages/photos/photos';
 import { MenuService } from './../services/menu';
 import { TabsPage } from './../pages/tabs/tabs';
-import { CleaningOverviewPage } from './../pages/cleaning-overview/cleaning-overview';
-import { CleaningChecklistPage } from './../pages/cleaning-checklist/cleaning-checklist';
+import { ChecklistSectionPage } from './../pages/checklist-section/checklist-section';
 import { ChecklistService } from './../services/checklist';
 import { JobAcceptingPage } from './../pages/job-accepting/job-accepting';
-import { CleaningChecklistSecondPage } from './../pages/cleaning-checklist-2/cleaning-checklist-2';
-import { CleaningChecklistForm } from './../components/cleaning-checklist-form/cleaning-checklist-form';
-import { GreetingOverviewPage } from './../pages/greeting-overview/greeting-overview';
-import { GreetingChecklistPage } from './../pages/greeting-checklist/greeting-checklist';
 import { MessengerPage } from './../pages/messenger/messenger';
 import { PastJobsPage } from './../pages/jobs-list/past-jobs';
 //my Services
@@ -49,15 +44,11 @@ import { MessengerService } from './../services/messenger-service';
 //directives
 import { KeyboardAttachDirective } from './../directives/keyboard-attach-directive';
 
-
-
-
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    CleaningChecklistPage,
-    CleaningChecklistForm,
+    ChecklistSectionPage,
     ThankYouPage,
     LogInPage,
     LogInForm,
@@ -65,7 +56,6 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     JobsListPage,
     JobDetailsPage,
     GuestEntryPage,
-    CleaningOverviewPage,
     MarketPage,
     MorePage,
     InputNumber,
@@ -74,14 +64,11 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     LinenInfoPage,
     RubbishInfoPage,
     SpecialRequirementsPage,
-    CleaningChecklistSecondPage,
     JobAcceptingPage,
-    GreetingChecklistPage,
-    GreetingOverviewPage,
     MessengerPage,
     PastJobsPage,
     KeyboardAttachDirective,
-    TestPage
+    ChecklistOverviewPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -96,8 +83,7 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
   entryComponents: [
     MyApp,
     HomePage,
-    CleaningChecklistPage,
-    CleaningChecklistForm,
+    ChecklistSectionPage,
     ThankYouPage,
     LogInForm,
     LogInPage,
@@ -105,7 +91,6 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     JobsListPage,
     JobDetailsPage,
     GuestEntryPage,
-    CleaningOverviewPage,
     MarketPage,
     MorePage,
     InputNumber,
@@ -114,13 +99,10 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     LinenInfoPage,
     RubbishInfoPage,
     SpecialRequirementsPage,
-    CleaningChecklistSecondPage,
     JobAcceptingPage,
-    GreetingChecklistPage,
-    GreetingOverviewPage,
     MessengerPage,
     PastJobsPage,
-    TestPage
+    ChecklistOverviewPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

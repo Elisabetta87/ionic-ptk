@@ -1,3 +1,4 @@
+import { Platform } from 'ionic-angular/index';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Rx';
 import { SecureStorage } from 'ionic-native';
@@ -10,6 +11,7 @@ export class StorageST {
     //I need to check if platform is ready (for all native functionality!!!!)
     private static st:SecureStorage = null;
     private static keys: string[];
+    private static plt: Platform;
     
     public static getStorage(): Observable<SecureStorage>{
         let storage = new Subject<SecureStorage>();
