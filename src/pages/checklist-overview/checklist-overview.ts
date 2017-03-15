@@ -1,3 +1,4 @@
+import { PropertyInfoPage } from './../property-info/property-info';
 import { ChecklistSectionPage } from './../checklist-section/checklist-section';
 import { StorageST } from './../../services/StorageST';
 import { Component } from '@angular/core';
@@ -289,10 +290,10 @@ export class ChecklistOverviewPage {
   }
 
   redirectToPropertyInfoPage(page) {
-    // this.navCtrl.push(PropertyInfoPage, {
-    //   checklistObj: this.checklistObj,
-    //   page: page,
-    // }) 
+    this.navCtrl.push(PropertyInfoPage, {
+      checklistObj: this.checklistObj,
+      page: page,
+    }) 
   }
 
   toggleChecklistBool() { // only possible from false -> true, as disbaled in HTML otherwise

@@ -1,3 +1,4 @@
+import { PropertyInfoPage } from './../pages/property-info/property-info';
 import { ChecklistOverviewPage } from './../pages/checklist-overview/checklist-overview';
 //ionic
 import { Platform } from 'ionic-angular/index';
@@ -68,7 +69,8 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     MessengerPage,
     PastJobsPage,
     KeyboardAttachDirective,
-    ChecklistOverviewPage
+    ChecklistOverviewPage,
+    PropertyInfoPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -102,7 +104,8 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     JobAcceptingPage,
     MessengerPage,
     PastJobsPage,
-    ChecklistOverviewPage
+    ChecklistOverviewPage,
+    PropertyInfoPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

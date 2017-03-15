@@ -6,8 +6,7 @@
 <ion-content>
   <ion-grid>
     <ion-row *ngFor="let section of checklistInfo['sections']">
-      
-      <ion-col width-10><div class="progressBar" [ngClass]="stage>=+section.section_stage && section.section_type!=='Property Info' ? 'greenBar' : ( stage>=+section.section_stage && section.section_type=='Property Info'  ? 'greenBar extra-height-'+propertyInfo.info.length  : '')"></div></ion-col>
+      <ion-col width-10><div class="progressBar" [ngClass]="stage>=+section.section_stage && section.section_type!=='Property Info' ? 'greenBar' : (section.section_type=='Property Info'  ? 'extra-height-'+propertyInfo.info.length  : ( stage>=+section.section_stage && section.section_type=='Property Info' ? 'greenBar extra-height-'+propertyInfo.info.length : ''))"></div></ion-col>
       <ion-col width-10 class="text-right">{{ section.section_stage }}.</ion-col>
       <ion-col width-80>
 

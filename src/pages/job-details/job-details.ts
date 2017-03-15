@@ -96,7 +96,7 @@ export class JobDetailsPage {
       checklistObj['stage'] = '1';
       checklistObj['job'] = this.job['id'];
       if (this.agentName) {checklistObj['agent_name'] = this.agentName;}
-      this.checklistService.putChecklist(checklistName, checklistId, checklistObj).subscribe(checklist => {});  
+      this.checklistService.putChecklist(checklistName, checklistId, checklistObj).subscribe();  
     }
     let checklistName = this.arrChecklists[0];
     let checklistId = this.job['checklists'][checklistName];
