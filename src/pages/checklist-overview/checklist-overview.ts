@@ -23,7 +23,6 @@ export class ChecklistOverviewPage {
   private checklistName: string;
   private checklistId:number;
   private checklistObj:Object;
-  private greenBar: string;
   private checklistInfoDict:Object;
   private checklistInfo:Object;
   private propertyInfo:Object;
@@ -32,6 +31,7 @@ export class ChecklistOverviewPage {
   private checkOut: boolean;
   private checklistBoolStage: number;
   private checkOutStage: number;
+  private propertyInfoStage: number;
   private current_date: Date = new Date();
   private propertyInfoHeightClass: string;
   
@@ -45,7 +45,6 @@ export class ChecklistOverviewPage {
     this.job = navParams.get('job');
     this.checklistName = navParams.get('checklistName');
     this.checklistId = navParams.get('checklistId');
-    this.greenBar = this.checklistId ? 'greenBar' : '';
     this.checklistInfoDict = {
         'Cleaning': {
             'sections': [
@@ -192,40 +191,40 @@ export class ChecklistOverviewPage {
           'slides': [
             {
               'text': 'Here is a photo of the front door',
-              'photo_url': 'https://.....',
+              'photo_url': 'img/img-property-1.jpg',
             },
             {
               'text': 'Here is a photo of the shower',
-              'photo_url': 'https://.....',
+              'photo_url': 'img/img-property-2.jpg',
             },
-          ]
+          ],
         },
         {
           'title': 'Linen Info',
           'slides': [
             {
               'text': 'Here is where the linen is stored',
-              'photo_url': 'https://.....',
+              'photo_url': 'img/img-property-1.jpg',
             },
-          ]
+          ],
         },
         {
           'title': 'Rubbish Info',
           'slides': [
             {
               'text': 'Here is where the bin is',
-              'photo_url': 'https://.....',
+              'photo_url': 'img/img-property-1.jpg',
             },
-          ]
+          ],
         },
         {
           'title': 'Special Requirements',
           'slides': [
             {
               'text': 'Please adhere to the following special requirements: ...',
-              'photo_url': '',
+              'photo_url': 'img/img-property-1.jpg',
             },
-          ]
+          ],
         },
       ]
     }
@@ -246,6 +245,7 @@ export class ChecklistOverviewPage {
             StorageST.set('checklist-'+this.checklistId, this.checklistObj).subscribe();
             StorageST.set('checklist-info-'+this.checklistId, this.checklistName).subscribe();
             this.setStage();
+            this.setPropertyInfoPageStages();
             loading.dismiss();
           })
       } else {
@@ -253,57 +253,72 @@ export class ChecklistOverviewPage {
           .subscribe(checklistString => {
               this.checklistObj = JSON.parse(checklistString);
               this.setStage();
+              this.setPropertyInfoPageStages();
               loading.dismiss();
           })      
       }
     })
+  // also get the checklistInfo
+  // also get the propertyInfo
   }
 
   setStage() {
     this.stage = +this.checklistObj['stage'];
     for (let e in this.checklistInfo['sections']) {
         if (this.checklistInfo['sections'][e]['section_type'] == 'Checklist Boolean') {
-            this.checklistBoolStage = +this.checklistInfo['sections'][e]['section_stage'];
+          this.checklistBoolStage = +this.checklistInfo['sections'][e]['section_stage'];
         }
         if (this.checklistInfo['sections'][e]['section_type'] == 'Check-Out') {
-            this.checkOutStage = +this.checklistInfo['sections'][e]['section_stage'];
+          this.checkOutStage = +this.checklistInfo['sections'][e]['section_stage'];
+        }
+        if (this.checklistInfo['sections'][e]['section_type'] == 'Property Info') {
+          this.propertyInfoStage = +this.checklistInfo['sections'][e]['section_stage'];
         }
     }
-    if (this.stage>=this.checklistBoolStage) {
+    if (this.stage>this.checklistBoolStage) {
       this.checklistBool = true;
     } else {
       this.checklistBool = false;
     }
-    if(this.stage==this.checkOutStage) {
+    if(this.stage>this.checkOutStage) {
       this.checkOut = true;
     } else {
       this.checkOut = false;
     }
   }
 
+  setPropertyInfoPageStages() {
+    for (let page of this.propertyInfo['info']) {
+      let pageIndex = this.propertyInfo['info'].indexOf(page);
+      let pageStage = this.propertyInfoStage + (pageIndex)/10;
+      this.propertyInfo['info'][pageIndex]['page_stage'] = pageStage.toString();
+    }
+  }
+
   redirectToSection(section) {
     this.navCtrl.push(ChecklistSectionPage, {
       checklistObj : this.checklistObj,
+      checklistName: this.checklistName,
       section      : section,
-      checklistName: this.checklistName
     }) 
   }
 
   redirectToPropertyInfoPage(page) {
     this.navCtrl.push(PropertyInfoPage, {
       checklistObj: this.checklistObj,
+      propertyInfo: this.propertyInfo,
       page: page,
     }) 
   }
 
   toggleChecklistBool() { // only possible from false -> true, as disbaled in HTML otherwise
-    this.stage = this.checklistBoolStage;
+    this.stage = this.checklistBoolStage + 1;
     this.checklistObj['stage'] = this.stage.toString();
     StorageST.set('checklist-'+this.checklistId, this.checklistObj).subscribe();
   }
 
   toggleCheckOut() { // only possible from false -> true, as disbaled in HTML otherwise
-    this.stage = this.checkOutStage;
+    this.stage = this.checkOutStage + 1;
     this.checklistObj['stage'] = this.stage.toString();
     this.checklistObj['check_out_stamp'] = this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16);
     StorageST.set('checklist-'+this.checklistId, this.checklistObj).subscribe();

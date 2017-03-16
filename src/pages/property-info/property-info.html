@@ -1,7 +1,34 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{ page }}</ion-title>
+    <ion-title>{{ page.title }}</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
-<ion-content>    
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <img [src]="slide.photo_url">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p>{{ slide.text }}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="page.slides.length>=1">
+      <ion-col width-20 class="previous-slide-col">
+        <button [disabled]="!currSlideIndex>0" (click)="previousSlide()"><ion-icon name="ios-arrow-back"></ion-icon></button>
+      </ion-col>
+      <ion-col width-60 class="return-clOverview-col">
+        <button [disabled]="currSlideIndex != page.slides.length-1" (click)="submitAllSlidesViewed()">Complete</button>
+      </ion-col>
+      <ion-col width-20 class="next-slide-col">
+        <button [disabled]="currSlideIndex == page.slides.length-1" (click)="nextSlide()"><ion-icon name="ios-arrow-forward"></ion-icon></button>
+      </ion-col>
+    </ion-row>    
+  </ion-grid>
+</ion-content> 
+
+<!--*ngIf="currSlideIndex>0"   -->
+
+<!--*ngIf="currSlideIndex == page.slides.length-1"-->

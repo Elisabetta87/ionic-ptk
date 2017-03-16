@@ -1,3 +1,39 @@
 property-info-page {
-    
+    img {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+    p {
+        text-align: center;
+        margin: 10px 0;
+    }
+    .next-slide-col {
+        text-align: right;
+    }
+    .previous-slide-col {
+        text-align: left;
+    }
+    button {
+        background-color: transparent;
+        ion-icon {
+            font-size: 2.5em;
+        }
+    }
+    .return-clOverview-col {
+        text-align: center;
+        margin-top: 5px;
+        button {
+            background-color: #A0C7F4;
+            color: #000000;
+            height: 30px;
+            display: block;
+            margin: 0 auto;
+            width: 100%;
+            border: 2px solid;
+            box-shadow: 1px 1px;
+        }
+
+    }
 }

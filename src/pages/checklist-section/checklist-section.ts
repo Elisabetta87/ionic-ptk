@@ -35,14 +35,11 @@ export class ChecklistSectionPage implements OnInit {
     this.checklistObj = navParams.get('checklistObj');
     this.sectionInfo = navParams.get('section');
     this.checklistName = navParams.get('checklistName');
-    console.log(this.sectionInfo);
 
     // platform.ready().then(() => {this.platformReady = true)})
     // remember to update service fix
 
     this.sectionFields = this.sectionInfo['section_fields'][0];
-    console.log(this.sectionInfo['section_fields']);
-    console.log(this.sectionFields);
     for(let e in this.sectionFields) {
       this.fields.push({
         field: e,
@@ -76,8 +73,8 @@ export class ChecklistSectionPage implements OnInit {
     for(let e in this.sectionForm.value) {
       this.checklistObj[e] = this.sectionForm.value[e];
     };
-    if (+this.checklistObj['stage'] < +this.sectionInfo['section_stage']) {
-      this.checklistObj['stage'] = this.sectionInfo['section_stage'];
+    if (+this.checklistObj['stage'] <= +this.sectionInfo['section_stage']) {
+      this.checklistObj['stage'] = (+this.sectionInfo['section_stage']+1).toString();
     }
     StorageST.set('checklist-'+this.checklistObj['id'], this.checklistObj).subscribe();
     this.checklist.putChecklist(this.checklistName, this.checklistObj['id'], this.checklistObj)

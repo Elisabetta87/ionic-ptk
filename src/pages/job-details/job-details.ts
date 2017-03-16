@@ -1,3 +1,4 @@
+import { StorageST } from './../../services/StorageST';
 import { ChecklistOverviewPage } from './../checklist-overview/checklist-overview';
 //my pages
 import { GetJobsService } from './../../services/get-jobs';
@@ -93,10 +94,11 @@ export class JobDetailsPage {
       let checklistId = this.job['checklists'][checklistName];
       let checklistObj = {};
       checklistObj['check_in_stamp'] = this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16);
-      checklistObj['stage'] = '1';
+      checklistObj['stage'] = '2';
       checklistObj['job'] = this.job['id'];
       if (this.agentName) {checklistObj['agent_name'] = this.agentName;}
-      this.checklistService.putChecklist(checklistName, checklistId, checklistObj).subscribe();  
+      this.checklistService.putChecklist(checklistName, checklistId, checklistObj).subscribe();
+      StorageST.set('checklist-'+checklistId, checklistObj).subscribe();  
     }
     let checklistName = this.arrChecklists[0];
     let checklistId = this.job['checklists'][checklistName];
