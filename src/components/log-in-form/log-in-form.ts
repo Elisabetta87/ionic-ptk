@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Rx';
 import { StorageST } from './../../services/StorageST';
 import { MenuService } from './../../services/menu';
 import { JobsListPage } from './../../pages/jobs-list/jobs-list';
@@ -93,10 +94,12 @@ export class LogInForm implements OnInit {
           this.lat = resp.coords.latitude;
           this.lng = resp.coords.longitude;
           loading.dismiss();
-        })
-      //} 
-    });
-  }
+        })      
+   });
+ }
+
+
+
 
   ngOnInit(){
     this.logInForm = this.fb.group({

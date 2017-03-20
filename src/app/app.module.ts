@@ -1,3 +1,4 @@
+import { PlatformService } from './../services/testObservable';
 import { PropertyInfoPage } from './../pages/property-info/property-info';
 import { ChecklistOverviewPage } from './../pages/checklist-overview/checklist-overview';
 //ionic
@@ -22,10 +23,6 @@ import { HomePageGuest } from '../pages/home-guest/home-guest';
 import { JobsListPage } from '../pages/jobs-list/jobs-list';
 import { MarketPage } from '../pages/jobs-list/market';
 import { JobDetailsPage } from '../pages/job-details/job-details';
-import { SpecialRequirementsPage } from './../pages/special-requirements/special-requirements';
-import { RubbishInfoPage } from './../pages/rubbish-info/rubbish-info';
-import { LinenInfoPage } from './../pages/linen-info/linen-info';
-import { PhotosPage } from './../pages/photos/photos';
 import { MenuService } from './../services/menu';
 import { TabsPage } from './../pages/tabs/tabs';
 import { ChecklistSectionPage } from './../pages/checklist-section/checklist-section';
@@ -61,10 +58,6 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     MorePage,
     InputNumber,
     TabsPage,
-    PhotosPage,
-    LinenInfoPage,
-    RubbishInfoPage,
-    SpecialRequirementsPage,
     JobAcceptingPage,
     MessengerPage,
     PastJobsPage,
@@ -97,10 +90,6 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     MorePage,
     InputNumber,
     TabsPage,
-    PhotosPage,
-    LinenInfoPage,
-    RubbishInfoPage,
-    SpecialRequirementsPage,
     JobAcceptingPage,
     MessengerPage,
     PastJobsPage,
@@ -120,6 +109,8 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     MenuService,
     StorageST,
     MessengerService,
+
+    PlatformService,
     {
       provide: PtkHttp,
       useFactory: (backend: XHRBackend, options: RequestOptions, storage: SecureStorage, app: App, platform: Platform) => new PtkHttp(backend, options, storage, app, platform),

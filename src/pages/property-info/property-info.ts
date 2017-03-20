@@ -27,6 +27,7 @@ export class PropertyInfoPage {
     this.propertyInfo = this.navParams.get('propertyInfo');
     this.page = this.navParams.get('page');
     this.slide = this.page['slides'][this.currSlideIndex];
+    console.log(this.checklistObj);
   }
 
   nextSlide() {

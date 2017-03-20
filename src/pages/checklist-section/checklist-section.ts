@@ -38,6 +38,7 @@ export class ChecklistSectionPage implements OnInit {
 
     // platform.ready().then(() => {this.platformReady = true)})
     // remember to update service fix
+    console.log(this.checklistName, this.checklistObj['id']);
 
     this.sectionFields = this.sectionInfo['section_fields'][0];
     for(let e in this.sectionFields) {
