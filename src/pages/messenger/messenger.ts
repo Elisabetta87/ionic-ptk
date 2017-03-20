@@ -48,10 +48,12 @@ export class MessengerPage implements OnInit {
             Keyboard.onKeyboardShow().subscribe(res => {
                 console.log(res);
                 this.menuService.hideMenu();
+                this.content.resize();
             });
             Keyboard.onKeyboardHide().subscribe(res => {
                 console.log(res);
                 this.menuService.displayMenu();
+                this.content.resize();
             });
         });    
         this.loading.present();

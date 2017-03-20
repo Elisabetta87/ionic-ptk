@@ -299,6 +299,7 @@ export class ChecklistOverviewPage {
     this.navCtrl.push(ChecklistSectionPage, {
       checklistObj : this.checklistObj,
       checklistName: this.checklistName,
+      checklistId: this.checklistId,
       section      : section,
     }) 
   }

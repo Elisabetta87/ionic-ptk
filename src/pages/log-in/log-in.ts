@@ -28,29 +28,6 @@ export class LogInPage {
           this.navCtrl.push(JobsListPage, {user_id: +userId});
         })
     })
-
-    
-  // StorageST.set('number', 23456789)
-  //            .subscribe(res => {
-  //              console.log('RESULT SET: ', res);
-  //            });
-
-  // StorageST.set('number2', 1000009)
-  //            .subscribe(res => {
-  //              console.log('RESULT SET: ', res);
-  //            });           
-
-  // console.log( StorageST.getKeys() );
-           
-
-    // if(this.isStorageReady) {
-    //   this.storage.get('user_id').then(user_id => {
-    //     console.log(user_id);
-    //     this.navCtrl.push(JobsListPage, {id: +user_id});
-    //   },
-    //   error => console.log(error)
-    //   );
-    // }
   }
 
 }

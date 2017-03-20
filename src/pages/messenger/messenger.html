@@ -1,4 +1,4 @@
-<ion-content padding-top #content content>
+<ion-content padding-top content>
     <ion-grid *ngFor="let msg of msgs">
         <ion-row *ngIf="!msg.outgoing" class="messageSent">
             <ion-col width-90 class="pr-0">
@@ -24,7 +24,7 @@
         </ion-row>
     </ion-grid>
 </ion-content>
-<ion-footer [keyboardAttach]="content">
+<ion-footer>
     <ion-toolbar>
         <form [formGroup]="messagingForm" (ngSubmit)="onSubmit()">
             <input class="messageInput" type="text" formControlName="message">
