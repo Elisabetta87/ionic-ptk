@@ -50,9 +50,10 @@ export class JobsListPage {
       this.tomorrow = this.tomorrow.toISOString().slice(0, 10);
   }
 
-  ionViewDidEnter() {
-    this.menuService.displayMenu();
-  }    
+  // ionViewDidEnter() {
+  //   this.menuService.displayMenu();
+  //   console.log('Entered jobs list');
+  // }    
 
   ionViewWillEnter() {
     console.log(StorageST.getKeys());

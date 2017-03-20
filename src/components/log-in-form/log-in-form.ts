@@ -1,3 +1,4 @@
+import { TabsPage } from './../../pages/tabs/tabs';
 import { Observable } from 'rxjs/Rx';
 import { StorageST } from './../../services/StorageST';
 import { MenuService } from './../../services/menu';
@@ -124,14 +125,17 @@ export class LogInForm implements OnInit {
       this.logInService.getUserToken(this.logInForm.value)
          .subscribe(resp => {
             let token = resp.token;
-            StorageST.set('authToken', token)
+            let objTokenCreated = {
+              token: token,
+              currentDate: new Date()
+            }
+            StorageST.set('authToken', objTokenCreated)
                      .subscribe(() => {
                         this.userIdService.getUserId({username: username})
                             .subscribe(resp => {
                                 let user_id = resp.results[0].id;
                                 StorageST.set('user_id', user_id.toString()).subscribe();
-                                this.menuService.displayMenu();
-                                this.navCtrl.push(JobsListPage, {id: user_id});
+                                this.navCtrl.push(TabsPage, {id: user_id});
                             })
                      })
          },

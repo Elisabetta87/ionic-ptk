@@ -47,7 +47,7 @@ export class StorageST {
                     Observable.fromPromise(st.get(key))
                               .subscribe( 
                                   value => { observableGet.next(value); },
-                                  err => console.log(err)
+                                  err => { observableGet.next('error'); }
                                );
                  })
         return observableGet;

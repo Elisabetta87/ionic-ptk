@@ -17,17 +17,7 @@ export class LogInPage {
     private platform: Platform
   ){}
 
-
   ionViewDidEnter() {
     this.menuService.hideMenu(); 
   }
-
-  ionViewWillEnter() {
-    this.platform.ready().then(() => {
-        StorageST.get('user_id').subscribe(userId => {
-          this.navCtrl.push(JobsListPage, {user_id: +userId});
-        })
-    })
-  }
-
 }

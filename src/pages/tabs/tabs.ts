@@ -11,8 +11,6 @@ import { Component } from '@angular/core';
 import {MorePage} from '../../pages/more/more';
 
 
-
-
 @Component({
     templateUrl: 'tabs.html',
     selector: 'tabs',
@@ -27,7 +25,7 @@ export class TabsPage {
     private el: any;
     
     tabRoots: Array<any> = [
-        LogInPage,
+        //LogInPage,
         JobsListPage,
         MarketPage,
         MorePage,
@@ -38,10 +36,7 @@ export class TabsPage {
     tab2Root: any = this.tabRoots[1];
     tab3Root: any = this.tabRoots[2];
     tab4Root: any = this.tabRoots[3];
-    tab5Root: any = this.tabRoots[4];
-
-
-    hasToShowTabs: boolean = false;
+    //tab5Root: any = this.tabRoots[4];
 
     constructor(
         private navCtrl: NavController,

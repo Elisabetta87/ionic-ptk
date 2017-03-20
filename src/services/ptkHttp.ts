@@ -6,7 +6,6 @@ import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/map';
 import {NavController, App, Platform} from "ionic-angular/index";
-//import {LogInPage} from "../pages/log-in/log-in";
 import {SecureStorage} from "ionic-native/dist/es5/index";
 import {Subject} from "rxjs/Subject";
 
@@ -83,7 +82,8 @@ export class PtkHttp extends Http {
       Observable.fromPromise(this.storage.get('authToken'))
         .subscribe(
           token => {
-            headers.append("Authorization", 'Token '+token);
+            let authToken = JSON.parse(token)['token'];
+            headers.append("Authorization", 'Token '+authToken);
             reqOpts.merge(options);
             subjNewReq.next( this.createNewRequest(reqOpts) );
             // this.storage.get('user_id').then(

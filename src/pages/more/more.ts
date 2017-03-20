@@ -21,7 +21,6 @@ export class MorePage {
     this.navCtrl.push(PastJobsPage);
   }
 
-
   logOut() {
     StorageST.remove('user_id').subscribe(() => {
       StorageST.remove('authToken').subscribe(() => this.navCtrl.push(LogInPage))
