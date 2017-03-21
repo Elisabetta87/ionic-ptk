@@ -35,21 +35,18 @@ export class PastJobsPage {
 
     this.date.setDate(this.date.getDate() - 1);
     this.twoWeeksBefore.setDate(this.twoWeeksBefore.getDate() - 14);
-    console.log(this.date);
-    console.log(this.twoWeeksBefore);
 
     this.forceGetRequest = this.navParams.get('forceGetRequest');
     
     this.loading = this.loadingCtrl.create({
         content: 'Please wait...'
     });
-    this.loading.present();  
     this.params = {start_date: this.date.toISOString().slice(0, 10)};
     this.yesterday = this.date.toISOString().slice(0, 10);
-    console.log(this.yesterday);
   }
 
   ionViewWillEnter() {
+    this.loading.present();  
     let date = new Date();
     let newTime = date.getTime();
     if (Object.keys(this.jobs).length==0) {
@@ -60,7 +57,6 @@ export class PastJobsPage {
                .subscribe(res => {
                   let start_time = +res;
                   let diff_time_mins = (newTime - start_time)/60000;
-                  console.log(diff_time_mins);
                   if(diff_time_mins > 10 || this.forceGetRequest) {
                     this.getJobs(newTime);
                   }
@@ -78,7 +74,6 @@ export class PastJobsPage {
                     status: 'complete',
                     user_id: user_id
                   };
-                  console.log(this.params_pastJobs);
                   this.date = this.params_pastJobs['start_date'];
                   this.getJobsService.loadJobs(this.params_pastJobs)
                       .subscribe( resp => {
@@ -87,8 +82,6 @@ export class PastJobsPage {
                                       if( resp.jobsAvailable ){
                                         this.jobsAvailable = true;
                                         this.jobs = resp.jobs;
-                                        console.log(this.jobs);
-                                        console.log(this.jobs[0].date, this.date);
                                       }
                                       else{
                                         this.message = resp.message;

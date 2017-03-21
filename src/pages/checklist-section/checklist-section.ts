@@ -40,7 +40,6 @@ export class ChecklistSectionPage implements OnInit {
 
     // platform.ready().then(() => {this.platformReady = true)})
     // remember to update service fix
-    console.log(this.checklistName, this.checklistObj['id'], this.checklistId);
 
     this.sectionFields = this.sectionInfo['section_fields'][0];
     for(let e in this.sectionFields) {
@@ -79,7 +78,7 @@ export class ChecklistSectionPage implements OnInit {
     if (+this.checklistObj['stage'] <= +this.sectionInfo['section_stage']) {
       this.checklistObj['stage'] = (+this.sectionInfo['section_stage']+1).toString();
     }
-    StorageST.set('checklist-'+this.checklistObj['id'], this.checklistObj).subscribe();
+    StorageST.set('checklist-'+this.checklistId, this.checklistObj).subscribe();
     this.checklist.putChecklist(this.checklistName, this.checklistId, this.checklistObj)
       .subscribe(() => {this.navCtrl.popTo(ChecklistOverviewPage)});
   };

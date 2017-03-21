@@ -60,7 +60,6 @@ export class MarketPage {
                .subscribe(res => {
                   let start_time = +res;
                   let diff_time_mins = (newTime - start_time)/60000;
-                  console.log(diff_time_mins);
                   if(diff_time_mins > 10 || this.forceGetRequest) {
                     this.loading.present();
                     this.getJobs(newTime);
@@ -87,17 +86,18 @@ export class MarketPage {
                                       if( resp.jobsAvailable ){
                                         this.jobsAvailable = true;
                                         this.jobs = resp.jobs;
-                                        console.log(this.jobs);
                                       }
                                       else{
                                         this.message = resp.message;
-                                      } 
+                                      }
                                       this.loading.dismiss();
-                                      this.content.resize();
-                                      console.log(this.content.resize());
                                    })
                       });
                })
+  }
+
+  ionViewDidLoad() {
+    this.content.resize();
   }
 
   pushPage(id:string, status: string) {

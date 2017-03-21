@@ -1,3 +1,7 @@
+import { InvoicesService } from './../services/provider-invoices';
+import { InvoicesPage } from './../pages/invoices/invoices';
+import { PropertyInfoService } from './../services/propertyInfo';
+import { ChecklistInfo } from './../services/checklistInfo';
 import { PlatformService } from './../services/testObservable';
 import { PropertyInfoPage } from './../pages/property-info/property-info';
 import { ChecklistOverviewPage } from './../pages/checklist-overview/checklist-overview';
@@ -63,7 +67,8 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     PastJobsPage,
     KeyboardAttachDirective,
     ChecklistOverviewPage,
-    PropertyInfoPage
+    PropertyInfoPage,
+    InvoicesPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -94,7 +99,8 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     MessengerPage,
     PastJobsPage,
     ChecklistOverviewPage,
-    PropertyInfoPage
+    PropertyInfoPage,
+    InvoicesPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
@@ -109,7 +115,9 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     MenuService,
     StorageST,
     MessengerService,
-
+    ChecklistInfo,
+    PropertyInfoService,
+    InvoicesService,
     PlatformService,
     {
       provide: PtkHttp,

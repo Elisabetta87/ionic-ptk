@@ -47,10 +47,8 @@ export class JobDetailsPage {
     for(let key in this.job['checklists']) {
       this.arrChecklists.push(key);
     }
-    // this.setChecklistPage = {
-    //   'Greeting': GreetingOverviewPage,
-    //   'Cleaning': CleaningOverviewPage
-    // }
+
+    console.log(this.arrChecklists);
   }
 
 
@@ -102,8 +100,6 @@ export class JobDetailsPage {
     }
     let checklistName = this.arrChecklists[0];
     let checklistId = this.job['checklists'][checklistName];
-    //let redirect = this.setChecklistPage[checklistName];
-    //
     this.navCtrl.push(ChecklistOverviewPage, {
                 job: this.job,
       checklistName: checklistName,
@@ -116,8 +112,6 @@ export class JobDetailsPage {
       return;
     }
     let checklistId = this.job['checklists'][checklistName];
-    //let redirect = this.setChecklistPage[checklistName];
-    //
     this.navCtrl.push(ChecklistOverviewPage, {
                 job: this.job,
       checklistName: checklistName,

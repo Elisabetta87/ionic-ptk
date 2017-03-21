@@ -48,15 +48,9 @@ export class JobsListPage {
       this.user_id = navParams.get('user_id');
       this.day = this.tomorrow.setDate(this.tomorrow.getDate()+1);
       this.tomorrow = this.tomorrow.toISOString().slice(0, 10);
-  }
-
-  // ionViewDidEnter() {
-  //   this.menuService.displayMenu();
-  //   console.log('Entered jobs list');
-  // }    
+  } 
 
   ionViewWillEnter() {
-    console.log(StorageST.getKeys());
     let date = new Date();
     let newTime = date.getTime();
     if (Object.keys(this.jobs).length==0) {
@@ -67,10 +61,8 @@ export class JobsListPage {
       StorageST.get('schedule-last-update')
                .subscribe(
                  res => {
-                    console.log(res);
                     let start_time = +res;
                     let diff_time_mins = (newTime - start_time)/60000;
-                    console.log(diff_time_mins);
                     if(diff_time_mins > 10) {
                       this.loading.present();
                       this.getJobs(newTime);
@@ -81,7 +73,6 @@ export class JobsListPage {
   }
 
   getJobs(time_stamp:any) {
-    console.log(StorageST.getKeys());
       StorageST.get('user_id')
                .subscribe(res => {
                   let user_id = +res;
@@ -91,7 +82,6 @@ export class JobsListPage {
                     status: 'accepted,complete',
                     user_id: user_id
                   }
-                  console.log(this.params);
                   this.getJobsService.loadJobs(this.params)
                       .subscribe( resp => {
                           StorageST.set('schedule-last-update', time_stamp.toString())
@@ -103,12 +93,14 @@ export class JobsListPage {
                                       else{
                                         this.message = resp.message;
                                       } 
-                                      console.log(this.jobs);
                                       this.loading.dismiss();
-                                      this.content.resize();
                                    })
                       })
                })
+  }
+
+  ionViewDidLoad() {
+    this.content.resize();
   }
 
   pushPage(id:string, status: string) {

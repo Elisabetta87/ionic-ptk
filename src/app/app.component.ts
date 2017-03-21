@@ -22,6 +22,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
+      StorageST.getStorage().subscribe();
       StorageST.get('authToken').subscribe(res => {
         if(res == 'error') {
           this.rootPage = LogInPage;
