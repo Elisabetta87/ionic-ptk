@@ -48,7 +48,7 @@ export class TabsPage {
         ionViewDidEnter() {
             this.el = document.createElement('ion-badge');
             this.el['style'].display = 'none';
-            let item = document.getElementsByClassName('tab-button-icon')[4];
+            let item = document.getElementsByClassName('tab-button-icon')[3];
             item.insertBefore(this.el, item.childNodes[0]);
             item.appendChild(this.el);
             StorageST.get('user_id').subscribe(id => {this.params = {user_id: +id}});

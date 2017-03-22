@@ -96,7 +96,7 @@ export class MarketPage {
                })
   }
 
-  ionViewDidLoad() {
+  resizeContent() {
     this.content.resize();
   }
 

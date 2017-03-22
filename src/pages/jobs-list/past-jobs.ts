@@ -25,6 +25,7 @@ export class PastJobsPage {
   private loading:any;
   private yesterday: any;
   private forceGetRequest:boolean = false;
+  private pastJobsList:boolean = true;
 
   constructor(
     public loadingCtrl: LoadingController,
@@ -87,14 +88,13 @@ export class PastJobsPage {
                                         this.message = resp.message;
                                       }
                                       this.loading.dismiss();
-                                      this.content.resize(); 
                                    })
                       });
                })
   }
 
-  ionViewDidLeave() {
-    this.navCtrl.push(MorePage);
+  resizeContent() {
+    this.content.resize();
   }
 
   nothing() {}

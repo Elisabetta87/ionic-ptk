@@ -99,7 +99,7 @@ export class JobsListPage {
                })
   }
 
-  ionViewDidLoad() {
+  resizeContent() {
     this.content.resize();
   }
 

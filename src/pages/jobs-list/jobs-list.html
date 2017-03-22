@@ -1,3 +1,8 @@
+<ion-header *ngIf="pastJobsList">
+  <ion-navbar>
+    <ion-title>Past Jobs</ion-title>
+  </ion-navbar>
+</ion-header>
 <ion-content padding-bottom content *ngIf="jobsAvailable">
   <ion-list inset *ngFor="let job of jobs; let i = index" class="m-3 mt-4 item-text-wrap">
     <div *ngIf="i==0">
@@ -24,6 +29,7 @@
         </ion-row>
       </ion-grid>
     </button>
+    <div *ngIf="i==jobs.length-1">{{ resizeContent() }}</div>
   </ion-list>
 </ion-content>
 <ion-content padding *ngIf="!jobsAvailable">
