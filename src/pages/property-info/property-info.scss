@@ -36,4 +36,15 @@ property-info-page {
         }
 
     }
+    .camera {
+        text-align: center;
+    }
+    .img-container {
+        position: relative;
+        button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    }
 }

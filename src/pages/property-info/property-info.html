@@ -25,7 +25,22 @@
       <ion-col width-20 class="next-slide-col">
         <button [disabled]="currSlideIndex == page.slides.length-1" (click)="nextSlide()"><ion-icon name="ios-arrow-forward"></ion-icon></button>
       </ion-col>
-    </ion-row>    
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="img-container" *ngIf="base64Image">
+        <img [src]="base64Image">
+        <button (click)="takePicture(true)">
+            <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col class="camera" *ngIf="base64Image == undefined || ''">
+        <button (click)="takePicture()">
+            <ion-icon name="camera"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row> 
+
   </ion-grid>
 </ion-content> 
 

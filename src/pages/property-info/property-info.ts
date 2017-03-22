@@ -1,8 +1,8 @@
+import { Camera } from 'ionic-native';
 import { StorageST } from './../../services/StorageST';
 import { ChecklistOverviewPage } from './../checklist-overview/checklist-overview';
 import { NavController, NavParams } from 'ionic-angular/index';
 import { Component } from '@angular/core';
-
 
 
 @Component({
@@ -18,6 +18,8 @@ export class PropertyInfoPage {
   private page: {};
   private slide: {};
   private currSlideIndex:number = 0;
+  public base64Image: string;
+  private myArrPictures: Array<string> = [];
 
   constructor(
     public navCtrl: NavController,
@@ -29,6 +31,32 @@ export class PropertyInfoPage {
     this.slide = this.page['slides'][this.currSlideIndex];
     console.log(this.checklistObj);
   }
+
+  ionViewWillEnter() {
+    console.log(this.myArrPictures);
+  }
+
+  public takePicture(deleteVal?:boolean) {
+    console.log('retake picture');
+        Camera.getPicture({
+            quality : 50,//is the default quality
+            destinationType : Camera.DestinationType.DATA_URL,
+            sourceType : Camera.PictureSourceType.CAMERA,
+            allowEdit : true,
+            encodingType: Camera.EncodingType.JPEG,
+            //targetWidth: 300,
+            //targetHeight: 300,
+            saveToPhotoAlbum: false
+        }).then(imageData => {
+            this.base64Image = "data:image/jpeg;base64," + imageData;
+            this.myArrPictures.push(this.base64Image);
+            if(deleteVal) {
+              this.base64Image = '';
+            }
+        }, error => {
+            console.log("ERROR -> " + JSON.stringify(error));
+        });
+    }
 
   nextSlide() {
     if(this.currSlideIndex+1<this.page['slides'].length) {
@@ -60,5 +88,6 @@ export class PropertyInfoPage {
       this.checklistObj['stage'] = (baseStage+1).toString();
     }
   }
+
 
 }
