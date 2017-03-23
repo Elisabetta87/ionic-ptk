@@ -11,8 +11,8 @@
       <ion-col width-80>
 
         <ion-row *ngIf="section.section_type == 'Check-In'">
-          <ion-col width-90>
-            Check In
+          <ion-col width-90 *ngIf="checklistObj">
+            Check In  - {{ checklistObj.check_in_stamp.slice(11,16) }}
           </ion-col>
           <ion-col width-10>
             <ion-icon class="green-tick" name="checkmark"></ion-icon>
@@ -28,7 +28,7 @@
             </ion-row>
             <ion-row *ngFor="let page of propertyInfo.info; let i = index">
               <ion-col width-90>
-                <button class="section-button" [disabled]="i==0 ? stage<+page.page_stage : stage<+page.page_stage" (click)="redirectToPropertyInfoPage(page)">{{ page.title }}</button>
+                <button class="section-button" [disabled]="i==0 ? stage<+page.page_stage : stage<+page.page_stage" (click)="redirectToPropertyInfoPage(page, section.section_name)">{{ page.title }}</button>
               </ion-col>
               <ion-col width-10>
                 <ion-icon *ngIf="stage>+page.page_stage" class="green-tick" name="checkmark"></ion-icon>
@@ -50,8 +50,8 @@
         </ion-row>
 
         <ion-row *ngIf="section.section_type == 'Check-Out'">
-          <ion-col width-70>
-            Check Out
+          <ion-col width-70 *ngIf="checklistObj">
+            Check Out {{ checklistObj.check_out_stamp ? " - " + checklistObj.check_out_stamp.slice(11,16) : '' }}
           </ion-col>
           <ion-col width-20 class="colToggle">
             <ion-toggle [disabled]="stage!=checkOutStage" [(ngModel)]="checkOut" (ionChange)="toggleCheckOut()" color="ptkgreen" class="toggle" mode="ios"></ion-toggle>

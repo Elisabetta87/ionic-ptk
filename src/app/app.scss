@@ -86,3 +86,10 @@ a:focus, a:hover {
   border: 1px solid #cccccc;
 }
 
+.line-break{
+  overflow: inherit;
+  text-overflow: inherit;
+  white-space: normal;
+}
+
+

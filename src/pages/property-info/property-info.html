@@ -4,44 +4,57 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <img [src]="slide.photo_url">
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <p>{{ slide.text }}</p>
-      </ion-col>
-    </ion-row>
-    <ion-row *ngIf="page.slides.length>=1">
-      <ion-col width-20 class="previous-slide-col">
-        <button [disabled]="!currSlideIndex>0" (click)="previousSlide()"><ion-icon name="ios-arrow-back"></ion-icon></button>
-      </ion-col>
-      <ion-col width-60 class="return-clOverview-col">
-        <button [disabled]="currSlideIndex != page.slides.length-1" (click)="submitAllSlidesViewed()">Complete</button>
-      </ion-col>
-      <ion-col width-20 class="next-slide-col">
-        <button [disabled]="currSlideIndex == page.slides.length-1" (click)="nextSlide()"><ion-icon name="ios-arrow-forward"></ion-icon></button>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col class="img-container" *ngIf="base64Image">
-        <img [src]="base64Image">
-        <button (click)="takePicture(true)">
-            <ion-icon name="close"></ion-icon>
-        </button>
-      </ion-col>
-      <ion-col class="camera" *ngIf="base64Image == undefined || ''">
-        <button (click)="takePicture()">
-            <ion-icon name="camera"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row> 
-
-  </ion-grid>
+  <ion-slides pager="true" (ionSlideDidChange)="slideChanged()">
+    <ion-slide *ngFor="let slide of page.slides; let i=index">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <img class="img" [src]="slide.photo_url">
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <p>{{ slide.text }}</p>
+          </ion-col>
+        </ion-row>
+        <!--<ion-row *ngIf="page.slides.length>=1">
+          <ion-col width-20 class="previous-slide-col">
+            <button [disabled]="!currSlideIndex>0" (click)="previousSlide()"><ion-icon name="ios-arrow-back"></ion-icon></button>
+          </ion-col>
+          <ion-col width-60 class="return-clOverview-col">
+            <button [disabled]="currSlideIndex != page.slides.length-1" (click)="submitAllSlidesViewed()">Complete</button>
+          </ion-col>
+          <ion-col width-20 class="next-slide-col">
+            <button [disabled]="currSlideIndex == page.slides.length-1" (click)="nextSlide()"><ion-icon name="ios-arrow-forward"></ion-icon></button>
+          </ion-col>
+        </ion-row>-->
+        <ion-row *ngIf="section_name == 'Take Photos'"> 
+          <ion-col width-20 class="previous-slide-col">
+            <button (click)="prev()"><ion-icon name="ios-arrow-back"></ion-icon></button>
+          </ion-col>
+          <ion-col width-60 class="return-clOverview-col">
+            <button *ngIf="allPicTaken" (click)="submitAllSlidesViewed()">Complete</button>
+          </ion-col>
+          <ion-col width-20 class="next-slide-col">
+            <button (click)="next()"><ion-icon name="ios-arrow-forward"></ion-icon></button>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="section_name == 'Take Photos'">
+          <ion-col class="img-container" *ngIf="base64Image[i] !== undefined">
+            <img class="img" [src]="base64Image[i]">
+            <button (click)="takePicture(i, true)">
+                <ion-icon name="close"></ion-icon>
+            </button>
+          </ion-col>
+          <ion-col class="camera" *ngIf="base64Image[i] == undefined">
+            <button (click)="takePicture(i)">
+                <ion-icon name="camera"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row> 
+      </ion-grid>
+    </ion-slide>    
+  </ion-slides>  
 </ion-content> 
 
 <!--*ngIf="currSlideIndex>0"   -->

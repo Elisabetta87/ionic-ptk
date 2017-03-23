@@ -1,4 +1,21 @@
 input-number {
+  ion-item.item-md {
+    padding-left: 0;
+    .label-md {
+      margin: 0;
+    }
+    .select-md {
+      padding: 0;
+    }
+    .select-icon {
+      width: 30px;
+    }
+    ion-select {
+      .select-text {
+        min-width: 0;
+      }
+    }
+  }
  div {
    border: 2px solid #000000;
    display: inline-block;

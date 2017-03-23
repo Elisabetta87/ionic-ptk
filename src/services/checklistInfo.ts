@@ -95,6 +95,12 @@ export class ChecklistInfo {
                     'section_stage': '5',
                 },
                 {
+                    'section_name': 'Take Photos',
+                    'section_type': 'Property Info',
+                    'section_fields': [],
+                    'section_stage': '6' 
+                },
+                {
                     'section_name': 'Check-Out',
                     'section_type': 'Check-Out',
                     'section_fields': [{
@@ -103,7 +109,7 @@ export class ChecklistInfo {
                             'type': 'datetime',
                         },
                     }],
-                    'section_stage': '6',
+                    'section_stage': '7',
                 },
             ],
         },

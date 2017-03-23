@@ -6,17 +6,40 @@
 <ion-content padding>
   <form padding [formGroup]="sectionForm" (ngSubmit)="onSubmit()">
     <ion-grid *ngFor="let field of fields">
-      <ion-row *ngIf="field.fieldType !== 'text'">
+      <ion-row *ngIf="field.fieldType !== 'text' && field.fieldType !== 'number'">
         <ion-col width-80>
           <p>{{ field.fieldName }}</p>
         </ion-col>
         <ion-col width-20 *ngIf="field.fieldType == 'boolean'">
           <ion-toggle color="ptkgreen" class="toggle" mode="ios" formControlName="{{ field.field }}"></ion-toggle>
         </ion-col>
-        <ion-col width-20 class="align-center" *ngIf="field.fieldType =='number'">
+        <!--<ion-col width-20 class="align-center" *ngIf="field.fieldType =='number'">
           <input-number formControlName="{{ field.field }}" ></input-number>
-        </ion-col>
+        </ion-col>-->
       </ion-row>
+<!--change input-number field-->
+      <ion-row *ngIf="field.fieldType == 'number'">
+        <ion-col width-100>
+          <ion-item class="number-selector">
+            <ion-label class="line-break"><p ion-text color="black">{{ field.fieldName }}</p></ion-label>
+            <ion-select formControlName="{{ field.field }}">
+              <ion-option>0</ion-option>
+              <ion-option>1</ion-option>
+              <ion-option>2</ion-option>
+              <ion-option>3</ion-option>
+              <ion-option>4</ion-option>
+              <ion-option>5</ion-option>
+              <ion-option>6</ion-option>
+              <ion-option>7</ion-option>
+              <ion-option>8</ion-option>
+              <ion-option>9</ion-option>
+              <ion-option>10</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>  
+      </ion-row>
+
+
       <ion-row *ngIf="field.fieldType == 'text'">
         <ion-col width-100>
           <p>{{ field.fieldName }}</p>

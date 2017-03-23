@@ -43,29 +43,29 @@ export class TabsPage {
         ) { 
         }
 
-        ionViewDidEnter() {
-            this.el = document.createElement('ion-badge');
-            this.el['style'].display = 'none';
-            let item = document.getElementsByClassName('tab-button-icon')[3];
-            item.insertBefore(this.el, item.childNodes[0]);
-            item.appendChild(this.el);
-            StorageST.get('user_id').subscribe(id => {this.params = {user_id: +id}});
-            this.msgService.interval(this.params).subscribe(lastMsgs => {
-                StorageST.get('messages').subscribe(res => {
-                    if(JSON.parse(res).length !== lastMsgs.length) {
-                        this.diff = lastMsgs.results.length - JSON.parse(res).length;
-                        if (this.diff > 0) {
-                            this.changeHtmlValue(this.diff.toString());
-                            this.el['style'].display = 'inline-block';
-                        }
-                    }
-                })
-            });
-        }
+        // ionViewDidEnter() {
+        //     this.el = document.createElement('ion-badge');
+        //     this.el['style'].display = 'none';
+        //     let item = document.getElementsByClassName('tab-button-icon')[3];
+        //     item.insertBefore(this.el, item.childNodes[0]);
+        //     item.appendChild(this.el);
+        //     StorageST.get('user_id').subscribe(id => {this.params = {user_id: +id}});
+        //     this.msgService.interval(this.params).subscribe(lastMsgs => {
+        //         StorageST.get('messages').subscribe(res => {
+        //             if(JSON.parse(res).length !== lastMsgs.length) {
+        //                 this.diff = lastMsgs.results.length - JSON.parse(res).length;
+        //                 if (this.diff > 0) {
+        //                     this.changeHtmlValue(this.diff.toString());
+        //                     this.el['style'].display = 'inline-block';
+        //                 }
+        //             }
+        //         })
+        //     });
+        // }
 
 
-        changeHtmlValue(val: string) {
-            this.el.innerHTML = val; 
-        }   
+        // changeHtmlValue(val: string) {
+        //     this.el.innerHTML = val; 
+        // }   
 
 }

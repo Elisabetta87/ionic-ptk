@@ -130,11 +130,12 @@ export class ChecklistOverviewPage {
     }) 
   }
 
-  redirectToPropertyInfoPage(page) {
+  redirectToPropertyInfoPage(page, section_name) {
     this.navCtrl.push(PropertyInfoPage, {
       checklistObj: this.checklistObj,
       propertyInfo: this.propertyInfo,
       page: page,
+      section_name: section_name
     }) 
   }
 

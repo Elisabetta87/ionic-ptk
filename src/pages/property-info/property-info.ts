@@ -1,8 +1,8 @@
 import { Camera } from 'ionic-native';
 import { StorageST } from './../../services/StorageST';
 import { ChecklistOverviewPage } from './../checklist-overview/checklist-overview';
-import { NavController, NavParams } from 'ionic-angular/index';
-import { Component } from '@angular/core';
+import { NavController, NavParams, Slides } from 'ionic-angular/index';
+import { Component, ViewChild } from '@angular/core';
 
 
 @Component({
@@ -12,14 +12,20 @@ import { Component } from '@angular/core';
 
 
 export class PropertyInfoPage {
+  @ViewChild(Slides) slides: Slides;
 
   private checklistObj: {};
   private propertyInfo: {};
   private page: {};
   private slide: {};
+  private section_name: string;
   private currSlideIndex:number = 0;
-  public base64Image: string;
-  private myArrPictures: Array<string> = [];
+  //
+  private currentIndex:number;
+  //
+  public base64Image: Array<string>;
+  private allPicTaken: boolean;
+  //private picturesTaken: {};
 
   constructor(
     public navCtrl: NavController,
@@ -27,32 +33,64 @@ export class PropertyInfoPage {
   ){
     this.checklistObj = this.navParams.get('checklistObj');
     this.propertyInfo = this.navParams.get('propertyInfo');
+    this.section_name = this.navParams.get('section_name');
     this.page = this.navParams.get('page');
     this.slide = this.page['slides'][this.currSlideIndex];
-    console.log(this.checklistObj);
+    this.base64Image = [];
+    // if (this.picturesTaken == undefined) {
+    //   this.picturesTaken = {};
+    // } 
   }
 
   ionViewWillEnter() {
-    console.log(this.myArrPictures);
+    //console.log(this.picturesTaken);
+    console.log(this.page);
+    for(let index of this.base64Image) {
+      if(index == undefined) {
+        return this.allPicTaken = false;
+      } else {
+        this.allPicTaken = true;
+      }
+    }
   }
 
-  public takePicture(deleteVal?:boolean) {
-    console.log('retake picture');
+  slideChanged() {
+    this.currentIndex = this.slides.getActiveIndex();
+    console.log("Current index is", this.currentIndex);
+  }
+  prev() {
+    this.slides.slidePrev();
+  }
+  next() {
+    this.slides.slideNext();
+  }
+
+  public takePicture(slideIndex, deleteVal?:boolean) {
         Camera.getPicture({
             quality : 50,//is the default quality
             destinationType : Camera.DestinationType.DATA_URL,
             sourceType : Camera.PictureSourceType.CAMERA,
-            allowEdit : true,
+            allowEdit : false,
             encodingType: Camera.EncodingType.JPEG,
-            //targetWidth: 300,
-            //targetHeight: 300,
+            targetWidth: 300,
+            targetHeight: 300,
             saveToPhotoAlbum: false
         }).then(imageData => {
-            this.base64Image = "data:image/jpeg;base64," + imageData;
-            this.myArrPictures.push(this.base64Image);
             if(deleteVal) {
-              this.base64Image = '';
+              delete this.base64Image[slideIndex] 
             }
+            this.base64Image[slideIndex] = "data:image/jpeg;base64," + imageData;
+            for(let index of this.base64Image) {
+              if(index == undefined) {
+                return this.allPicTaken = false;
+              } else {
+                this.allPicTaken = true;
+              }
+            }
+            //this.picturesTaken['slideIndex'] = this.base64Image;
+            // this.page['pic'] = this.base64Image;
+            // console.log(this.picturesTaken);
+            // this.currentIndex = slideIndex;
         }, error => {
             console.log("ERROR -> " + JSON.stringify(error));
         });
