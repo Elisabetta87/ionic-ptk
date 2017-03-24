@@ -1,4 +1,3 @@
-import { MorePage } from './../more/more';
 import { StorageST } from './../../services/StorageST';
 import { GetJobsService } from './../../services/get-jobs';
 import { Component, ViewChild } from '@angular/core';
@@ -17,7 +16,7 @@ export class PastJobsPage {
   private params_pastJobs = {};
   private twoWeeksBefore: any =  new Date();
   private jobsAvailable:boolean;
-  private jobs:any = {};
+  private jobs: Array<any> = [];
   private message: string;
   private pastJobs:boolean = true;
   private params = {};
@@ -76,7 +75,7 @@ export class PastJobsPage {
                     user_id: user_id
                   };
                   this.date = this.params_pastJobs['start_date'];
-                  this.getJobsService.loadJobs(this.params_pastJobs)
+                  this.getJobsService.loadJobs(this.params_pastJobs, true)
                       .subscribe( resp => {
                           StorageST.set('pastJobs-last-update', time_stamp.toString())
                                    .subscribe(() => {

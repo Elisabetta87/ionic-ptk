@@ -2,7 +2,7 @@
     <ion-grid *ngFor="let msg of msgs">
         <ion-row *ngIf="!msg.outgoing" class="messageSent">
             <ion-col width-90 class="pr-0">
-                <div class="messageContainer p-3">
+                <div class="messageContainer p-1">
                     <div class="message-text"><span>{{ msg.message }}</span></div>
                     <div class="time">{{ msg.created.slice(11, 16) }}</div>
                 </div>
@@ -16,7 +16,7 @@
                 <div class="arrow-left"></div>
             </ion-col>
             <ion-col width-90 class="pl-0">
-                <div class="messageContainer p-3">
+                <div class="messageContainer p-1">
                     <div class="message-text"><span>{{ msg.message }}</span></div>
                     <div class="time">{{ msg.created.slice(11, 16) }}</div>
                 </div>

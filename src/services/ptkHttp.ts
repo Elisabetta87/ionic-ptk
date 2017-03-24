@@ -1,4 +1,3 @@
-import { JobsListPage } from './../pages/jobs-list/jobs-list';
 import {Injectable} from '@angular/core';
 import {Http, Headers, RequestOptionsArgs, Request, Response, ConnectionBackend, RequestOptions} from "@angular/http";
 import {Observable} from 'rxjs/Rx';
@@ -86,10 +85,6 @@ export class PtkHttp extends Http {
             headers.append("Authorization", 'Token '+authToken);
             reqOpts.merge(options);
             subjNewReq.next( this.createNewRequest(reqOpts) );
-            // this.storage.get('user_id').then(
-            //   user_id => this.navCtrl.push(JobsListPage, {id: +user_id}),
-            //   error => console.log(error)
-            // )
           },
           err => {
             if( (options && options.withCredentials) ){

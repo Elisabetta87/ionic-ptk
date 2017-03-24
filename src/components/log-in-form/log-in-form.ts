@@ -1,13 +1,10 @@
 import { TabsPage } from './../../pages/tabs/tabs';
-import { Observable } from 'rxjs/Rx';
 import { StorageST } from './../../services/StorageST';
 import { MenuService } from './../../services/menu';
-import { JobsListPage } from './../../pages/jobs-list/jobs-list';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NavController, LoadingController, Platform, AlertController } from 'ionic-angular/index';
-import {Diagnostic} from 'ionic-native';
-import {HomePage} from "../../pages/home/home";
+//import {Diagnostic} from 'ionic-native';
 import {HomePageGuest} from "../../pages/home-guest/home-guest";
 import {LogInService} from "../../services/log-in-service";
 import {GeolocationService} from "../../services/geolocation-service";
@@ -24,11 +21,11 @@ export class LogInForm implements OnInit {
 
   public logInForm: FormGroup;
   private btnClicked: string;
-  private isStorageReady: boolean;
+  //private isStorageReady: boolean;
   private lat: number;
   private lng: number; 
   private message: string;
-  private platformReady: boolean;
+  //private platformReady: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -120,7 +117,7 @@ export class LogInForm implements OnInit {
 
   onSubmit() {
     if (this.btnClicked == 'logId') {
-      let body = JSON.stringify(this.logInForm.value);
+      //let body = JSON.stringify(this.logInForm.value);
       let username = this.logInForm.value.username;
       this.logInService.getUserToken(this.logInForm.value)
          .subscribe(resp => {

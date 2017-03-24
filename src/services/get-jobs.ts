@@ -28,25 +28,31 @@ export class GetJobsService {
                .map(data => JSON.parse(data['_body']))
   }
 
-  loadJobs(params): Observable<any> {
+  loadJobs(params, pastJobs?:boolean): Observable<any> {
       let subj = new Subject();    
       if (params['user_id'] != undefined) {
             this.getJobs(params)
                 .subscribe(resp => {
                     let jobs = [];
                     if (resp.results.length == 0) {
-                        subj.next({
-                          jobsAvailable : false,
-                          message       : 'Sorry, no jobs available!!'
-                        });
+                      subj.next({
+                        jobsAvailable : false,
+                        message       : 'Sorry, no jobs available!!'
+                      });
                     } else {
-                        for(let i=0; i< resp.results.length; i++) {
-                            jobs.push(resp.results[i]);
+                      if(pastJobs) {
+                        for(let i=resp.results.length-1; i>=0; i--) {
+                          jobs.push(resp.results[i]);
                         };
-                        subj.next({
-                          jobsAvailable : true,
-                          jobs          : jobs
-                        });
+                      } else {
+                        for(let i=0; i< resp.results.length; i++) {
+                          jobs.push(resp.results[i]);
+                        };
+                      }
+                      subj.next({
+                        jobsAvailable : true,
+                        jobs          : jobs
+                      });
                     }
                 });
       } else {

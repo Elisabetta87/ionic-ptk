@@ -1,9 +1,5 @@
 import {Injectable} from "@angular/core";
-import "rxjs/Rx";
 import {PtkHttp} from "./ptkHttp";
-import { URLs } from './URLs';
-
-
 
 
 @Injectable()

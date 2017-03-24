@@ -18,8 +18,8 @@ export class InvoicesPage {
       public platform: Platform
   ){
       this.invoicesList = [];
-      for(let e of this.invoicesService.providerInvoices()['info']) {
-          this.invoicesList.push(e);
+      for(let i = this.invoicesService.providerInvoices()['info'].length-1; i>=0; i--) {
+          this.invoicesList.push(this.invoicesService.providerInvoices()['info'][i]);
       }
   }
 
@@ -45,7 +45,7 @@ export class InvoicesPage {
               .then(() => console.log('File is opened'))
               .catch(e => console.log('Error opening file', e)) 
          } else {
-            let ref = cordova.InAppBrowser.open(link, '_system', 'location=yes'); 
+            cordova.InAppBrowser.open(link, '_system', 'location=yes'); 
          }
       }
     );

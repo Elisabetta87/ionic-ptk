@@ -1,3 +1,4 @@
+import { PropertyInfoPage } from './../property-info/property-info';
 import { ChecklistOverviewPage } from './../checklist-overview/checklist-overview';
 import { StorageST } from './../../services/StorageST';
 import { ChecklistService } from './../../services/checklist';
@@ -5,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GeolocationService } from '../../services/geolocation-service';
 import { NavController, NavParams, Platform } from 'ionic-angular/index';
-import { ChecklistSecondPage } from '../../pages/checklist-second/checklist-second';
 
 @Component({
   selector: 'checklist-section',
@@ -13,7 +13,6 @@ import { ChecklistSecondPage } from '../../pages/checklist-second/checklist-seco
 })
 export class ChecklistSectionPage implements OnInit {
 
-  private job: Object;
   private checklistObj: Object = {};
   private checklistName: string;
   private checklistId: number;
@@ -22,6 +21,7 @@ export class ChecklistSectionPage implements OnInit {
   private sectionForm: FormGroup;
   private sectionFormBuilder: Object = {};
   private fields:any = [];
+  private propertyInfo:{};
 
   //private platformReady: boolean;
 
@@ -37,6 +37,8 @@ export class ChecklistSectionPage implements OnInit {
     this.sectionInfo = navParams.get('section');
     this.checklistName = navParams.get('checklistName');
     this.checklistId = navParams.get('checklistId');
+    this.propertyInfo = navParams.get('propertyInfo');
+    console.log(this.sectionInfo['section_name']);
 
     // platform.ready().then(() => {this.platformReady = true)})
     // remember to update service fix
@@ -80,7 +82,13 @@ export class ChecklistSectionPage implements OnInit {
     }
     StorageST.set('checklist-'+this.checklistId, this.checklistObj).subscribe();
     this.checklist.putChecklist(this.checklistName, this.checklistId, this.checklistObj)
-      .subscribe(() => {this.navCtrl.popTo(ChecklistOverviewPage)});
+      .subscribe(() => {
+        if(this.sectionInfo['section_name'] == 'Departure Checklist') {
+          this.navCtrl.push(PropertyInfoPage, {departureChecklist: true})
+        } else {
+          this.navCtrl.popTo(ChecklistOverviewPage);
+        }
+      });
   };
 
   // generateFieldName(name:string) {

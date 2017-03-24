@@ -6,7 +6,6 @@ import { SecureStorage } from 'ionic-native';
 import { JobsListPage } from './../jobs-list/jobs-list';
 import { MarketPage} from '../../pages/jobs-list/market';
 import { NavController } from 'ionic-angular/index';
-import { LogInPage } from './../log-in/log-in';
 import { Component } from '@angular/core';
 import {MorePage} from '../../pages/more/more';
 
@@ -20,9 +19,9 @@ import {MorePage} from '../../pages/more/more';
 
 export class TabsPage {
 
-    private params: {};
-    private diff: number;
-    private el: any;
+    // private params: {};
+    // private diff: number;
+    // private el: any;
     
     tabRoots: Array<any> = [
         JobsListPage,

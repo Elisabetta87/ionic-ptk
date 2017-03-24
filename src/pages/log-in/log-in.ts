@@ -1,8 +1,6 @@
-import { StorageST } from './../../services/StorageST';
-import { JobsListPage } from './../jobs-list/jobs-list';
 import { MenuService } from './../../services/menu';
 import { Component } from '@angular/core';
-import { NavController, Platform } from "ionic-angular/index";
+import { NavController } from "ionic-angular/index";
 
 
 @Component({
@@ -14,7 +12,6 @@ export class LogInPage {
   constructor(
     public navCtrl: NavController,
     private menuService: MenuService,
-    private platform: Platform
   ){}
 
   ionViewDidEnter() {

@@ -1,9 +1,9 @@
+import { PropertyInfoService } from './../../services/propertyInfo';
 import { Camera } from 'ionic-native';
 import { StorageST } from './../../services/StorageST';
 import { ChecklistOverviewPage } from './../checklist-overview/checklist-overview';
 import { NavController, NavParams, Slides } from 'ionic-angular/index';
 import { Component, ViewChild } from '@angular/core';
-
 
 @Component({
   selector: 'property-info-page',
@@ -23,20 +23,33 @@ export class PropertyInfoPage {
   //
   private currentIndex:number;
   //
+  private takePhotos:string;
   public base64Image: Array<string>;
   private allPicTaken: boolean;
+  private departureChecklist: boolean;
   //private picturesTaken: {};
+  private index: number = 0;
 
   constructor(
     public navCtrl: NavController,
-    private navParams: NavParams
+    private navParams: NavParams,
+    private propertyInfoService: PropertyInfoService
+    //private file: File
   ){
     this.checklistObj = this.navParams.get('checklistObj');
     this.propertyInfo = this.navParams.get('propertyInfo');
     this.section_name = this.navParams.get('section_name');
     this.page = this.navParams.get('page');
-    this.slide = this.page['slides'][this.currSlideIndex];
     this.base64Image = [];
+    this.departureChecklist = this.navParams.get('departureChecklist');
+    console.log(this.departureChecklist);
+    if(this.departureChecklist) {
+      this.propertyInfo = this.propertyInfoService.propertyInfoObj();
+      this.page = this.propertyInfo['info'];
+      console.log('ciao');
+    } else {
+      this.slide = this.page['slides'][this.currSlideIndex];
+    }
     // if (this.picturesTaken == undefined) {
     //   this.picturesTaken = {};
     // } 
@@ -67,7 +80,7 @@ export class PropertyInfoPage {
 
   public takePicture(slideIndex, deleteVal?:boolean) {
         Camera.getPicture({
-            quality : 50,//is the default quality
+            quality : 100,//50 is the default quality
             destinationType : Camera.DestinationType.DATA_URL,
             sourceType : Camera.PictureSourceType.CAMERA,
             allowEdit : false,
@@ -85,12 +98,9 @@ export class PropertyInfoPage {
                 return this.allPicTaken = false;
               } else {
                 this.allPicTaken = true;
+                //this.file.createDir(path, dirName, replace).then()
               }
             }
-            //this.picturesTaken['slideIndex'] = this.base64Image;
-            // this.page['pic'] = this.base64Image;
-            // console.log(this.picturesTaken);
-            // this.currentIndex = slideIndex;
         }, error => {
             console.log("ERROR -> " + JSON.stringify(error));
         });
@@ -100,6 +110,7 @@ export class PropertyInfoPage {
     if(this.currSlideIndex+1<this.page['slides'].length) {
       this.slide = this.page['slides'][this.currSlideIndex+1];
       this.currSlideIndex = this.currSlideIndex+1;
+      this.slides.slideNext();
     }
   }
 
@@ -107,7 +118,15 @@ export class PropertyInfoPage {
     if(this.currSlideIndex-1>=0) {
       this.slide = this.page['slides'][this.currSlideIndex-1];
       this.currSlideIndex = this.currSlideIndex-1;
+      this.slides.slidePrev();
     }
+  }
+
+  goToNextPage(index) {
+    if(index < this.propertyInfo['info'].length) {
+      this.index++;
+    } 
+    console.log(this.index);
   }
 
   submitAllSlidesViewed() {

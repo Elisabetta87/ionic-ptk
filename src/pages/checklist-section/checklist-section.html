@@ -6,7 +6,7 @@
 <ion-content padding>
   <form padding [formGroup]="sectionForm" (ngSubmit)="onSubmit()">
     <ion-grid *ngFor="let field of fields">
-      <ion-row *ngIf="field.fieldType !== 'text' && field.fieldType !== 'number'">
+      <ion-row *ngIf="field.fieldType !== 'text' && field.fieldType !== 'number' && field.fieldType !== 'takePhotos'">
         <ion-col width-80>
           <p>{{ field.fieldName }}</p>
         </ion-col>
@@ -38,7 +38,6 @@
           </ion-item>
         </ion-col>  
       </ion-row>
-
 
       <ion-row *ngIf="field.fieldType == 'text'">
         <ion-col width-100>

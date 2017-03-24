@@ -7,11 +7,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, Platform } from 'ionic-angular/index';
 //My Imports
 import { ChecklistService } from './../../services/checklist';
-import { SpecialRequirementsPage } from './../special-requirements/special-requirements';
-import { RubbishInfoPage } from './../rubbish-info/rubbish-info';
-import { LinenInfoPage } from './../linen-info/linen-info';
-import { PhotosPage } from './../photos/photos';
-import { GreetingOverviewPage } from './../greeting-overview/greeting-overview';
 import { JobDetailsPage } from './../job-details/job-details';
 
 
@@ -35,8 +30,7 @@ export class ChecklistOverviewPage {
   private checkOutStage: number;
   private propertyInfoStage: number;
   private current_date: Date = new Date();
-  private propertyInfoHeightClass: string;
-  
+    
   constructor(
     public navCtrl: NavController,
     private navParams: NavParams,
@@ -54,8 +48,6 @@ export class ChecklistOverviewPage {
     this.checklistInfo = this.checklistInfoDict[this.checklistName];
     this.propertyInfo = this.propertyInfoService.propertyInfoObj();
    
-    //this.propertyInfoHeightClass = 'extra-height-'+this.propertyInfo['info'].length.toString();
-    //console.log(this.propertyInfoHeightClass);
   }
 
   ionViewWillEnter() {
@@ -90,6 +82,7 @@ export class ChecklistOverviewPage {
 
   setStage() {
     this.stage = +this.checklistObj['stage'];
+    console.log(this.stage);
     for (let e in this.checklistInfo['sections']) {
         if (this.checklistInfo['sections'][e]['section_type'] == 'Checklist Boolean') {
           this.checklistBoolStage = +this.checklistInfo['sections'][e]['section_stage'];
@@ -127,10 +120,11 @@ export class ChecklistOverviewPage {
       checklistName: this.checklistName,
       checklistId: this.checklistId,
       section      : section,
+      propertyInfo: this.propertyInfo
     }) 
   }
 
-  redirectToPropertyInfoPage(page, section_name) {
+  redirectToPropertyInfoPage(page, section_name?:string) {
     this.navCtrl.push(PropertyInfoPage, {
       checklistObj: this.checklistObj,
       propertyInfo: this.propertyInfo,
@@ -138,6 +132,7 @@ export class ChecklistOverviewPage {
       section_name: section_name
     }) 
   }
+  
 
   toggleChecklistBool() { // only possible from false -> true, as disbaled in HTML otherwise
     this.stage = this.checklistBoolStage + 1;

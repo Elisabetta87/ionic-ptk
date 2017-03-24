@@ -1,6 +1,4 @@
 import { Injectable } from "@angular/core";
-import { TabsPage } from './../tabs/tabs';
-
 
 @Injectable()
 export class MenuService {

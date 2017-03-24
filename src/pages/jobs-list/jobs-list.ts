@@ -1,8 +1,8 @@
 import { StorageST } from './../../services/StorageST';
 import { MenuService } from './../../services/menu';
-import { Diagnostic } from 'ionic-native';
-import { TabsPage } from './../tabs/tabs';
-import { MenuComponent } from './../../components/menu/menu';
+//import { Diagnostic } from 'ionic-native';
+//import { TabsPage } from './../tabs/tabs';
+//import { MenuComponent } from './../../components/menu/menu';
 import { Component, ViewChild } from '@angular/core';
 import { NavController, LoadingController, NavParams, Nav, Content} from 'ionic-angular/index';
 import { JobDetailsPage } from '../job-details/job-details';
@@ -25,7 +25,6 @@ export class JobsListPage {
   private message: string;
   private date: string;
   private time: string;
-  private green: string;
   private schedule:boolean = true;
   private tomorrow: any = new Date();
   private day: any;

@@ -1,4 +1,3 @@
-import { InAppBrowser } from 'ionic-native';
 import { InvoicesPage } from './../invoices/invoices';
 import { PastJobsPage } from './../jobs-list/past-jobs';
 import { StorageST } from './../../services/StorageST';

@@ -4,7 +4,7 @@ import { StorageST } from './../../services/StorageST';
 import { MessengerService } from './../../services/messenger-service';
 import { Platform, Content } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, Input, Directive, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Keyboard } from 'ionic-native';
 
 @Component({
@@ -17,12 +17,10 @@ export class MessengerPage implements OnInit {
     @ViewChild(Content) content: Content;
 
     private messagingForm: FormGroup;
-    private user_id: number;
     private msgs: {}[];
     private loading: any;
     private params: {};
     private scrollHeight;
-    private scrollRequired;
     private intId;
 
     constructor(

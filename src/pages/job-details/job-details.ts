@@ -21,11 +21,9 @@ export class JobDetailsPage {
   private current_date: Date = new Date();
   private platform_ready: boolean;
   private submitButton: boolean = true;
-  private today = new Date();
   private arrChecklists:any;
   private buttonStatus:string;
   private agentName:string;
-  private setChecklistPage:Object;
 
   constructor(
     public navCtrl: NavController,

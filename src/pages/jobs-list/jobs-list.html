@@ -6,7 +6,7 @@
 <ion-content padding-bottom content *ngIf="jobsAvailable">
   <ion-list inset *ngFor="let job of jobs; let i = index" class="m-3 mt-4 item-text-wrap">
     <div *ngIf="i==0">
-      <p class="text-center date">{{ job.date == params.start_date ? 'Today' : (job.date == tomorrow ? 'Tomorrow' : job.date | date:'fullDate') }}</p>
+      <p class="text-center date">{{ job.date == params.start_date && job.date !== yesterday ? 'Today' : (job.date == params.start_date && job.date == yesterday ? 'Yesterday' : (job.date == tomorrow ? 'Tomorrow' : job.date | date:'fullDate')) }}</p>
     </div>
     <div *ngIf="i>0">
         <p class="text-center date" *ngIf="jobs[i-1].date != jobs[i].date">{{ job.date == params.start_date && job.date !== yesterday ? 'Today' : (job.date == params.start_date && job.date == yesterday ? 'Yesterday' : (job.date == tomorrow ? 'Tomorrow' : job.date | date:'fullDate')) }}</p>
@@ -35,6 +35,3 @@
 <ion-content padding *ngIf="!jobsAvailable">
   <h3 class="mt-5 text-center">{{ message }}</h3>
 </ion-content>  
-
-<!--{{job.time.slice(0,-6)>=12 ? 'pm' : 'am'}} - {{ job.end_time.slice(0,-3) }} {{job.end_time.slice(0,-6)>=12 ? 'pm' : 'am'}}-->
-<!--(job.date == yesterday ? 'Yesterday' : job.date | date:'fullDate')-->

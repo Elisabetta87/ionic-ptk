@@ -22,6 +22,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
+      this.hideSplashScreen();
       StorageST.getStorage().subscribe();
       StorageST.get('authToken').subscribe(res => {
         if(res == 'error') {
@@ -35,6 +36,16 @@ export class MyApp {
       })
     })
  }
+
+ hideSplashScreen() {
+   if (Splashscreen) {
+     setTimeout(() => {
+       Splashscreen.hide();
+     }, 100);
+   }
+ }
+
+
 
  tokenExpired(res) {
     let tokenCreated = new Date(JSON.parse(res)['currentDate']);

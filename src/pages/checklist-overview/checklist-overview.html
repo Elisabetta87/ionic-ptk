@@ -6,7 +6,7 @@
 <ion-content>
   <ion-grid>
     <ion-row *ngFor="let section of checklistInfo['sections']">
-      <ion-col width-10><div class="progressBar" [ngClass]="stage>+section.section_stage && section.section_type!=='Property Info' ? 'greenBar' : ( stage>+section.section_stage && section.section_type=='Property Info' ? 'greenBar extra-height-'+propertyInfo.info.length : (section.section_type=='Property Info'  ? 'extra-height-'+propertyInfo.info.length : ''))"></div></ion-col>
+      <ion-col width-10 *ngIf="section.section_type!=='Property Photos'"><div class="progressBar" [ngClass]="stage>+section.section_stage && section.section_type!=='Property Info' ? 'greenBar' : ( stage>+section.section_stage && section.section_type=='Property Info' ? 'greenBar extra-height-'+propertyInfo.info.length : (section.section_type=='Property Info'  ? 'extra-height-'+propertyInfo.info.length : ''))"></div></ion-col>
       <ion-col width-10 class="text-right">{{ section.section_stage }}.</ion-col>
       <ion-col width-80>
 
@@ -28,7 +28,7 @@
             </ion-row>
             <ion-row *ngFor="let page of propertyInfo.info; let i = index">
               <ion-col width-90>
-                <button class="section-button" [disabled]="i==0 ? stage<+page.page_stage : stage<+page.page_stage" (click)="redirectToPropertyInfoPage(page, section.section_name)">{{ page.title }}</button>
+                <button class="section-button" [disabled]="i==0 ? stage<+page.page_stage : stage<+page.page_stage" (click)="redirectToPropertyInfoPage(page)">{{ page.title }}</button>
               </ion-col>
               <ion-col width-10>
                 <ion-icon *ngIf="stage>+page.page_stage" class="green-tick" name="checkmark"></ion-icon>

@@ -1,6 +1,6 @@
-import { TabsPage } from './../tabs/tabs';
+//import { TabsPage } from './../tabs/tabs';
 import { MenuService } from './../../services/menu';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular/index';
 import { LogInPage } from '../log-in/log-in';
 import { GuestEntryPage } from '../guest-entry/guest-entry';

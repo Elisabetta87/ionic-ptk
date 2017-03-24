@@ -119,6 +119,7 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     PropertyInfoService,
     InvoicesService,
     PlatformService,
+    URLs,
     {
       provide: PtkHttp,
       useFactory: (backend: XHRBackend, options: RequestOptions, storage: SecureStorage, app: App, platform: Platform) => new PtkHttp(backend, options, storage, app, platform),
