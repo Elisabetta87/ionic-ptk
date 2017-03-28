@@ -1,9 +1,6 @@
 import {Http} from "@angular/http";
 import {Injectable} from "@angular/core";
-import "rxjs/Rx";
 import {Geolocation} from 'ionic-native';
-
-
 
 
 
@@ -14,7 +11,6 @@ export class GeolocationService {
 
 
   constructor(private http: Http){}
-
 
   getGeoPosition() {
     return Geolocation.getCurrentPosition()

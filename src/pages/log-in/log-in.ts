@@ -1,6 +1,5 @@
 import { MenuService } from './../../services/menu';
 import { Component } from '@angular/core';
-import { NavController } from "ionic-angular/index";
 
 
 @Component({
@@ -10,11 +9,10 @@ import { NavController } from "ionic-angular/index";
 export class LogInPage {
 
   constructor(
-    public navCtrl: NavController,
-    private menuService: MenuService,
+    private menu: MenuService
   ){}
 
-  ionViewDidEnter() {
-    this.menuService.hideMenu(); 
-  }
+  // ionViewWillEnter() {
+  //   this.menu.hideMenu();
+  // }
 }

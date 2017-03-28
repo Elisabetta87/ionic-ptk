@@ -5,8 +5,6 @@ import { Component, ViewChild } from '@angular/core';
 import {NavController, LoadingController, NavParams, Content} from "ionic-angular/index";
 
 
-
-
 @Component({
   selector: 'page-market',
   templateUrl: 'jobs-list.html'
@@ -20,11 +18,11 @@ export class MarketPage {
   private jobsAvailable:boolean;
   private jobs:any = {};
   private message: string;
-  private market:boolean = true;
+  private market:boolean;
   private tomorrow: any = new Date();
   private params = {};
   private today: any = new Date(); 
-  private time_stamp = new Date();
+  //private time_stamp = new Date();
   private loading:any;
   private forceGetRequest:boolean = false;
 
@@ -35,6 +33,7 @@ export class MarketPage {
     private getJobsService: GetJobsService
   ) {
 
+    this.market = true;
     this.date.setDate(this.date.getDate() + 1);
     this.twoWeeksAfter.setDate(this.twoWeeksAfter.getDate() + 1);
 

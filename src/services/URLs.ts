@@ -1,7 +1,3 @@
-//import { Injectable } from '@angular/core';
-//import { Component } from '@angular/core';
-
-//@Injectable()
 export class URLs{
     
     static home: string = 'https://ptkconnect.com/';

@@ -1,5 +1,4 @@
 import { StorageST } from './../../services/StorageST';
-import { MenuService } from './../../services/menu';
 //import { Diagnostic } from 'ionic-native';
 //import { TabsPage } from './../tabs/tabs';
 //import { MenuComponent } from './../../components/menu/menu';
@@ -7,7 +6,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, LoadingController, NavParams, Nav, Content} from 'ionic-angular/index';
 import { JobDetailsPage } from '../job-details/job-details';
 import {GetJobsService} from "../../services/get-jobs";
-import {DatePipe}  from "@angular/common";
+//import {DatePipe}  from "@angular/common";
 
 
 @Component({
@@ -25,7 +24,7 @@ export class JobsListPage {
   private message: string;
   private date: string;
   private time: string;
-  private schedule:boolean = true;
+  private schedule:boolean;
   private tomorrow: any = new Date();
   private day: any;
   private loading:any;
@@ -36,12 +35,12 @@ export class JobsListPage {
     public navCtrl:NavController,
     private navParams: NavParams,
     private getJobsService: GetJobsService,
-    public nav: Nav,
-    private menuService: MenuService
+    public nav: Nav
   ) {
       this.loading = this.loadingCtrl.create({
         content: 'Please wait...'
       });
+      this.schedule = true;
       this.date = navParams.get('date');
       this.time = navParams.get('time');
       this.user_id = navParams.get('user_id');

@@ -1,4 +1,5 @@
-import { Observable } from 'rxjs/Rx';
+//import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 import { URLs } from './URLs';
 import { PtkHttp } from './ptkHttp';
 import { Injectable } from '@angular/core';
@@ -21,10 +22,10 @@ export class MessengerService {
                     .map(data => JSON.parse(data['_body']))
     }
 
-    interval(params) {
-        return Observable.interval(300000)
-                    .flatMap(() => this.getMessages(params))
-    }
+    // interval(params) {
+    //     return Observable.interval(300000)
+    //                 .flatMap(() => this.getMessages(params))
+    // }
 
     postMessages(body) {
         return this.ptkHttp.post(URLs.APIs.messages, body)

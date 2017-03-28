@@ -1,17 +1,14 @@
 import { PtkHttp } from './ptkHttp';
 import { URLs } from './URLs';
 import {Injectable} from "@angular/core";
-import "rxjs/Rx";
-
 
 
 @Injectable()
 export class LogInService {
 
   constructor(
-    private ptkHttp: PtkHttp,
+    private ptkHttp: PtkHttp
   ){}
-
 
   getUserToken(body){
     return this.ptkHttp.post(URLs.APIs.tokenAuth, body)
@@ -20,7 +17,7 @@ export class LogInService {
 
   getGuestJobMatch(params) {
     return this.ptkHttp.get(URLs.APIs.getGuestJobMatch+URLs.getParams(params))
-                       .map(data => JSON.parse(data['_body']))
+               .map(data => JSON.parse(data['_body']))
   }
 
 

@@ -23,7 +23,7 @@ export class PropertyInfoPage {
   //
   private currentIndex:number;
   //
-  private takePhotos:string;
+  //private takePhotos:string;
   public base64Image: Array<string>;
   private allPicTaken: boolean;
   private departureChecklist: boolean;

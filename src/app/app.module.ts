@@ -2,7 +2,6 @@ import { InvoicesService } from './../services/provider-invoices';
 import { InvoicesPage } from './../pages/invoices/invoices';
 import { PropertyInfoService } from './../services/propertyInfo';
 import { ChecklistInfo } from './../services/checklistInfo';
-import { PlatformService } from './../services/testObservable';
 import { PropertyInfoPage } from './../pages/property-info/property-info';
 import { ChecklistOverviewPage } from './../pages/checklist-overview/checklist-overview';
 //ionic
@@ -45,6 +44,10 @@ import { StorageST } from './../services/StorageST';
 import { MessengerService } from './../services/messenger-service';
 //directives
 import { KeyboardAttachDirective } from './../directives/keyboard-attach-directive';
+
+export function httpFactory(backend: XHRBackend, options: RequestOptions, storage: SecureStorage, app: App, platform: Platform) {
+  return new PtkHttp(backend, options, storage, app, platform)
+}
 
 @NgModule({
   declarations: [
@@ -118,11 +121,10 @@ import { KeyboardAttachDirective } from './../directives/keyboard-attach-directi
     ChecklistInfo,
     PropertyInfoService,
     InvoicesService,
-    PlatformService,
     URLs,
     {
       provide: PtkHttp,
-      useFactory: (backend: XHRBackend, options: RequestOptions, storage: SecureStorage, app: App, platform: Platform) => new PtkHttp(backend, options, storage, app, platform),
+      useFactory: httpFactory,
       deps: [XHRBackend, RequestOptions, SecureStorage, App, Platform]
     }
   ]

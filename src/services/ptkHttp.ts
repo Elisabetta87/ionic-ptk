@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers, RequestOptionsArgs, Request, Response, ConnectionBackend, RequestOptions} from "@angular/http";
-import {Observable} from 'rxjs/Rx';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/map';
@@ -91,7 +91,7 @@ export class PtkHttp extends Http {
               console.log('DO SOMETHING IF THE TOKEN DOESN\'T EXIST AND YOU NEED IT');
             }
             else{
-              console.log('YOU DON\'T NEED TOKEN', options);
+              console.log('YOU DON\'T NEED TOKEN');
               reqOpts.merge(options);
               subjNewReq.next( this.createNewRequest(reqOpts) );
             }

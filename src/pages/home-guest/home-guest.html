@@ -2,16 +2,16 @@
   <!----------- JOB MATCH -------------->
   <img src="../../assets/img/logo@2x-min.png" width="50"/>
   <ion-item-group *ngIf="checklist">
-        <p class="mt-4">We have matched your time and location against the following job, to be performed by an agent of Friendly Cleaners:</p>
+        <p class="mt-4">We have matched your time and location against the following job, to be performed by an agent of {{ job.provider_name }}:</p>
         <div class="orange-box my-4 p-2">
-          <p>11am-2pm</p>
-          <p>Porden Road, SW2 5SA</p>
-          <p>Cleaning</p>
+          <p>{{ job.start_time.slice(0, 5) }} - {{ job.end_time.slice(0,5) }}</p>
+          <p>{{ job.property_address }}</p>
+          <p>{{ job.services_string }}</p>
         </div>
         <p class="text-center">Are you here to perform this job?</p>
-        <div class="my-4 pl-5 pr-5">
+        <div class="btn-container">
           <button class="green-btn" (click)="accept()">YES</button>
-          <button class="pink-btn float-right" (click)="discard()">NO</button>
+          <button class="pink-btn" (click)="discard()">NO</button>
         </div>
   </ion-item-group>
     <ion-card *ngIf="!checklist">

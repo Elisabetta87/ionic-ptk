@@ -1,9 +1,9 @@
 <ion-content padding>
   <img src="../../assets/img/logo@2x-min.png" width="50"/>
-  <p class="mt-5 mb-4 text-center">Please enter your name</p>
+  <p class="my-4 text-center">Please enter your name</p>
   <form [formGroup]="guestForm" (ngSubmit)="onSubmit()">
     <input placeholder="Full Name" type="text" name="agent_name" formControlName="agent_name">
-    <button class="green-btn mt-5 d-block ml-auto mr-auto" type="submit" (click)="moveToJobDetails()">Submit</button>
+    <button class="green-btn my-4" type="submit" [disabled]="!guestForm.valid">Submit</button>
   </form>
 </ion-content>
 

@@ -1,5 +1,3 @@
-//import { TabsPage } from './../tabs/tabs';
-import { MenuService } from './../../services/menu';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular/index';
 import { LogInPage } from '../log-in/log-in';
@@ -16,18 +14,12 @@ export class HomePageGuest {
   private job: Object;
 
   constructor(
-         public navCtrl: NavController,
-      private navParams: NavParams,
-    private menuService: MenuService
+    public navCtrl: NavController,
+    private navParams: NavParams
   ) {
     this.checklist = true;
-
     this.job = this.navParams.get('job');
     console.log(this.job);
-  }
-
-  ionViewDidEnter() {
-    this.menuService.hideMenu();
   }
 
   accept() {

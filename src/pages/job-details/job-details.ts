@@ -7,7 +7,7 @@ import { ChecklistService } from './../../services/checklist';
 import { NavController, NavParams, Platform } from 'ionic-angular/index';
 //angular
 import { Component } from '@angular/core';
-import {DatePipe}  from "@angular/common";
+//import {DatePipe}  from "@angular/common";
 
 @Component({
   selector: 'page-job-details',
@@ -34,8 +34,6 @@ export class JobDetailsPage {
   ) {
     this.job = this.navParams.get('job');
     this.agentName = this.navParams.get('agentName');
-    console.log(this.job);
-    console.log(this.agentName);
     this.platform.ready().then(() => {
       this.platform_ready = true;
     });
@@ -45,12 +43,11 @@ export class JobDetailsPage {
     for(let key in this.job['checklists']) {
       this.arrChecklists.push(key);
     }
-
-    console.log(this.arrChecklists);
   }
 
-
   ionViewWillEnter() {
+    console.log(this.job['id']);
+    console.log(this.job);
     if(!(this.platform_ready)) {
       return;
     }
@@ -92,7 +89,8 @@ export class JobDetailsPage {
       checklistObj['check_in_stamp'] = this.current_date.toISOString().slice(0,10) + ' ' + this.current_date.toISOString().slice(11, 16);
       checklistObj['stage'] = '2';
       checklistObj['job'] = this.job['id'];
-      if (this.agentName) {checklistObj['agent_name'] = this.agentName;}
+      if (this.agentName) {checklistObj['agent_name'] = this.agentName};
+      console.log(checklistObj);
       this.checklistService.putChecklist(checklistName, checklistId, checklistObj).subscribe();
       StorageST.set('checklist-'+checklistId, checklistObj).subscribe();  
     }

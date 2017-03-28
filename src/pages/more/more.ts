@@ -2,7 +2,7 @@ import { InvoicesPage } from './../invoices/invoices';
 import { PastJobsPage } from './../jobs-list/past-jobs';
 import { StorageST } from './../../services/StorageST';
 import { Component } from '@angular/core';
-import {NavController} from "ionic-angular/index";
+import {NavController, Nav} from "ionic-angular/index";
 import {LogInPage} from "../log-in/log-in";
 
 
@@ -15,7 +15,8 @@ import {LogInPage} from "../log-in/log-in";
 export class MorePage {
 
   constructor(
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public nav: Nav
   ) {}
 
   goToPastJobsPage() {
@@ -28,7 +29,7 @@ export class MorePage {
 
   logOut() {
     StorageST.remove('user_id').subscribe(() => {
-      StorageST.remove('authToken').subscribe(() => this.navCtrl.push(LogInPage))
+      StorageST.remove('authToken').subscribe(() => this.nav.setRoot(LogInPage));
     })
      
   }

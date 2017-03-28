@@ -1,4 +1,4 @@
-import { FileOpener, InAppBrowser } from 'ionic-native';
+import { FileOpener } from 'ionic-native';
 import { Platform } from 'ionic-angular/index';
 import { InvoicesService } from './../../services/provider-invoices';
 import { Component } from '@angular/core';

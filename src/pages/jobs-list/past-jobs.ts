@@ -18,13 +18,13 @@ export class PastJobsPage {
   private jobsAvailable:boolean;
   private jobs: Array<any> = [];
   private message: string;
-  private pastJobs:boolean = true;
+  private pastJobs:boolean;
   private params = {};
   private date: any = new Date(); 
   private loading:any;
   private yesterday: any;
   private forceGetRequest:boolean = false;
-  private pastJobsList:boolean = true;
+  private pastJobsList:boolean;
 
   constructor(
     public loadingCtrl: LoadingController,
@@ -33,6 +33,8 @@ export class PastJobsPage {
     private getJobsService: GetJobsService
   ) {
 
+    this.pastJobsList = true;
+    this.pastJobs = true;
     this.date.setDate(this.date.getDate() - 1);
     this.twoWeeksBefore.setDate(this.twoWeeksBefore.getDate() - 14);
 

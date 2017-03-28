@@ -1,5 +1,6 @@
 import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import "rxjs/add/observable/of";
 import { SecureStorage } from 'ionic-native';
 import { Injectable } from '@angular/core';
 

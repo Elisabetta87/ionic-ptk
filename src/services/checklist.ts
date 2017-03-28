@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import "rxjs/Rx";
+import 'rxjs/add/operator/map';
 import {PtkHttp} from "./ptkHttp";
 import { URLs } from './URLs';
 

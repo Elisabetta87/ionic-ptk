@@ -1,6 +1,5 @@
 import { TabsPage } from './../../pages/tabs/tabs';
 import { StorageST } from './../../services/StorageST';
-import { MenuService } from './../../services/menu';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NavController, LoadingController, Platform, AlertController } from 'ionic-angular/index';
@@ -11,6 +10,7 @@ import {GeolocationService} from "../../services/geolocation-service";
 import {UserIdService} from "../../services/user-id-service";
 import {GetJobsService} from "../../services/get-jobs";
 
+import Hashids from 'hashids';
 
 @Component({
   selector: 'log-in-form',
@@ -21,11 +21,9 @@ export class LogInForm implements OnInit {
 
   public logInForm: FormGroup;
   private btnClicked: string;
-  //private isStorageReady: boolean;
   private lat: number;
   private lng: number; 
   private message: string;
-  //private platformReady: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -35,7 +33,6 @@ export class LogInForm implements OnInit {
     private userIdService: UserIdService,
     private geolocation: GeolocationService,
     private getJobsService: GetJobsService,
-    private menuService: MenuService,
     private loadingCtrl: LoadingController,
     private platform: Platform
   ) {
@@ -44,13 +41,11 @@ export class LogInForm implements OnInit {
         });
     loading.present();
     this.platform.ready().then(() => {
-      console.log('core = ' + this.platform.is('core'), 'mobileweb = ' + this.platform.is('mobileweb'), 'android = ' + this.platform.is('android'), 'mobile = ' + this.platform.is('mobile'));
-      console.log('cordova = ' + this.platform.is('cordova'));
       // if( !(this.platform.is('core') || this.platform.is('mobileweb')) ) {
       //   Diagnostic.isLocationEnabled().then(isAvailable => {
       //     console.log('Is available? ' + isAvailable);
       //     if(isAvailable){
-      //       this.storage.create('ptkStorage').then(() => this.isStorageReady = true); 
+      //       //this.storage.create('ptkStorage').then(() => this.isStorageReady = true); 
       //       this.geolocation.getGeoPosition().then((resp) => {
       //         this.lat = resp.coords.latitude;
       //         this.lng = resp.coords.longitude;
@@ -93,10 +88,9 @@ export class LogInForm implements OnInit {
           this.lng = resp.coords.longitude;
           loading.dismiss();
         })      
+      //}
    });
  }
-
-
 
 
   ngOnInit(){
@@ -104,6 +98,9 @@ export class LogInForm implements OnInit {
       username: ['Elisa', Validators.required],
       password: ['GreenTurtle2017', Validators.required]
     });
+
+    
+
   }
 
   logId() {
@@ -117,7 +114,6 @@ export class LogInForm implements OnInit {
 
   onSubmit() {
     if (this.btnClicked == 'logId') {
-      //let body = JSON.stringify(this.logInForm.value);
       let username = this.logInForm.value.username;
       this.logInService.getUserToken(this.logInForm.value)
          .subscribe(resp => {
@@ -132,7 +128,10 @@ export class LogInForm implements OnInit {
                             .subscribe(resp => {
                                 let user_id = resp.results[0].id;
                                 StorageST.set('user_id', user_id.toString()).subscribe();
-                                this.navCtrl.push(TabsPage, {id: user_id});
+                                //
+                                // set root as TabsPage
+                                //
+                                this.navCtrl.push(TabsPage);
                             })
                      })
          },
@@ -140,7 +139,11 @@ export class LogInForm implements OnInit {
          );                                                                
     };
     if (this.btnClicked == 'logAsGuest') {
-      this.menuService.hideMenu();
+      let hashids = new Hashids("this is my salt", 17, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890");
+      let id = hashids.encode(30, 322);
+      let numbers = hashids.decode(id);
+      console.log(id, numbers);
+
       let today = new Date();
       let location = this.lat + ',' + this.lng;
       let params = {
@@ -155,6 +158,9 @@ export class LogInForm implements OnInit {
         } else {
           console.log(resp.results);
           let job = resp.results[0];
+          //
+           // set root as HomePageGuest
+           //
           this.navCtrl.push(HomePageGuest, {job: job});
         }
       },
